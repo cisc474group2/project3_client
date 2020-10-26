@@ -1,15 +1,22 @@
-import { UserService } from './security/services/user.service';
-import { SecurityService } from './security/services/security.service';
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
-  constructor(private _secSvc: SecurityService) { }
+  title = 'ExampleUI';
+  get loggedIn():boolean{
+    return this.authSvc.loggedIn;
+  }
+  constructor(public authSvc:AuthService) {
+    authSvc.authorize();
+  }
 
-  logout = () => this._secSvc.logout();
+  signout(){
+    this.authSvc.logout();
+    return false;
+  }
 }
