@@ -10,6 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { PosteventComponent } from './pages/postevent/postevent.component';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PosteventComponent } from './pages/postevent/postevent.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    PosteventComponent
+    PosteventComponent,
+    EventComponent,
   ],
   imports: [
     BrowserModule,
