@@ -21,7 +21,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm=this.formBuilder.group({
       username: ['',Validators.required],
-      password: ['',Validators.required]
+      password: ['',Validators.required],
+      indOrBusiness: ['', Validators.required]
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -32,9 +33,11 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authSvc.register(this.registerForm.controls.username.value,this.registerForm.controls.password.value, this.registerForm.controls.indOrBusiness.value).subscribe(response=>{
-      this.router.navigate([this.returnUrl]);
-    },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+    this.authSvc.register(this.registerForm.controls.username.value,
+      this.registerForm.controls.password.value, 
+      this.registerForm.controls.indOrBusiness.value == true ? 'I' : 'B').subscribe(response=>{
+        this.router.navigate([this.returnUrl]);
+      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
   }
 
 }
