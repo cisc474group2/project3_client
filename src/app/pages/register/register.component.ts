@@ -27,7 +27,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-
+    this.submitted == true;
+    if (this.registerForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.authSvc.register(this.registerForm.controls.username.value,this.registerForm.controls.password.value, this.registerForm.controls.indOrBusiness.value).subscribe(response=>{
+      this.router.navigate([this.returnUrl]);
+    },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
   }
 
 }
