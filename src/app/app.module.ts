@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { AddprojectComponent } from './pages/addproject/addproject.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { PosteventComponent } from './pages/postevent/postevent.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AddprojectComponent
+    PosteventComponent
   ],
   imports: [
     BrowserModule,
