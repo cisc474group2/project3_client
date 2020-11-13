@@ -57,6 +57,15 @@ export class AuthService {
         return user.data.user;
       }),catchError(err=>{this.CurrentUser.next(null);this.token=null;return throwError(err.message||'server error')}));
   }
+
+  register(email: string, password:string): Observable<any>{
+      return this.http.post<any>(this.path+'register',{email: email,password: password })
+        .pipe(map(user=>{
+          this.token=user.data.token
+          this.CurrentUser.next(user.data.user.email);
+          return user.data.user;
+        }),catchError(err=>{this.CurrentUser.next(null);this.token=null;return throwError(err.message||'server error')}));
+    }
   logout(){
     this.token=null;
     this.CurrentUser.next(null);
