@@ -11,10 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  isChecked=false;
   loading =false;
   submitted=false;
   returnUrl: string;
   error: string;
+
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) { }
 
