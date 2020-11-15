@@ -10,11 +10,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   
-  hidden = false;
+  hidden = true;
   hideIfBusiness = true;
-  hideIfIndividual = true;
+  hideIfIndividual = false;
   showIfBusiness = false;
-  showIfIndividual = false;
+  showIfIndividual = true;
   registerForm: FormGroup;
   loading =false;
   submitted=false;
@@ -32,17 +32,13 @@ export class RegisterComponent implements OnInit {
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  unhideForIndividual(){
-    this.hidden = !this.hidden;
+  unhide(){
     this.hideIfIndividual = !this.hideIfIndividual;
     this.showIfIndividual = !this.showIfIndividual;
-  }
-
-  unhideForBusiness(){
-    this.hidden = !this.hidden;
     this.hideIfBusiness = !this.hideIfBusiness;
-    this.showIfBusiness = !this.showIfBusiness;
-  }
+    this.showIfBusiness = !this.showIfBusiness;  }
+
+
 
   register(){
     this.submitted == true;
