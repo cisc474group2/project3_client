@@ -58,8 +58,8 @@ export class AuthService {
       }),catchError(err=>{this.CurrentUser.next(null);this.token=null;return throwError(err.message||'server error')}));
   }
 
-  register(email: string, password:string, type:string): Observable<any>{
-      return this.http.post<any>(this.path+'register',{email: email,password: password, type: type })
+  register(email: string, password:string, type:string, type_obj:object): Observable<any>{
+      return this.http.post<any>(this.path+'register',{email: email,password: password, type: type, type_obj: type_obj })
         .pipe(map(user=>{
           this.token=user.data.token
           this.CurrentUser.next(user.data.user.email);

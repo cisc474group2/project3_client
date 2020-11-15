@@ -9,7 +9,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  
+  hidden = true;
+  hideIfBusiness = true;
+  hideIfIndividual = false;
+  showIfBusiness = false;
+  showIfIndividual = true;
   registerForm: FormGroup;
   isChecked=false;
   loading =false;
@@ -28,6 +33,14 @@ export class RegisterComponent implements OnInit {
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
+
+  unhide(){
+    this.hideIfIndividual = !this.hideIfIndividual;
+    this.showIfIndividual = !this.showIfIndividual;
+    this.hideIfBusiness = !this.hideIfBusiness;
+    this.showIfBusiness = !this.showIfBusiness;  }
+
+
 
   register(){
     this.submitted == true;
