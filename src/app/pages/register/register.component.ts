@@ -1,7 +1,9 @@
+import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 
 @Component({
   selector: 'app-register',
@@ -21,15 +23,22 @@ export class RegisterComponent implements OnInit {
   submitted=false;
   returnUrl: string;
   error: string;
+  type_obj:BusModel | IndModel;
 
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) { }
 
   ngOnInit(): void {
     this.registerForm=this.formBuilder.group({
-      username: ['',Validators.required],
+      email: ['',Validators.required],
       password: ['',Validators.required],
-      indOrBusiness: ['', Validators.required]
+      individual: ['', Validators.required], 
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      businessName: ['', Validators.required],
+      businessAddress: ['', Validators.required],
+      contactName: ['', Validators.required],
+      contactPhone: ['', Validators.required]
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -38,9 +47,8 @@ export class RegisterComponent implements OnInit {
     this.hideIfIndividual = !this.hideIfIndividual;
     this.showIfIndividual = !this.showIfIndividual;
     this.hideIfBusiness = !this.hideIfBusiness;
-    this.showIfBusiness = !this.showIfBusiness;  }
-
-
+    this.showIfBusiness = !this.showIfBusiness;  
+  }
 
   register(){
     this.submitted == true;
@@ -48,9 +56,29 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authSvc.register(this.registerForm.controls.username.value,
+    if (this.registerForm.controls.individual.value) {
+      this.type_obj = new IndModel(
+        this.registerForm.controls.firstName.value, 
+        this.registerForm.controls.lastName.value);
+    }
+    else {
+      this.type_obj = new BusModel(
+        this.registerForm.controls.businessName.value,
+        this.registerForm.controls.contactName.value,
+        this.registerForm.controls.businessPhone.value,
+        '', // business email component
+        new Geoloc(0, 0),
+        this.registerForm.controls.businessAddress.value
+      );
+    }
+    
+
+    this.authSvc.register(
+      this.registerForm.controls.email.value,
       this.registerForm.controls.password.value, 
-      this.registerForm.controls.indOrBusiness.value == true ? 'I' : 'B').subscribe(response=>{
+      this.registerForm.controls.indOrBusiness.value == true ? 'I' : 'B', 
+      this.type_obj)
+      .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
   }
