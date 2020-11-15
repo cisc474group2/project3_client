@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  
+  hidden = false;
   registerForm: FormGroup;
   loading =false;
   submitted=false;
@@ -25,6 +26,10 @@ export class RegisterComponent implements OnInit {
       indOrBusiness: ['', Validators.required]
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  unhide(){
+    this.hidden = !this.hidden;
   }
 
   register(){
