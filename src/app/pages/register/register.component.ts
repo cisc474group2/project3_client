@@ -12,11 +12,9 @@ import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 })
 export class RegisterComponent implements OnInit {
   
-  hidden = true;
-  hideIfBusiness = true;
-  hideIfIndividual = false;
+  temp;
+  showIfIndividual = false;
   showIfBusiness = false;
-  showIfIndividual = true;
   registerForm: FormGroup;
   isChecked=false;
   loading =false;
@@ -43,12 +41,30 @@ export class RegisterComponent implements OnInit {
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  unhide(){
-    this.hideIfIndividual = !this.hideIfIndividual;
-    this.showIfIndividual = !this.showIfIndividual;
-    this.hideIfBusiness = !this.hideIfBusiness;
-    this.showIfBusiness = !this.showIfBusiness;  
+  unhide(e){
+    if(e.target.id == "indivCheck" && e.target.checked){
+      this.showIfIndividual = true;
+      this.showIfBusiness = false;
+    }
+
+    if(e.target.id == "indivCheck" && e.target.checked == false){
+      this.showIfIndividual = false;
+    }
+
+    if(e.target.id == "busCheck" && e.target.checked){
+      this.showIfBusiness = true;
+      this.showIfIndividual = false;
+    }
+
+    if(e.target.id == "busCheck" && e.target.checked == false){
+      this.showIfBusiness = false;
   }
+    if(e.target != this.temp && this.temp!= undefined){
+      this.temp.checked = false;
+    }
+    this.temp = e.target;
+  }
+
 
   register(){
     this.submitted == true;
