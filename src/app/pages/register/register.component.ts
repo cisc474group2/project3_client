@@ -13,6 +13,7 @@ import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 export class RegisterComponent implements OnInit {
   
   temp;
+  hidden = true;
   showIfIndividual = false;
   showIfBusiness = false;
   registerForm: FormGroup;
@@ -30,11 +31,15 @@ export class RegisterComponent implements OnInit {
     this.registerForm=this.formBuilder.group({
       email: ['',Validators.required],
       password: ['',Validators.required],
-      individual: ['', Validators.required], 
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      individual: [''], 
+      firstName: [''],
+      lastName: [''],
       businessName: ['', Validators.required],
-      businessAddress: ['', Validators.required],
+      businessStreet: ['', Validators.required],
+      businessApt: [''],
+      businessCity: ['', Validators.required],
+      businessState: ['', Validators.required],
+      businessZip: ['', Validators.required],
       contactName: ['', Validators.required],
       contactPhone: ['', Validators.required]
     });
@@ -58,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
     if(e.target.id == "busCheck" && e.target.checked == false){
       this.showIfBusiness = false;
-  }
+    }
     if(e.target != this.temp && this.temp!= undefined){
       this.temp.checked = false;
     }
@@ -68,6 +73,7 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.submitted == true;
+    console.log(this.registerForm)
     if (this.registerForm.invalid) {
       return;
     }
@@ -83,7 +89,12 @@ export class RegisterComponent implements OnInit {
         this.registerForm.controls.contactName.value,
         this.registerForm.controls.businessPhone.value,
         '', // business email component
-        new Geoloc(0, 0),
+        new Geoloc(this.registerForm.controls.businessStreet.value + "+" 
+          + this.registerForm.controls.businessApt.value + "+"
+          + this.registerForm.controls.businessCity.value + "+"
+          + this.registerForm.controls.businessState.value
+          //+ "+" + this.registerForm.controls.businessZip.value
+          ),
         this.registerForm.controls.businessAddress.value
       );
     }

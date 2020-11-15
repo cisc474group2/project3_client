@@ -1,3 +1,5 @@
+import { Config } from './Config';
+
 export class UserModel {
 	email = '';
 	password = '';
@@ -46,8 +48,17 @@ export class Geoloc {
 	lng = 0.0;
 	lat = 0.0;
 
-	public constructor(longitude:number, latitude:number) {
-		this.lng = longitude;
-		this.lat = latitude;
+	public constructor(address:string) {
+		const getZipData = (async () => {
+			const dynURL = Config.GOOGLE_GEOCODING
+				.replace('outputFormat', 'json')
+				.replace('<<ADDR>>', address)
+				.replace('<<KEY>>', Config.GOOGLE_API);
+            const response = await fetch(dynURL);
+            const json = await response.json(); 
+            return json});
+		
+		//this.lng = longitude;
+		//this.lat = latitude;
 	}
 }
