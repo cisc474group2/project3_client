@@ -51,7 +51,7 @@ export class Geoloc {
 	public constructor(address:string) {
 		const getZipData = (async () => {
 			const dynURL = Config.GOOGLE_GEOCODING
-				.replace('outputFormat', 'json')
+				.replace('<<OUT>>', 'json')
 				.replace('<<ADDR>>', address)
 				.replace('<<KEY>>', Config.GOOGLE_API);
             const response = await fetch(dynURL);
