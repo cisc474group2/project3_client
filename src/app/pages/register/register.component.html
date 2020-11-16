@@ -1,10 +1,10 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <h2>Register</h2>
 <form [formGroup]="registerForm" (ngSubmit)="register()">
-
     <div class="form-group" *ngIf="hidden">
         <label for="email">Email</label>
-        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.email.errors }" />
+        <input type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && registerForm.controls.email.errors }" />
         <div *ngIf="submitted && registerForm.controls.email.errors" class="invalid-feedback">
             <div *ngIf="registerForm.controls.email.errors.required">Username is required</div>
         </div>
@@ -16,7 +16,6 @@
             <div *ngIf="registerForm.controls.password.errors.required">Password is required</div>
         </div>
     </div>
-
     <div class="form-group">
         <label for="individual">Individual</label>
         <input type="checkbox" id = indivCheck (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
@@ -26,7 +25,6 @@
             <div *ngIf="registerForm.controls.individual.errors.required">this is required</div>
         </div>
     </div>
-
     <div class="form-group" *ngIf="showIfIndividual">
         <label for="firstName">First Name</label>
         <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.firstName.errors }"/>
@@ -34,8 +32,6 @@
             <div *ngIf="registerForm.controls.firstName.errors.required">firstName is required</div>
         </div>
     </div>
-
-
     <div class="form-group" *ngIf="showIfIndividual">
         <label for="lastName">Last Name</label>
         <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.lastName.errors }"/>
@@ -43,8 +39,6 @@
             <div *ngIf="registerForm.controls.lastName.errors.required">firstName is required</div>
         </div>
     </div>
-
-
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessName">Business Name</label>
         <input type="text" formControlName="businessName" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.businessName.errors }"/>

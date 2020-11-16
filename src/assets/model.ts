@@ -58,6 +58,7 @@ export class Geoloc {
             const json = await response.json(); 
             return json});
 		
+		console.log(getZipData);
 		//this.lng = longitude;
 		//this.lat = latitude;
 	}
