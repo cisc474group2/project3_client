@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
       businessState: ['', Validators.required],
       businessZip: ['', Validators.required],
       contactName: ['', Validators.required],
-      contactPhone: ['', Validators.required]
+      businessPhone: ['', Validators.required]
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true;
-    if (this.registerForm.controls.individual.value) {
+    if (!this.registerForm.controls.individual.value) {
       this.type_obj = new IndModel(
         this.registerForm.controls.firstName.value, 
         this.registerForm.controls.lastName.value);
@@ -95,7 +95,7 @@ export class RegisterComponent implements OnInit {
           + this.registerForm.controls.businessState.value
           //+ "+" + this.registerForm.controls.businessZip.value
           ),
-        this.registerForm.controls.businessAddress.value
+        this.registerForm.controls.businessStreet.value
       );
     }
     
@@ -103,7 +103,7 @@ export class RegisterComponent implements OnInit {
     this.authSvc.register(
       this.registerForm.controls.email.value,
       this.registerForm.controls.password.value, 
-      this.registerForm.controls.indOrBusiness.value == true ? 'I' : 'B', 
+      this.registerForm.controls.individual.value == false ? 'I' : 'B', 
       this.type_obj)
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
