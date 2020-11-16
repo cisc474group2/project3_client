@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { UserModel, BusModel, IndModel} from "../../assets/model";
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +59,8 @@ export class AuthService {
       }),catchError(err=>{this.CurrentUser.next(null);this.token=null;return throwError(err.message||'server error')}));
   }
 
-  register(email: string, password:string, type:string): Observable<any>{
-      return this.http.post<any>(this.path+'register',{email: email,password: password, type: type })
+  register(email: string, password:string, type:string, type_obj:IndModel | BusModel): Observable<any>{
+      return this.http.post<any>(this.path+'register',{email: email,password: password, type: type, type_obj: type_obj })
         .pipe(map(user=>{
           this.token=user.data.token
           this.CurrentUser.next(user.data.user.email);
