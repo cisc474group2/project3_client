@@ -13,10 +13,12 @@ import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 export class RegisterComponent implements OnInit {
   
   temp;
-  hidden = true;
+  individualRegister = false;
   showIfIndividual = false;
   showIfBusiness = false;
   registerForm: FormGroup;
+  individualForm: FormGroup;
+  businessForm: FormGroup;
   isChecked=false;
   loading =false;
   submitted=false;
@@ -29,11 +31,16 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm=this.formBuilder.group({
+      individual: ['', Validators.required],
       email: ['',Validators.required],
-      password: ['',Validators.required],
-      individual: [''], 
-      firstName: [''],
-      lastName: [''],
+      password: ['',Validators.required]
+    });
+    this.individualForm=this.formBuilder.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required]
+    });
+
+    this.businessForm=this.formBuilder.group({
       businessName: ['', Validators.required],
       businessStreet: ['', Validators.required],
       businessApt: [''],
@@ -50,44 +57,53 @@ export class RegisterComponent implements OnInit {
     if(e.target.id == "indivCheck" && e.target.checked){
       this.showIfIndividual = true;
       this.showIfBusiness = false;
+      this.individualRegister = true;
     }
 
     if(e.target.id == "indivCheck" && e.target.checked == false){
       this.showIfIndividual = false;
+      this.individualRegister = false;
     }
 
     if(e.target.id == "busCheck" && e.target.checked){
       this.showIfBusiness = true;
       this.showIfIndividual = false;
+      this.individualRegister = false;
     }
 
     if(e.target.id == "busCheck" && e.target.checked == false){
       this.showIfBusiness = false;
     }
     if(e.target != this.temp && this.temp!= undefined){
+      e.target.checked = true;
       this.temp.checked = false;
+      
     }
+    
     this.temp = e.target;
   }
 
 
   register(){
     this.submitted == true;
-    console.log(this.registerForm)
-    if (this.registerForm.invalid) {
+    console.log(this.registerForm);
+    if (this.registerForm.invalid || (this.individualRegister && this.individualForm.invalid) 
+    || (!this.individualRegister && this.businessForm.invalid)) {
       return;
     }
+
     this.loading = true;
-    if (!this.registerForm.controls.individual.value) {
+    if (this.individualRegister) {
       this.type_obj = new IndModel(
-        this.registerForm.controls.firstName.value, 
-        this.registerForm.controls.lastName.value);
+        this.individualForm.controls.firstName.value, 
+        this.individualForm.controls.lastName.value);
     }
     else {
+      
       this.type_obj = new BusModel(
-        this.registerForm.controls.businessName.value,
-        this.registerForm.controls.contactName.value,
-        this.registerForm.controls.businessPhone.value,
+        this.businessForm.controls.businessName.value,
+        this.businessForm.controls.contactName.value,
+        this.businessForm.controls.businessPhone.value,
         '', // business email component
           this.registerForm.controls.businessStreet.value + "+" 
           + this.registerForm.controls.businessApt.value + "+"
@@ -98,10 +114,11 @@ export class RegisterComponent implements OnInit {
     }
     
 
+
     this.authSvc.register(
       this.registerForm.controls.email.value,
       this.registerForm.controls.password.value, 
-      this.registerForm.controls.individual.value == false ? 'I' : 'B', 
+      this.individualRegister == true ? 'I' : 'B', 
       this.type_obj)
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
