@@ -66,22 +66,12 @@ export class BusModel {
 }
 
 export class Geoloc {
-	lng = 0.0;
-	lat = 0.0;
+	lng:number;
+	lat:number;
 
-	public constructor(address:string) {
-		const getZipData = (async () => {
-			const dynURL = Config.GOOGLE_GEOCODING
-				.replace('<<OUT>>', 'json')
-				.replace('<<ADDR>>', address)
-				.replace('<<KEY>>', Config.GOOGLE_API);
-            const response = await fetch(dynURL);
-            const json = await response.json(); 
-            return json});
-		
-		console.log(getZipData);
-		//this.lng = longitude;
-		//this.lat = latitude;
+	public constructor(lng:number, lat:number) {
+		this.lat = 0.0;
+		this.lng = 0.0;
 	}
 	toObject():any{
         return {lat:this.lat,

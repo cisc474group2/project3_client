@@ -35,11 +35,7 @@ export class PosteventComponent implements OnInit {
     }
     this.eventsForm.controls.title.value,
     this.eventsForm.controls.description.value,
-    new Geoloc(this.eventsForm.controls.eventStreet.value + "+" 
-    + this.eventsForm.controls.eventCity.value + "+"
-    + this.eventsForm.controls.eventState.value
-    //+ "+" + this.eventsForm.controls.eventZip.value
-    ),
+    new Geoloc(0, 0),
     this.eventsForm.controls.eventStreet.value
   }
 }
