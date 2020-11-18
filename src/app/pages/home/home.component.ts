@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectsService } from 'src/app/services/projects.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +7,10 @@ import { ProjectsService } from 'src/app/services/projects.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  semesters=[];
-  constructor(private projSvc:ProjectsService) { 
-    projSvc.getProjects().subscribe(result=>{
-      this.semesters=result.data.semesters;
+  events_list=[];
+  constructor(private projSvc:EventsService) { 
+    projSvc.getEvents().subscribe(result=>{
+      this.events_list=result.data;
     })
   }
 

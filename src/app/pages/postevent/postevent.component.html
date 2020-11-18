@@ -1,1 +1,31 @@
-<p>postevent works!</p>
+<form [formGroup]="eventsForm" (ngSubmit)="postEvent()">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.title.errors }" />
+        <div *ngIf="submitted && eventsForm.controls.title.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.title.errors.required">Title is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.description.errors }" />
+    </div>
+    <div class="form-group">
+        <label for="event-address">Event Address</label>
+        <input type="event-address" formControlName="event-address" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.address.errors }" />
+        <div *ngIf="submitted && eventsForm.controls.address.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.address.errors.required">Address is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="start-time">Start</label>
+        <input type="datetime-local" formControlName="start-time" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.start.errors }" />
+        <div *ngIf="submitted && eventsForm.controls.start.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.start.errors.required">Start time is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="end-time">End</label>
+        <input type="datetime-local" formControlName="end-time" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.end.errors }" />
+    </div>
+</form>

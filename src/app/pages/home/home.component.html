@@ -1,9 +1,16 @@
-<p>home works!</p>
-<div *ngIf='semesters.length>0'>
+<h1 style="text-align: center;">Events Near You</h1>
+<div *ngIf='events_list.length>0'>
 <ul>
-    <li *ngFor='let item of semesters'>
-        {{item}}
+    <li class= "event" *ngFor='let event of events_list'>
+        <span id="title">{{event.title}}</span>
+        <!--change below to business name later-->
+        <span>{{event.bus_id}}</span>
+        <span>{{event.description}}</span>
+        <span>Going: {{event.registered_ind.length}}</span>
+        <span>{{event.event_address}}</span>
+        <span>{{event.start_time}}</span>
+        <span>{{event.end_time}}</span>
     </li>
 </ul>
 </div>
-<div *ngIf='semesters.length==0'>No records found</div>
+<div *ngIf='events_list.length==0'>No records found</div>

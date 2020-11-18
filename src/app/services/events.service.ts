@@ -5,12 +5,12 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsService {
+export class EventsService {
 
-  private path="http://localhost:3000/api/projects/"
+  private path="http://localhost:3000/api/"
   constructor(private http:HttpClient) { }
 
-  getProjects(): Observable<any>{
-    return this.http.get(this.path+'semesters');
+  getEvents(): Observable<any>{
+    return this.http.get(this.path+'events');
   }
 }
