@@ -11,10 +11,31 @@
         <input type="description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.description.errors }" />
     </div>
     <div class="form-group">
-        <label for="event-address">Event Address</label>
-        <input type="event-address" formControlName="event-address" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.address.errors }" />
-        <div *ngIf="submitted && eventsForm.controls.address.errors" class="invalid-feedback">
-            <div *ngIf="eventsForm.controls.address.errors.required">Address is required</div>
+        <label for="eventStreet">Street Address</label>
+        <input type="text" formControlName="eventStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventStreet.errors }"/>
+        <div *ngIf="submitted && registerForm.controls.eventStreet.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.controls.eventStreet.errors.required">eventStreet is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventCity">City</label>
+        <input type="text" formControlName="eventCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventCity.errors }"/>
+        <div *ngIf="submitted && registerForm.controls.eventCity.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.controls.eventCity.errors.required">eventCity is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventState">State</label>
+        <input type="text" formControlName="eventState" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventState.errors }"/>
+        <div *ngIf="submitted && registerForm.controls.eventState.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.controls.eventState.errors.required">eventState is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventZip">Zip</label>
+        <input type="text" formControlName="eventZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventZip.errors }"/>
+        <div *ngIf="submitted && registerForm.controls.eventZip.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.controls.eventZip.errors.required">eventZip is required</div>
         </div>
     </div>
     <div class="form-group">
@@ -27,5 +48,12 @@
     <div class="form-group">
         <label for="end-time">End</label>
         <input type="datetime-local" formControlName="end-time" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.end.errors }" />
+    </div>
+
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Submit
+        </button>
     </div>
 </form>
