@@ -89,13 +89,11 @@ export class RegisterComponent implements OnInit {
         this.registerForm.controls.contactName.value,
         this.registerForm.controls.businessPhone.value,
         '', // business email component
-        new Geoloc(this.registerForm.controls.businessStreet.value + "+" 
+          this.registerForm.controls.businessStreet.value + "+" 
           + this.registerForm.controls.businessApt.value + "+"
           + this.registerForm.controls.businessCity.value + "+"
           + this.registerForm.controls.businessState.value
-          //+ "+" + this.registerForm.controls.businessZip.value
-          ),
-        this.registerForm.controls.businessStreet.value
+          + "+" + this.registerForm.controls.businessZip.value
       );
     }
     

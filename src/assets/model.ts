@@ -45,12 +45,12 @@ export class BusModel {
 	bus_address = '';
 	hosted_events = [];
 
-	public constructor(bname:string, cname:string, cphone:string, cemail:string, geoloc:Geoloc, baddr:string) {
+	public constructor(bname:string, cname:string, cphone:string, cemail:string, baddr:string) {
 		this.bus_name = bname;
 		this.contact_name = cname;
 		this.contact_phone = cphone;
 		this.contact_email = cemail;
-		this.geoloc = geoloc;
+		//this.geoloc = geoloc;
 		this.bus_address = baddr;
 	}
 
@@ -59,7 +59,7 @@ export class BusModel {
             contact_name:this.contact_name,
             contact_phone:this.contact_phone,
             contact_email:this.contact_email,
-            geolocation:this.geoloc,
+            //geolocation:this.geoloc,
             mailAddress:this.bus_address,
             hostedEvents:this.hosted_events};
     }
