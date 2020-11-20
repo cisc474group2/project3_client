@@ -15,7 +15,7 @@
       <a class="nav-link" [class.disabled]='!loggedIn' routerLink='postevent' routerLinkActive='active'>Post Event</a>
     </li>-->
     <li class="nav-item">
-      <a class="nav-link" routerLink='postevent' routerLinkActive='active'>Post Event</a>
+      <a class="nav-link" routerLink='postevent' [hidden]='!loggedIn' routerLinkActive='active'>Post Event</a>
     </li>
   </ul>
   <ul class='navbar-nav navbar-nav-right' [hidden]='loggedIn'>

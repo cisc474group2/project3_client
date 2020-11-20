@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from 'src/app/services/events.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-postevent',
@@ -11,6 +12,10 @@ import { EventsService } from 'src/app/services/events.service';
 })
 export class PosteventComponent implements OnInit {
 
+  get loggedIn():boolean{
+    return this.authSvc.loggedIn;
+  }
+
   submitted=false;
   loading =false;
   returnUrl: string;
@@ -18,12 +23,15 @@ export class PosteventComponent implements OnInit {
   error: string;
   event: Event;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { }
+  constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
+    authSvc.authorize();
+  }
 
   ngOnInit(): void {
     this.eventsForm=this.formBuilder.group({
       title: '',
       description: '',
+      eventApt: '',
       eventStreet: '',
       eventCity: '',
       eventState: '',
@@ -41,15 +49,15 @@ export class PosteventComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.eventsForm.controls.title.value,
-    this.eventsForm.controls.description.value,
-    new Geoloc(0, 0),
-    this.eventsForm.controls.eventStreet.value
-
+    
     this.eventSvc.postEvent(
       this.eventsForm.controls.title.value,
       this.eventsForm.controls.description.value,
-      new Geoloc(0,0),
+      this.eventsForm.controls.eventStreet.value + "+" 
+      + this.eventsForm.controls.eventApt.value + "+"
+      + this.eventsForm.controls.eventCity.value + "+"
+      + this.eventsForm.controls.eventState.value
+      + "+" + this.eventsForm.controls.eventZip.value,
       this.eventsForm.controls.start_time.value,
       this.eventsForm.controls.end_time.value
       )

@@ -27,8 +27,8 @@ export class EventsService {
     return this.http.get(this.path+'events');
   }
 
-  postEvent(title: string, description: string, event_address: Geoloc, start_time: string, end_time: string): Observable<any>{
-    return this.http.post<any>(this.path,{ title: title, description: description, event_address: event_address, start_time: start_time, end_time: end_time})
+  postEvent(title: string, description: string, event_address: string, start_time: string, end_time: string): Observable<any>{
+    return this.http.post<any>(this.path+'events',{ title: title, description: description, event_address: event_address, start_time: start_time, end_time: end_time})
       .pipe(map(event=>{
         title=event.data.title
         description=event.data.description

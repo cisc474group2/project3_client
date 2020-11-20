@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.submitted == true;
-    console.log(this.registerForm);
+    console.log(this.businessForm);
     if (this.registerForm.invalid || (this.individualRegister && this.individualForm.invalid) 
     || (!this.individualRegister && this.businessForm.invalid)) {
       return;
@@ -105,11 +105,11 @@ export class RegisterComponent implements OnInit {
         this.businessForm.controls.contactName.value,
         this.businessForm.controls.businessPhone.value,
         '', // business email component
-          this.registerForm.controls.businessStreet.value + "+" 
-          + this.registerForm.controls.businessApt.value + "+"
-          + this.registerForm.controls.businessCity.value + "+"
-          + this.registerForm.controls.businessState.value
-          + "+" + this.registerForm.controls.businessZip.value
+          this.businessForm.controls.businessStreet.value + "+" 
+          + this.businessForm.controls.businessApt.value + "+"
+          + this.businessForm.controls.businessCity.value + "+"
+          + this.businessForm.controls.businessState.value
+          + "+" + this.businessForm.controls.businessZip.value
       );
     }
     

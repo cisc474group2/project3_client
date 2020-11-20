@@ -92,10 +92,11 @@ export class Event{
     end_time='';
     create_date='';
 	
-	public constructor(title:string, description:string, event_address:Geoloc, start_time:string, end_time:string) {
+	public constructor(title:string, description:string, event_address:Geoloc, registered_ind: string[]=[], start_time:string, end_time:string) {
 		this.title = title;
 		this.description = description;
 		this.event_address = event_address;
+		this.registered_ind = registered_ind;
 		this.start_time = start_time;
 		this.end_time = end_time;
 	}
