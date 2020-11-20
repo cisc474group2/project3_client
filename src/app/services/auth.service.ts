@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserModel, BusModel, IndModel} from "../../assets/model";
 
@@ -10,8 +10,10 @@ import { UserModel, BusModel, IndModel} from "../../assets/model";
 export class AuthService {
   private path='http://localhost:3000/api/security/'
   private _token:string=null;
-  CurrentUser: ReplaySubject<string>=new ReplaySubject<string>();
-
+  CurrentUser: BehaviorSubject<string>=new BehaviorSubject<string>(null);
+//CurrentUser: ReplaySubject<string>=new BehaviorSubject<string>();
+//Replay sends ALL versions of the subject
+//Behavior sends !!THE MOST RECENT ONE ONLY!!.
   get token():string{
     if (this._token==null){
       this._token=localStorage.getItem('token')
@@ -34,20 +36,26 @@ export class AuthService {
   }
 
   //authorize calls the underlying api to see if the current token is valid (if it exists) and clears it if it is not.
-  //returns nothing, but updates token if it is invalid
-  authorize():void{
+  //returns string of the user type AND updates token if it is invalid
+  authorize(type:string=''):string{
+    let given_type:string = '';
     this.http.get(this.path+'authorize').subscribe(result=>{
       //on success, we do nothing because token is good
+      console.log("try_catch: " + result['data'].type)
+      given_type = result['data'].type;
+
+      console.log(result);
       if (result['status']!='success'){
         this.token=null;
       }
       else{
         this.CurrentUser.next(result['data'].email)
       }
-
+      return given_type;
     },err=>{
       this.token=null;
     });
+    return given_type;
   }
 
   login(email: string,password:string): Observable<any>{

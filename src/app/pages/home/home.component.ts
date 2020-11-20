@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
       while(this.i < this.events_list.length){
         eventSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
           this.businessName = busResult.data.type_obj.bus_name;
-          this.events_list[this.i].bus_id = this.businessName;
+          //this.events_list[this.i].bus_id = this.businessName;
         });
         this.i++;
       }

@@ -18,16 +18,20 @@ export class PosteventComponent implements OnInit {
   eventsForm: FormGroup;
   error: string;
   event: Event;
+  liut:string;
 
   constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
-    authSvc.authorize();
-    //Will fix now
+    
   }
 
   ngOnInit(): void {
+    this.liut = this.authSvc.authorize();
+    //Authorize w/ Business accounts only
+
     this.authSvc.CurrentUser.subscribe(user => {
-      console.log(user);
-        if (user === null) {
+      //console.log(user);
+      console.log("liut: " + this.liut);
+        if (user === null || this.liut != 'B') {
           this.router.navigate(['login'])
         }
     });
