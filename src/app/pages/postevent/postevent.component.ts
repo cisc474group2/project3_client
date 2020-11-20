@@ -41,22 +41,17 @@ export class PosteventComponent implements OnInit {
       return;
     }
     this.loading = true;
-      this.event = new Event(
-        this.eventsForm.controls.title.value,
-        this.eventsForm.controls.description.value,
-        new Geoloc(0,0),
-        this.eventsForm.controls.start_time.value,
-        this.eventsForm.controls.end_time.value
-      );
-    
-    
+    this.eventsForm.controls.title.value,
+    this.eventsForm.controls.description.value,
+    new Geoloc(0, 0),
+    this.eventsForm.controls.eventStreet.value
 
     this.eventSvc.postEvent(
       this.eventsForm.controls.title.value,
-        this.eventsForm.controls.description.value,
-        new Geoloc(0,0),
-        this.eventsForm.controls.start_time.value,
-        this.eventsForm.controls.end_time.value
+      this.eventsForm.controls.description.value,
+      new Geoloc(0,0),
+      this.eventsForm.controls.start_time.value,
+      this.eventsForm.controls.end_time.value
       )
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
