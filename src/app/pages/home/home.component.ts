@@ -8,11 +8,38 @@ import { EventsService } from 'src/app/services/events.service';
 })
 export class HomeComponent implements OnInit {
   events_list=[];
+  businessName = '';
+  i = 0;
   constructor(private projSvc:EventsService) { 
     projSvc.getEvents().subscribe(result=>{
       this.events_list=result.data;
+      while(this.i < this.events_list.length){
+        projSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
+          this.businessName = busResult.data.type_obj.bus_name;
+        });
+        this.i++;
+      }
     })
+   
   }
+
+
+
+
+
+
+
+
+// load everything at same time
+
+
+
+
+
+
+
+
+
 
   ngOnInit(): void {
   }
