@@ -12,10 +12,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class PosteventComponent implements OnInit {
 
-  get loggedIn():boolean{
-    return this.authSvc.loggedIn;
-  }
-
   submitted=false;
   loading =false;
   returnUrl: string;
@@ -25,14 +21,16 @@ export class PosteventComponent implements OnInit {
 
   constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
     authSvc.authorize();
+    //Will fix now
   }
 
   ngOnInit(): void {
     this.authSvc.CurrentUser.subscribe(user => {
+      console.log(user);
         if (user === null) {
           this.router.navigate(['login'])
         }
-    })
+    });
     this.eventsForm=this.formBuilder.group({
       title: '',
       description: '',
