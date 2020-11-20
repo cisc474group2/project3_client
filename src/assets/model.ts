@@ -45,12 +45,12 @@ export class BusModel {
 	bus_address = '';
 	hosted_events = [];
 
-	public constructor(bname:string, cname:string, cphone:string, cemail:string, geoloc:Geoloc, baddr:string) {
+	public constructor(bname:string, cname:string, cphone:string, cemail:string, baddr:string) {
 		this.bus_name = bname;
 		this.contact_name = cname;
 		this.contact_phone = cphone;
 		this.contact_email = cemail;
-		this.geoloc = geoloc;
+		//this.geoloc = geoloc;
 		this.bus_address = baddr;
 	}
 
@@ -59,29 +59,19 @@ export class BusModel {
             contact_name:this.contact_name,
             contact_phone:this.contact_phone,
             contact_email:this.contact_email,
-            geolocation:this.geoloc,
+            //geolocation:this.geoloc,
             mailAddress:this.bus_address,
             hostedEvents:this.hosted_events};
     }
 }
 
 export class Geoloc {
-	lng = 0.0;
-	lat = 0.0;
+	lng:number;
+	lat:number;
 
-	public constructor(address:string) {
-		const getZipData = (async () => {
-			const dynURL = Config.GOOGLE_GEOCODING
-				.replace('<<OUT>>', 'json')
-				.replace('<<ADDR>>', address)
-				.replace('<<KEY>>', Config.GOOGLE_API);
-            const response = await fetch(dynURL);
-            const json = await response.json(); 
-            return json});
-		
-		console.log(getZipData);
-		//this.lng = longitude;
-		//this.lat = latitude;
+	public constructor(lng:number, lat:number) {
+		this.lat = 0.0;
+		this.lng = 0.0;
 	}
 	toObject():any{
         return {lat:this.lat,
