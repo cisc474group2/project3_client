@@ -11,6 +11,7 @@ export class AuthService {
   private path='http://localhost:3000/api/security/'
   private _token:string=null;
   CurrentUser: BehaviorSubject<string>=new BehaviorSubject<string>(null);
+  currentType = '';
 //CurrentUser: ReplaySubject<string>=new BehaviorSubject<string>();
 //Replay sends ALL versions of the subject
 //Behavior sends !!THE MOST RECENT ONE ONLY!!.
@@ -35,14 +36,18 @@ export class AuthService {
     this.CurrentUser.next(null);
   }
 
+  
+
   //authorize calls the underlying api to see if the current token is valid (if it exists) and clears it if it is not.
   //returns string of the user type AND updates token if it is invalid
-  authorize(type:string=''):string{
-    let given_type:string = '';
+  authorize(type:string=''):void{
+    let given_type = '';
     this.http.get(this.path+'authorize').subscribe(result=>{
       //on success, we do nothing because token is good
       console.log("try_catch: " + result['data'].type)
-      given_type = result['data'].type;
+      let given_type = result['data'].type;
+
+      this.currentType = given_type;
 
       console.log(result);
       if (result['status']!='success'){
@@ -51,12 +56,13 @@ export class AuthService {
       else{
         this.CurrentUser.next(result['data'].email)
       }
-      return given_type;
     },err=>{
       this.token=null;
     });
-    return given_type;
   }
+
+  
+ 
 
   login(email: string,password:string): Observable<any>{
     return this.http.post<any>(this.path+'login',{email: email,password: password })

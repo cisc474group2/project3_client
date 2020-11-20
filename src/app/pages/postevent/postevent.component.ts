@@ -25,13 +25,13 @@ export class PosteventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.liut = this.authSvc.authorize();
+    this.authSvc.authorize();
     //Authorize w/ Business accounts only
 
     this.authSvc.CurrentUser.subscribe(user => {
       //console.log(user);
       console.log("liut: " + this.liut);
-        if (user === null || this.liut != 'B') {
+        if (user === null || this.authSvc.currentType != 'B') {
           this.router.navigate(['login'])
         }
     });
