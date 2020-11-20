@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-postevent',
@@ -14,9 +15,14 @@ export class PosteventComponent implements OnInit {
   returnUrl: string;
   eventsForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, public authService:AuthService, public rerouter:Router) { }
 
   ngOnInit(): void {
+    this.authService.CurrentUser.subscribe(user => {
+        if (user === null) {
+          this.rerouter.navigate(['login'])
+        }
+    })
     this.eventsForm=this.formBuilder.group({
       title: '',
       description: '',

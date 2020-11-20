@@ -73,6 +73,7 @@ export class Geoloc {
 		this.lat = 0.0;
 		this.lng = 0.0;
 	}
+
 	toObject():any{
         return {lat:this.lat,
             lng:this.lng
@@ -86,20 +87,34 @@ export class Event{
     bus_id='';
     description?='';
     registered_ind:string[]=[];
-    event_geoloc='';
+    event_geoloc:Geoloc = new Geoloc(0, 0);
     event_address='';
     start_time='';
     end_time='';
-    create_date='';
+	create_date:Date|null = null;
 	
-	public constructor(title:string, description:string, event_address:string, start_time:string, end_time:string) {
+	public constructor(title:string, description:string, event_address:string, start_time:string, end_time:string, bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null ){
 		this.title = title;
+		this.bus_id = bus_id;
 		this.description = description;
 		this.event_address = event_address;
 		this.start_time = start_time;
 		this.end_time = end_time;
+		this.event_geoloc = geoloc;
+		this.registered_ind = registered_ind;
+		this.create_date = create_date;
 	}
     toObject():any{
-        return {title:this.title,bus_id:this.bus_id,description:this.description,registered_ind:this.registered_ind,event_geoloc:this.event_geoloc,event_address:this.event_address,start_time:this.start_time,end_time:this.end_time};
+		return {
+			title:this.title,
+			bus_id:this.bus_id,
+			description:this.description,
+			registered_ind:this.registered_ind,
+			event_geoloc:this.event_geoloc,
+			event_address:this.event_address,
+			start_time:this.start_time,
+			end_time:this.end_time,
+			create_date:this.create_date
+		};
     }
 }
