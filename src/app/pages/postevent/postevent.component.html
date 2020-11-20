@@ -12,30 +12,30 @@
     </div>
     <div class="form-group">
         <label for="eventStreet">Street Address</label>
-        <input type="text" formControlName="eventStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventStreet.errors }"/>
-        <div *ngIf="submitted && registerForm.controls.eventStreet.errors" class="invalid-feedback">
-            <div *ngIf="registerForm.controls.eventStreet.errors.required">eventStreet is required</div>
+        <input type="text" formControlName="eventStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventStreet.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventStreet.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventStreet.errors.required">eventStreet is required</div>
         </div>
     </div>
     <div class="form-group">
         <label for="eventCity">City</label>
-        <input type="text" formControlName="eventCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventCity.errors }"/>
-        <div *ngIf="submitted && registerForm.controls.eventCity.errors" class="invalid-feedback">
-            <div *ngIf="registerForm.controls.eventCity.errors.required">eventCity is required</div>
+        <input type="text" formControlName="eventCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventCity.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventCity.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventCity.errors.required">eventCity is required</div>
         </div>
     </div>
     <div class="form-group">
         <label for="eventState">State</label>
-        <input type="text" formControlName="eventState" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventState.errors }"/>
-        <div *ngIf="submitted && registerForm.controls.eventState.errors" class="invalid-feedback">
-            <div *ngIf="registerForm.controls.eventState.errors.required">eventState is required</div>
+        <input type="text" formControlName="eventState" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventState.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventState.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventState.errors.required">eventState is required</div>
         </div>
     </div>
     <div class="form-group">
         <label for="eventZip">Zip</label>
-        <input type="text" formControlName="eventZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.eventZip.errors }"/>
-        <div *ngIf="submitted && registerForm.controls.eventZip.errors" class="invalid-feedback">
-            <div *ngIf="registerForm.controls.eventZip.errors.required">eventZip is required</div>
+        <input type="text" formControlName="eventZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventZip.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventZip.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventZip.errors.required">eventZip is required</div>
         </div>
     </div>
     <div class="form-group">

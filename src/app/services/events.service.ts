@@ -3,6 +3,7 @@ import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Event, Geoloc } from '../../assets/model';
+import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,14 @@ export class EventsService {
 
   constructor(private http:HttpClient) {
   }
+
+
+
+
+// load everything at same time
+
+
+
 
   getEvents(): Observable<any>{
     return this.http.get(this.path+'events');
@@ -29,4 +38,21 @@ export class EventsService {
         return event.data;
       }),catchError(err=>{return throwError(err.message||'server error')}));
   }
+  getBusiness(busID: string): Observable<any>{
+
+    return this.http.get(this.path+'users/bus' + "/" + busID);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

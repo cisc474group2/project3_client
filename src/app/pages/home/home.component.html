@@ -4,7 +4,7 @@
     <li class= "event" *ngFor='let event of events_list'>
         <span id="title">{{event.title}}</span>
         <!--change below to business name later-->
-        <span>{{event.bus_id}}</span>
+        <span>{{businessName}}</span>
         <span>{{event.description}}</span>
         <span>Going: {{event.registered_ind.length}}</span>
         <span>{{event.event_address}}</span>
