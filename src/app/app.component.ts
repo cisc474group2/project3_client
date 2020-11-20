@@ -8,9 +8,11 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'Community Board';
-  business = false;
   get loggedIn():boolean{
     return this.authSvc.loggedIn;
+  }
+  get business():boolean{
+    return this.authSvc.currentType == 'B';
   }
   constructor(public authSvc:AuthService) {
     authSvc.authorize();
