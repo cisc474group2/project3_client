@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { EventsService } from 'src/app/services/events.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-postevent',
@@ -11,22 +12,35 @@ import { AuthService } from '../../services/auth.service';
 })
 export class PosteventComponent implements OnInit {
 
+  get loggedIn():boolean{
+    return this.authSvc.loggedIn;
+  }
+
   submitted=false;
+  loading =false;
   returnUrl: string;
   eventsForm: FormGroup;
+  error: string;
+  event: Event;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, public authService:AuthService, public rerouter:Router) { }
+  constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
+    authSvc.authorize();
+  }
 
   ngOnInit(): void {
-    this.authService.CurrentUser.subscribe(user => {
+    this.authSvc.CurrentUser.subscribe(user => {
         if (user === null) {
-          this.rerouter.navigate(['login'])
+          this.router.navigate(['login'])
         }
     })
     this.eventsForm=this.formBuilder.group({
       title: '',
       description: '',
-      event_address: '',
+      eventApt: '',
+      eventStreet: '',
+      eventCity: '',
+      eventState: '',
+      eventZip: '',
       start_time: '',
       end_time: ''
     });
@@ -39,9 +53,22 @@ export class PosteventComponent implements OnInit {
     if (this.eventsForm.invalid) {
       return;
     }
-    this.eventsForm.controls.title.value,
-    this.eventsForm.controls.description.value,
-    new Geoloc(0, 0),
-    this.eventsForm.controls.eventStreet.value
+    this.loading = true;
+    
+    this.eventSvc.postEvent(
+      this.eventsForm.controls.title.value,
+      this.eventsForm.controls.description.value,
+      this.eventsForm.controls.eventStreet.value + "+" 
+      + this.eventsForm.controls.eventApt.value + "+"
+      + this.eventsForm.controls.eventCity.value + "+"
+      + this.eventsForm.controls.eventState.value
+      + "+" + this.eventsForm.controls.eventZip.value,
+      this.eventsForm.controls.start_time.value,
+      this.eventsForm.controls.end_time.value
+      )
+      .subscribe(response=>{
+        this.router.navigate([this.returnUrl]);
+      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
   }
+ 
 }

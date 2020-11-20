@@ -98,6 +98,7 @@ export class Event{
 		this.bus_id = bus_id;
 		this.description = description;
 		this.event_address = event_address;
+		this.registered_ind = registered_ind;
 		this.start_time = start_time;
 		this.end_time = end_time;
 		this.event_geoloc = geoloc;
