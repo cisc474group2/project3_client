@@ -27,7 +27,7 @@ export class PosteventComponent implements OnInit {
   ngOnInit(): void {
     this.authSvc.CurrentUser.subscribe(user => {
       console.log(user);
-        if (user == null) {
+        if (user === null) {
           this.router.navigate(['login'])
         }
     });
