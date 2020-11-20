@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-postevent',
@@ -18,7 +18,7 @@ export class PosteventComponent implements OnInit {
   error: string;
   event: Event;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { }
 
   ngOnInit(): void {
     this.eventsForm=this.formBuilder.group({
@@ -44,19 +44,20 @@ export class PosteventComponent implements OnInit {
       this.event = new Event(
         this.eventsForm.controls.title.value,
         this.eventsForm.controls.description.value,
-        new Geoloc(this.eventsForm.controls.eventStreet.value + "+" 
-        + this.eventsForm.controls.eventCity.value + "+"
-        + this.eventsForm.controls.eventState.value
-        //+ "+" + this.eventsForm.controls.eventZip.value
-        ),
+        new Geoloc(0,0),
         this.eventsForm.controls.start_time.value,
         this.eventsForm.controls.end_time.value
       );
     
     
 
-    this.authSvc.postEvent(
-      this.event)
+    this.eventSvc.postEvent(
+      this.eventsForm.controls.title.value,
+        this.eventsForm.controls.description.value,
+        new Geoloc(0,0),
+        this.eventsForm.controls.start_time.value,
+        this.eventsForm.controls.end_time.value
+      )
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
