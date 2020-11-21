@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { PosteventComponent } from './pages/postevent/postevent.component';
+import {ProfileComponent} from '.pages/profile/profile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
 
@@ -20,7 +21,8 @@ import { fromEventPattern } from 'rxjs';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    PosteventComponent
+    PosteventComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
