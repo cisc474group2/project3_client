@@ -11,7 +11,7 @@ export class AuthService {
   private path='http://localhost:3000/api/security/'
   private _token:string=null;
   CurrentUser: BehaviorSubject<string>=new BehaviorSubject<string>(null);
-  currentType = '';
+  userObject;
 //CurrentUser: ReplaySubject<string>=new BehaviorSubject<string>();
 //Replay sends ALL versions of the subject
 //Behavior sends !!THE MOST RECENT ONE ONLY!!.
@@ -44,17 +44,13 @@ export class AuthService {
     let given_type = '';
     this.http.get(this.path+'authorize').subscribe(result=>{
       //on success, we do nothing because token is good
-      console.log("try_catch: " + result['data'].type)
-      let given_type = result['data'].type;
+      this.userObject = result['data'];
 
-      this.currentType = given_type;
-
-      console.log(result);
       if (result['status']!='success'){
         this.token=null;
       }
       else{
-        this.CurrentUser.next(result['data'].email)
+        this.CurrentUser.next(this.userObject.email)
       }
     },err=>{
       this.token=null;

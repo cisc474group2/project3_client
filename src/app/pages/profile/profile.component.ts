@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit {
   notEditingProfile = true;
   showIfIndividual = false;
   showIfBusiness = false;
-  userType = '';
   email: string;
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) {
@@ -39,7 +38,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['login'])
       }
       else{
-        if(this.authSvc.currentType == 'I'){
+        if(this.authSvc.userObject.type == 'I'){
           this.showIfIndividual = true;
           this.showIfBusiness = false;
         }

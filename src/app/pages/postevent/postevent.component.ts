@@ -28,7 +28,7 @@ export class PosteventComponent implements OnInit {
     //Authorize w/ Business accounts only
 
     this.authSvc.CurrentUser.subscribe(user => {
-        if (user === null || this.authSvc.currentType != 'B') {
+        if (user === null || this.authSvc.userObject.type != 'B') {
           this.router.navigate(['login'])
         }
     });
