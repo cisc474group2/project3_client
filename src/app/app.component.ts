@@ -12,7 +12,7 @@ export class AppComponent {
     return this.authSvc.loggedIn;
   }
   get business():boolean{
-    return this.authSvc.currentType == 'B';
+    return this.authSvc.userObject.type == 'B';
   }
   constructor(public authSvc:AuthService) {
     authSvc.authorize();

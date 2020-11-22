@@ -45,7 +45,6 @@ export class AuthService {
     this.http.get(this.path+'authorize').subscribe(result=>{
       //on success, we do nothing because token is good
       this.userObject = result['data'];
-
       if (result['status']!='success'){
         this.token=null;
       }

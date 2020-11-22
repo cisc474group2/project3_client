@@ -20,14 +20,33 @@ export class ProfileComponent implements OnInit {
   loading = false;
   submitted = false;
   notEditingProfile = true;
+  email: string;
+  reg_events: [];
+  fName: string;
+  lName: string;
+  busName: string;
+  cName: string;
+  cPhone: string;
+  mailAddress: string;
+  hostedEvents: [];
   showIfIndividual = false;
   showIfBusiness = false;
-  email: string;
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) {
     this.authSvc.authorize();
-    //TODO
-    // we need to get user info and display it here (havent decided how to do this yet)
+    this.email = this.authSvc.userObject.email;
+    this.reg_events = this.authSvc.userObject.reg_events;
+    if(this.authSvc.userObject.type == 'I'){
+      this.fName = this.authSvc.userObject.type_obj.fName;
+      this.lName = this.authSvc.userObject.type_obj.lName;
+    }
+    else{
+      this.busName = this.authSvc.userObject.type_obj.busName;
+      this.cName = this.authSvc.userObject.type_obj.cName;
+      this.cPhone = this.authSvc.userObject.type_obj.cPhone;
+      this.mailAddress = this.authSvc.userObject.type_obj.mailAddress;
+      this.hostedEvents = this.authSvc.userObject.type_obj.hostedEvents;
+    }
   
     
    }
@@ -68,11 +87,22 @@ export class ProfileComponent implements OnInit {
       businessPhone: ['', Validators.required]
     });
     
-    // this is how we will preload information into form after we get it from database (how beautiful)
-    this.email = "tim@tim.com";
     this.profileForm.setValue({
       email: this.email 
     });
+
+    this.individualForm.setValue({
+      firstName: this.fName,
+      lastName: this.lName
+    });
+
+    this.businessForm.setValue({
+      businessName: this.busName,
+      contactName: this.cName,
+      businessPhone: this.cPhone
+    });
+
+
     
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }

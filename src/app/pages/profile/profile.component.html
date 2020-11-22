@@ -3,24 +3,34 @@
 <div *ngIf="notEditingProfile">
     <div class="form-group">
         <button [disabled]="loading" (click)="editProfile()" class="btn btn-primary">
-           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Edit Profile
         </button>
     </div>
-    <div>Email</div>
-    <div>Business Name if Bus</div>
-    <div>First Name if Ind</div>
-    <div>Last Name if Ind</div>
-    <div>Registered Events</div>
-    <div>Business Address if Bus</div>
-    <div>Hosted Events if Bus</div>
-    <div>Contact Name if Bus</div>
-    <div>Phone Number if Business</div>  
+    <label for="email">Email</label>
+        <div name="email">{{email}}</div>
+    <label for="fName" *ngIf="showIfIndividual">First Name</label>
+        <div *ngIf="showIfIndividual" name="fName">{{fName}}</div>
+    <label for="lName" *ngIf="showIfIndividual">Last Name</label>
+        <div *ngIf="showIfIndividual" name="lName">{{lName}}</div>
+    <label for="busName" *ngIf="showIfBusiness">Business Name</label>
+        <div *ngIf="showIfBusiness" name="busName">{{busName}}</div>
+    <label for="reg_events">Registered Events</label>
+        <div name="reg_events">{{reg_events}}</div>
+    <label for="cName" *ngIf="showIfBusiness">Contact Name</label>
+        <div *ngIf="showIfBusiness" name="cName">{{cName}}</div>
+    <label for="cPhone" *ngIf="showIfBusiness">Contact Phone</label>
+        <div *ngIf="showIfBusiness" name="cPhone">{{cPhone}}</div>
+    <label for="mailAddress" *ngIf="showIfBusiness">Mail Address</label>
+        <div *ngIf="showIfBusiness" name="mailAddress">{{mailAddress}}</div>
+    <label for="hostedEvents" *ngIf="showIfBusiness">Hosted Events</label>
+        <div *ngIf="showIfBusiness" name="hostedEvents">{{hostedEvents}}</div>
 </div>
 <form [formGroup]="profileForm" *ngIf="!notEditingProfile" (ngSubmit)="updateInfo()">
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && profileForm.controls.email.errors }"/>
+        <input type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && profileForm.controls.email.errors }" />
         <div *ngIf="submitted && profileForm.controls.email.errors" class="invalid-feedback">
             <div *ngIf="profileForm.controls.email.errors.required">Username is required</div>
         </div>
@@ -29,14 +39,16 @@
 <form [formGroup]="individualForm" *ngIf="!notEditingProfile" (ngSubmit)="updateInfo()">
     <div class="form-group" *ngIf="showIfIndividual">
         <label for="firstName">First Name</label>
-        <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.firstName.errors }"/>
+        <input type="text" formControlName="firstName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && individualForm.controls.firstName.errors }" />
         <div *ngIf="submitted && individualForm.controls.firstName.errors" class="invalid-feedback">
             <div *ngIf="individualForm.controls.firstName.errors.required">firstName is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfIndividual">
         <label for="lastName">Last Name</label>
-        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.lastName.errors }"/>
+        <input type="text" formControlName="lastName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && individualForm.controls.lastName.errors }" />
         <div *ngIf="submitted && individualForm.controls.lastName.errors" class="invalid-feedback">
             <div *ngIf="individualForm.controls.lastName.errors.required">firstName is required</div>
         </div>
@@ -51,7 +63,8 @@
 <form [formGroup]="businessForm" *ngIf="!notEditingProfile" (ngSubmit)="updateInfo()">
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessName">Business Name</label>
-        <input type="text" formControlName="businessName" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessName.errors }"/>
+        <input type="text" formControlName="businessName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessName.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessName.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessName.errors.required">Username is required</div>
         </div>
@@ -61,49 +74,56 @@
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessStreet">Street</label>
-        <input type="text" formControlName="businessStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessStreet.errors }"/>
+        <input type="text" formControlName="businessStreet" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessStreet.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessStreet.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessStreet.errors.required">businessStreet is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessApt">Unit/P.O. Box</label>
-        <input type="text" formControlName="businessApt" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessApt.errors }"/>
+        <input type="text" formControlName="businessApt" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessApt.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessApt.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessApt.errors.required">businessApt is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessCity">City</label>
-        <input type="text" formControlName="businessCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessCity.errors }"/>
+        <input type="text" formControlName="businessCity" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessCity.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessCity.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessCity.errors.required">businessCity is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessState">State</label>
-        <input type="text" formControlName="businessState" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }"/>
+        <input type="text" formControlName="businessState" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessState.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessState.errors.required">businessState is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessZip">Zip</label>
-        <input type="text" formControlName="businessZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessZip.errors }"/>
+        <input type="text" formControlName="businessZip" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessZip.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessZip.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessZip.errors.required">businessZip is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="contactName">Contact Name</label>
-        <input type="text" formControlName="contactName" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.contactName.errors }"/>
+        <input type="text" formControlName="contactName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.contactName.errors }" />
         <div *ngIf="submitted && businessForm.controls.contactName.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.contactName.errors.required">contactName is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessPhone">Phone Number</label>
-        <input type="text" formControlName="businessPhone" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessPhone.errors }"/>
+        <input type="text" formControlName="businessPhone" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessPhone.errors }" />
         <div *ngIf="submitted && businessForm.controls.businessPhone.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessPhone.errors.required">businessPhone is required</div>
         </div>
@@ -115,5 +135,3 @@
         </button>
     </div>
 </form>
-    
-
