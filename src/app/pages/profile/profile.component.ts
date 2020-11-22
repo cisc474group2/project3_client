@@ -30,11 +30,7 @@ export class ProfileComponent implements OnInit {
     //TODO
     // we need to get user info and display it here (havent decided how to do this yet)
   
-    // this is how we will preload information into form after we get it from database (how beautiful)
-    this.email = "tim@tim.com";
-    this.profileForm.setValue({
-      email: this.email 
-    });
+    
    }
 
   ngOnInit(): void {
@@ -73,7 +69,11 @@ export class ProfileComponent implements OnInit {
       businessPhone: ['', Validators.required]
     });
     
-    
+    // this is how we will preload information into form after we get it from database (how beautiful)
+    this.email = "tim@tim.com";
+    this.profileForm.setValue({
+      email: this.email 
+    });
     
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
