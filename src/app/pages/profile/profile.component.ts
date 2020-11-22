@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService} from 'src/app/services/profile.service';
 import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 
 @Component({
@@ -32,7 +33,7 @@ export class ProfileComponent implements OnInit {
   showIfIndividual = false;
   showIfBusiness = false;
 
-  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) {
+  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService) {
     this.authSvc.authorize();
     this.email = this.authSvc.userObject.email;
     this.reg_events = this.authSvc.userObject.reg_events;
@@ -91,16 +92,25 @@ export class ProfileComponent implements OnInit {
       email: this.email 
     });
 
+  if(this.authSvc.userObject.type == 'I'){
     this.individualForm.setValue({
       firstName: this.fName,
       lastName: this.lName
     });
+  }
 
+  else{
     this.businessForm.setValue({
       businessName: this.busName,
       contactName: this.cName,
-      businessPhone: this.cPhone
+      businessPhone: this.cPhone,
+      businessStreet: '',
+      businessApt: '',
+      businessCity: '', 
+      businessState: '',
+      businessZip: ''
     });
+  }
 
 
     

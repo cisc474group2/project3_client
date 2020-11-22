@@ -17,15 +17,7 @@ export class ProfileService {
 
   // get user so we can display information
   // how we will get the information for the user for here I have not decided yet
-  getUser(type: string, userID: string){
-    if(type == 'B'){
-      return this.http.get(this.path + 'users/bus' + "/" + userID);
-    }
-    else{
-      return this.http.get(this.path+'users/ind' + "/" + userID);
-    }
-    
-  }
+  
  
 
 }
