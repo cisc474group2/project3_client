@@ -121,10 +121,37 @@ export class ProfileComponent implements OnInit {
     this.notEditingProfile = false;
   }
     
+
   // take info from form and update db entry
   updateInfo(){
     this.loading = true;
     this.submitted = true;
-  }
+    if(this.profileForm.invalid || (this.authSvc.userObject.type == 'I' && this.individualForm.invalid) || (this.authSvc.userObject.type == 'B' && this.businessForm.invalid)){
+      return;
+    }
+
+    if(this.authSvc.userObject.type == 'I'){
+      this.authSvc.userObject.type_obj.fName = this.individualForm.controls.firstName.value;
+      this.authSvc.userObject.type_obj.lName = this.individualForm.controls.lastName.value;
+    }
+
+    else{
+      this.authSvc.userObject.type_obj.bus_name = this.businessForm.controls.businessName.value;
+      this.authSvc.userObject.type_obj.cName = this.businessForm.controls.contactName.value;
+      this.authSvc.userObject.type_obj.cPhone = this.businessForm.controls.businessPhone.value;
+      this.authSvc.userObject.type_obj.mailAddress = this.businessForm.controls.businessStreet.value + "+" 
+      + this.businessForm.controls.businessApt.value + "+"
+      + this.businessForm.controls.businessCity.value + "+"
+      + this.businessForm.controls.businessState.value
+      + "+" + this.businessForm.controls.businessZip.value;
+    }
+
+    this.profileSvc.updateUser(this.authSvc.userObject._id, 
+      this.profileForm.controls.email.value, this.authSvc.userObject.type_obj).subscribe(response=>{
+        this.router.navigate['login'];
+      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+    }
+
+  
 
 }

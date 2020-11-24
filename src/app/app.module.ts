@@ -17,6 +17,8 @@ import { ProfileComponent } from './pages/profile/profile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
 import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
+import { AgmCoreModule } from '@agm/core';
+import { Config } from 'src/assets/Config';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    GoogleMapsModule
+    AgmCoreModule.forRoot({
+      apiKey: Config.GOOGLE_API
+    })
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
