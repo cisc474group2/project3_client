@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
@@ -12,6 +12,7 @@ import { UserGeolocationService } from './user-geolocation.service';
 export class EventsService {
 
   private path="http://localhost:3000/api/"
+  public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
 
   constructor(private http:HttpClient, private geoloc:UserGeolocationService) {
   }
@@ -62,6 +63,7 @@ export class EventsService {
         });
       });
     });
+    this.event_list.next(event_model_list);
     return event_model_list;
   }
 
