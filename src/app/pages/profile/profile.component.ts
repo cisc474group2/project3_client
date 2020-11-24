@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
       this.lName = this.authSvc.userObject.type_obj.lName;
     }
     else{
-      this.busName = this.authSvc.userObject.type_obj.busName;
+      this.busName = this.authSvc.userObject.type_obj.bus_name;
       this.cName = this.authSvc.userObject.type_obj.cName;
       this.cPhone = this.authSvc.userObject.type_obj.cPhone;
       this.mailAddress = this.authSvc.userObject.type_obj.mailAddress.split('+');

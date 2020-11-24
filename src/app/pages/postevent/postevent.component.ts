@@ -70,6 +70,8 @@ export class PosteventComponent implements OnInit {
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+
+      this.router.navigate(['home']);
   }
  
 }
