@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
+import { UserGeolocationService } from './user-geolocation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,20 @@ export class EventsService {
 
   private path="http://localhost:3000/api/"
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private geoloc:UserGeolocationService) {
   }
-
-
-
-
-// load everything at same time
-
-
-
 
   getEvents(): Observable<any>{
     return this.http.get(this.path+'events');
+  }
+
+  getLocalEvents(): Observable<any>{
+    console.log(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat);
+    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat);
+  }
+
+  getLocalEventsCustRad(rad:number): Observable<any> {
+    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat + '/' + rad);
   }
 
   postEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any>{
@@ -44,14 +46,15 @@ export class EventsService {
 
   getEventsFormattedBusinessName(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
-    this.getEvents().subscribe(result => {
+    this.getLocalEvents().subscribe(result => {
       result.data.forEach(unformatted_event => {
         this.getBusiness(unformatted_event.bus_id).subscribe(business => {
           event_model_list.push(new EventModel(unformatted_event.title,
             unformatted_event.description,
             unformatted_event.event_address,
             unformatted_event.start_time,
-            unformatted_event.end_time, 
+            unformatted_event.end_time,
+            unformatted_event._id, 
             business.data.type_obj.bus_name,
             unformatted_event.registered_ind,
             unformatted_event.event_geoloc,

@@ -24,7 +24,7 @@ export class UserGeolocationService {
         this.lng = position.coords.longitude;
         this.lat = position.coords.latitude;
         this.accuracy = position.coords.accuracy;
-        console.log(this.lat + ' ' + this.lng);
+        //console.log(this.lat + ' ' + this.lng);
       });
     } else {
       console.log("No Support for Geolocation");
