@@ -27,8 +27,8 @@ export class EventsService {
     return this.http.get(this.path+'events');
   }
 
-  postEvent(title: string, description: string, event_address: string, start_time: string, end_time: string): Observable<any>{
-    return this.http.post<any>(this.path+'events',{ title: title, description: description, event_address: event_address, start_time: start_time, end_time: end_time})
+  postEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any>{
+    return this.http.post<any>(this.path+'events',{ title: title, bus_id: busID, description: description, registered_ind: registered_ind, event_address: event_address, start_time: start_time, end_time: end_time})
       .pipe(map(event=>{
         title=event.data.title
         description=event.data.description
@@ -42,20 +42,20 @@ export class EventsService {
     return this.http.get(this.path+'users/bus' + "/" + busID);
   }
 
-  getEvetnsFormatedBusinessName(): Array<EventModel> {
+  getEventsFormattedBusinessName(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
     this.getEvents().subscribe(result => {
-      result.data.forEach(unformated_event => {
-        this.getBusiness(unformated_event.bus_id).subscribe(business => {
-          event_model_list.push(new EventModel(unformated_event.title,
-            unformated_event.description,
-            unformated_event.event_address,
-            unformated_event.start_time,
-            unformated_event.end_time, 
+      result.data.forEach(unformatted_event => {
+        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+          event_model_list.push(new EventModel(unformatted_event.title,
+            unformatted_event.description,
+            unformatted_event.event_address,
+            unformatted_event.start_time,
+            unformatted_event.end_time, 
             business.data.type_obj.bus_name,
-            unformated_event.registered_ind,
-            unformated_event.event_geoloc,
-            unformated_event.create_date))
+            unformatted_event.registered_ind,
+            unformatted_event.event_geoloc,
+            unformatted_event.create_date))
         });
       });
     });
