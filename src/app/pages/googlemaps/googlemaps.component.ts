@@ -21,22 +21,19 @@ export class GooglemapsComponent {
   googleMapMarkerContainer:Array<GoogleMapMarker>;
 
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService) {
-    if (geolocService.lat == undefined) {
-      geolocService.getLocation();
-    }
-    this.lat = geolocService.lat;
-    this.lng = geolocService.lng;
-    this.googleMapType = 'ROADMAP';
-    this.zoom = 12;
-    eventSvc.event_list.subscribe(events => {
-      this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
-      events.forEach( event => {
-        this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description));
-      })
-    });
-
+    geolocService.lat.subscribe(res => {
+      this.lat = geolocService.lat.value;
+      this.lng = geolocService.lng.value;
+      this.googleMapType = 'ROADMAP';
+      this.zoom = 12;
+      eventSvc.event_list.subscribe(events => {
+        this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
+        events.forEach( event => {
+          this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description));
+        })
+      });
+    })
   }
-
 }
 
 export class GoogleMapMarker {

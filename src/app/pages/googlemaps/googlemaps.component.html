@@ -2,7 +2,7 @@
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
         <div class="event" *ngFor='let event of googleMapMarkerContainer'>
-            <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
+            <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.title" [label]="event.label"></agm-marker>
         </div>
     </agm-map>
 </div>
