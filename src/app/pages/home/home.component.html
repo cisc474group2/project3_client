@@ -1,10 +1,10 @@
 <h1 style="text-align: center;">Events Near You</h1>
-<div *ngIf='events_list.length>0'>
+<div *ngIf='g.length>0'>
 <ul>
-    <li class= "event" *ngFor='let event of events_list'>
+    <li class= "event" *ngFor='let event of g'>
         <span id="title">{{event.title}}</span>
         <!--change below to business name later-->
-        <span>{{businessName}}</span>
+        <span>{{event.bus_id}}</span>
         <span>{{event.description}}</span>
         <span>Going: {{event.registered_ind.length}}</span>
         <span>{{event.event_address}}</span>
@@ -13,14 +13,14 @@
     </li>
 </ul>
 </div>
-<div *ngIf='events_list.length==0'>No records found</div>
+<div *ngIf='g.length==0'>No records found</div>
 
 <div class="card" *ngFor='let card of g'>
     <div class="card-header">
         <span id="title">{{card.title}}</span>
     </div>
     <div class="card-body">
-        <span>{{businessName}}</span>
+        <span>{{card.bus_id}}</span>
         <span>{{card.description}}</span>
         <span>Going: {{card.registered_ind.length}}</span>
         <span>{{card.event_address}}</span>

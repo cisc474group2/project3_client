@@ -10,26 +10,21 @@ import { EventModel } from '../../../assets/model';
 export class HomeComponent implements OnInit {
   g:Array<EventModel>;
   events_list=[];
-  businessName = '';
   i = 0;
   constructor(private eventSvc:EventsService) { 
-    this.g = eventSvc.getEvetnsFormatedBusinessName();
-    eventSvc.getEvents().subscribe(result=>{
-      this.events_list=result.data;
-      while(this.i < this.events_list.length){
-        eventSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
-          this.businessName = busResult.data.type_obj.bus_name;
-        });
-        this.i++;
-      }
-    });
+    this.g = eventSvc.getEventsFormattedBusinessName();
+    // eventSvc.getEvents().subscribe(result=>{
+    //   this.events_list=result.data;
+    //   while(this.i < this.events_list.length){
+    //     eventSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
+    //       this.businessName = busResult.data.type_obj.bus_name;
+    //       //this.events_list[this.i].bus_id = this.businessName;
+    //     });
+    //     this.i++;
+    //   }
+    // });
   
   }
-
-
-
-
-
 
 
 

@@ -56,7 +56,9 @@ export class PosteventComponent implements OnInit {
     
     this.eventSvc.postEvent(
       this.eventsForm.controls.title.value,
+      this.authSvc.userObject._id,
       this.eventsForm.controls.description.value,
+      [],
       this.eventsForm.controls.eventStreet.value + "+" 
       + this.eventsForm.controls.eventApt.value + "+"
       + this.eventsForm.controls.eventCity.value + "+"
