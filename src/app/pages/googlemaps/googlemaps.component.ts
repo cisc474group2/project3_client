@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserGeolocationService } from 'src/app/services/user-geolocation.service';
-import { Config } from '../../../assets/config';
+//@ts-ignore
+import { Config } from '../../../assets/Config';
 
 @Component({
   selector: 'app-googlemaps',

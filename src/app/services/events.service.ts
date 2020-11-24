@@ -38,6 +38,12 @@ export class EventsService {
         return event.data;
       }),catchError(err=>{return throwError(err.message||'server error')}));
   }
+
+
+  updateUserList(eventID: string, registered_ind: string){
+    return this.http.put(this.path + 'events/' + eventID + "/registered", {registered_ind: registered_ind});
+  }
+  
   getBusiness(busID: string): Observable<any>{
     return this.http.get(this.path+'users/bus' + "/" + busID);
   }

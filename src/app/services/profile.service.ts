@@ -18,6 +18,8 @@ export class ProfileService {
   // get user so we can display information
   // how we will get the information for the user for here I have not decided yet
   
- 
+  updateEventsList(userID: string, reg_events: string){
+    return this.http.put(this.path + 'users/' + userID + "/registered", {reg_events: reg_events});
+  }
 
 }
