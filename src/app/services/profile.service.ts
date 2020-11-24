@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
+import { UserModel, BusModel, IndModel} from "../../assets/model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,10 @@ export class ProfileService {
   constructor(private http:HttpClient) {
   }
 
-  // get user so we can display information
-  // how we will get the information for the user for here I have not decided yet
+
+  updateUser(userID: string, email:string, type_obj: IndModel | BusModel){
+    return this.http.put(this.path+'users' + "/" + userID, {email:email, type_obj: type_obj});
+  }
   
  
 
