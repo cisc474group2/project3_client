@@ -46,8 +46,14 @@ export class HomeComponent implements OnInit {
 
   registerUser(event_id){
     var user_id = this.authSvc.userObject._id;
-    this.profileSvc.updateEventsList(user_id, event_id);
-    this.eventSvc.updateUserList(event_id, user_id);
+    var registered_ind = [];
+    var reg_events = [];
+    registered_ind.push(user_id);
+    reg_events.push(event_id);
+    console.log(event_id);
+    console.log(user_id);
+    this.profileSvc.updateEventsList(user_id, reg_events);
+    this.eventSvc.updateUserList(event_id, registered_ind);
   }
 
 }
