@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
-import { Event } from '../../../assets/model';
+import { EventModel } from '../../../assets/model';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { Event } from '../../../assets/model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  g:Array<Event>;
+  g:Array<EventModel>;
   events_list=[];
   businessName = '';
   i = 0;

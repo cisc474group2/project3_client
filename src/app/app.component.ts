@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { UserGeolocationService } from './services/user-geolocation.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,9 @@ export class AppComponent {
   get business():boolean{
     return this.authSvc.userObject.type == 'B';
   }
-  constructor(public authSvc:AuthService) {
+  constructor(public authSvc:AuthService, public geoloc:UserGeolocationService) {
     authSvc.authorize();
+    geoloc.getLocation();
   }
 
 

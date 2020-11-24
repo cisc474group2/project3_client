@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Event, Geoloc } from '../../assets/model';
+import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 
 @Injectable({

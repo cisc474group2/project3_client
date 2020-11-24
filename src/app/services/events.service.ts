@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Event, Geoloc } from '../../assets/model';
+import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 
 @Injectable({
@@ -42,12 +42,12 @@ export class EventsService {
     return this.http.get(this.path+'users/bus' + "/" + busID);
   }
 
-  getEvetnsFormatedBusinessName(): Array<Event> {
-    let event_model_list = Array<Event>();
+  getEvetnsFormatedBusinessName(): Array<EventModel> {
+    let event_model_list = Array<EventModel>();
     this.getEvents().subscribe(result => {
       result.data.forEach(unformated_event => {
         this.getBusiness(unformated_event.bus_id).subscribe(business => {
-          event_model_list.push(new Event(unformated_event.title,
+          event_model_list.push(new EventModel(unformated_event.title,
             unformated_event.description,
             unformated_event.event_address,
             unformated_event.start_time,

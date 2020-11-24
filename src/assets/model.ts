@@ -1,4 +1,4 @@
-import { Config } from './Config';
+//import { Config } from './Config';
 
 export class UserModel {
 	email = '';
@@ -82,7 +82,7 @@ export class Geoloc {
 	
 }
 
-export class Event{
+export class EventModel{
     title='';
     bus_id='';
     description?='';

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './pages/material/material-module'
@@ -10,10 +11,12 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserGeolocationService } from './services/user-geolocation.service'
 import { PosteventComponent } from './pages/postevent/postevent.component';
-import {ProfileComponent} from './pages/profile/profile.component'
+import { ProfileComponent } from './pages/profile/profile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
+import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { fromEventPattern } from 'rxjs';
     LoginComponent,
     RegisterComponent,
     PosteventComponent,
-    ProfileComponent
+    ProfileComponent,
+    GooglemapsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,8 @@ import { fromEventPattern } from 'rxjs';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    GoogleMapsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]

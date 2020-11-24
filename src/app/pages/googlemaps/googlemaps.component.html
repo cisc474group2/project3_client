@@ -1,0 +1,11 @@
+<div *ngIf="apiLoaded | async">
+    <google-map height="400px"
+                width="750px"
+                [center]="center"
+                [zoom]="zoom"
+                (mapClick)="moveMap($event)"
+                (mapMousemove)="move($event)"></google-map>
+</div>
+<p>googlemaps works!</p>
+<div>Lat: {{this.lat}}</div>
+<div>Lng: {{this.lng}}</div>

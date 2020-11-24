@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Event, Geoloc } from '../../../assets/model';
+import { EventModel, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from 'src/app/services/events.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +17,7 @@ export class PosteventComponent implements OnInit {
   returnUrl: string;
   eventsForm: FormGroup;
   error: string;
-  event: Event;
+  event: EventModel;
 
   constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
     this.authSvc.authorize();
