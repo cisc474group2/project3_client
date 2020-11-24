@@ -43,7 +43,7 @@ export class EventsService {
   }
 
 
-  updateUserList(eventID: string, registered_ind: string[]){
+  updateUserList(eventID: string, registered_ind: string){
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
     console.log(x);
     return this.http.put(x, {registered_ind: registered_ind});
