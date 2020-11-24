@@ -1,5 +1,14 @@
 <div class="map">
+<<<<<<< HEAD
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null"></agm-map>
+=======
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        <div class="event" *ngFor='let event of googleMapMarkerContainer'>
+            <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.title" [label]="event.label"></agm-marker>
+        </div>
+    </agm-map>
+>>>>>>> 84633ee971577c8c4fba08579da6514f877890c1
 </div>
 <div>Lat: {{this.lat}}</div>
 <div>Lng: {{this.lng}}</div>

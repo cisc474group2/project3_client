@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
@@ -12,6 +12,7 @@ import { UserGeolocationService } from './user-geolocation.service';
 export class EventsService {
 
   private path="http://localhost:3000/api/"
+  public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
 
   constructor(private http:HttpClient, private geoloc:UserGeolocationService) {
   }
@@ -21,12 +22,12 @@ export class EventsService {
   }
 
   getLocalEvents(): Observable<any>{
-    console.log(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat);
-    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat);
+    console.log(this.path+'events/geo/loc/' + this.geoloc.lng.value + ',' + this.geoloc.lat.value);
+    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng.value + ',' + this.geoloc.lat.value);
   }
 
   getLocalEventsCustRad(rad:number): Observable<any> {
-    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng + ',' + this.geoloc.lat + '/' + rad);
+    return this.http.get(this.path+'events/geo/loc/' + this.geoloc.lng.value + ',' + this.geoloc.lat.value + '/' + rad);
   }
 
   postEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any>{
@@ -52,22 +53,45 @@ export class EventsService {
 
   getEventsFormattedBusinessName(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
-    this.getLocalEvents().subscribe(result => {
-      result.data.forEach(unformatted_event => {
-        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-          event_model_list.push(new EventModel(unformatted_event.title,
-            unformatted_event.description,
-            unformatted_event.event_address,
-            unformatted_event.start_time,
-            unformatted_event.end_time,
-            unformatted_event._id, 
-            business.data.type_obj.bus_name,
-            unformatted_event.registered_ind,
-            unformatted_event.event_geoloc,
-            unformatted_event.create_date))
+    this.geoloc.lat.subscribe(res => {
+      if (res == null) {
+        this.getEvents().subscribe(result => {
+          result.data.forEach(unformatted_event => {
+            this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+              event_model_list.push(new EventModel(unformatted_event.title,
+                unformatted_event.description,
+                unformatted_event.event_address,
+                unformatted_event.start_time,
+                unformatted_event.end_time,
+                unformatted_event._id, 
+                business.data.type_obj.bus_name,
+                unformatted_event.registered_ind,
+                unformatted_event.event_geoloc,
+                unformatted_event.create_date))
+            });
+          });
         });
-      });
+      }
+      else {
+        this.getLocalEvents().subscribe(result => {
+          result.data.forEach(unformatted_event => {
+            this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+              event_model_list.push(new EventModel(unformatted_event.title,
+                unformatted_event.description,
+                unformatted_event.event_address,
+                unformatted_event.start_time,
+                unformatted_event.end_time,
+                unformatted_event._id, 
+                business.data.type_obj.bus_name,
+                unformatted_event.registered_ind,
+                unformatted_event.event_geoloc,
+                unformatted_event.create_date))
+            });
+          });
+        });
+      }
     });
+    this.event_list.next(event_model_list);
     return event_model_list;
   }
 

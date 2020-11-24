@@ -12,8 +12,14 @@ export class AppComponent {
   get loggedIn():boolean{
     return this.authSvc.loggedIn;
   }
+
   get business():boolean{
-    return this.authSvc.userObject.type == 'B';
+    if(this.authSvc.userObject!=undefined){
+      return this.authSvc.userObject.type == 'B';
+    }
+    else{
+      return false;
+    }
   }
   constructor(public authSvc:AuthService, public geoloc:UserGeolocationService) {
     authSvc.authorize();
