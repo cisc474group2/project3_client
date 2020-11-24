@@ -44,7 +44,9 @@ export class EventsService {
 
 
   updateUserList(eventID: string, registered_ind: string[]){
-    return this.http.put(this.path + 'events/' + eventID + "/registered", {registered_ind: registered_ind});
+    var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
+    console.log(x);
+    return this.http.put(x, {registered_ind: registered_ind});
   }
   
   getBusiness(busID: string): Observable<any>{

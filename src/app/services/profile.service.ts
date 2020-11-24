@@ -22,7 +22,9 @@ export class ProfileService {
   }
   
   updateEventsList(userID: string, reg_events: string[]){
-    return this.http.put(this.path + 'users/' + userID + "/registered", {reg_events: reg_events});
+    var x = this.path + 'users' + "/" + userID + "/" + 'registered';
+    console.log(x);
+    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: reg_events});
   }
 
 }
