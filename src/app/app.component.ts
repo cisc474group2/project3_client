@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserGeolocationService } from './services/user-geolocation.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent {
       return false;
     }
   }
-  constructor(public authSvc:AuthService, public geoloc:UserGeolocationService) {
+  constructor(public authSvc:AuthService, public geoloc:UserGeolocationService, private router: Router) {
     authSvc.authorize();
     geoloc.getLocation();
   }
@@ -29,6 +30,7 @@ export class AppComponent {
 
   signout(){
     this.authSvc.logout();
+    this.router.navigate(['login']);
     return false;
   }
 }
