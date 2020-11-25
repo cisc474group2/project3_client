@@ -65,6 +65,7 @@ export class AuthService {
       .pipe(map(user=>{
         this.token=user.data.token
         this.CurrentUser.next(user.data.user.email);
+        this.authorize();
         return user.data.user;
       }),catchError(err=>{this.CurrentUser.next(null);this.token=null;return throwError(err.message||'server error')}));
   }

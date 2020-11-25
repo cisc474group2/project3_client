@@ -15,36 +15,13 @@ export class HomeComponent implements OnInit {
   i = 0;
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
     this.g = eventSvc.getEventsFormattedBusinessName();
-    // eventSvc.getEvents().subscribe(result=>{
-    //   this.events_list=result.data;
-    //   while(this.i < this.events_list.length){
-    //     eventSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
-    //       this.businessName = busResult.data.type_obj.bus_name;
-    //       //this.events_list[this.i].bus_id = this.businessName;
-    //     });
-    //     this.i++;
-    //   }
-    // });
-  
   }
-
-
-
-// load everything at same time
-
-
-
-
-
-
-
-
-
 
   ngOnInit(): void {
   }
 
   registerUser(event_id){
+    console.log(this.authSvc.CurrentUser.value);
     var user_id = this.authSvc.userObject._id;
     console.log(event_id);
     console.log(user_id);
