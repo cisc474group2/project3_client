@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService) {
       if (authSvc.loggedIn)
-      this.router.navigate(['/']);
+      this.router.navigate(['home']);
    }
 
   ngOnInit(): void {
@@ -38,5 +38,7 @@ export class LoginComponent implements OnInit {
     this.authSvc.login(this.loginForm.controls.username.value,this.loginForm.controls.password.value).subscribe(response=>{
       this.router.navigate([this.returnUrl]);
     },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+
+    
   }
 }

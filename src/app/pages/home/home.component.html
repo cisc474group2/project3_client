@@ -1,18 +1,5 @@
-<h1 style="text-align: center;">Events Near You</h1>
-<!-- <div *ngIf='g.length>0'>
-    <ul>
-        <li class="event" *ngFor='let event of g'>
-            <span id="title">{{event.title}}</span>
-            <span>{{event.bus_id}}</span>
-            <span>{{event.description}}</span>
-            <span>Going: {{event.registered_ind.length}}</span>
-            <span>{{event.event_address}}</span>
-            <span>{{event.start_time}}</span>
-            <span>{{event.end_time}}</span>
-        </li>
-    </ul>
-</div> -->
-<div *ngIf='g.length==0'>No records found</div>
+<h1 style="text-align: center; padding-top: 2.5%;">Events Near You</h1>
+
 <div class="card" *ngFor='let card of g'>
     <div class="card-header">
         <span id="title">{{card.title}}</span>
@@ -24,6 +11,7 @@
         <span>{{card.event_address}}</span>
         <span>{{card.start_time}}</span>
         <span>{{card.end_time}}</span>
+        <span><button (click)="registerUser(card._id)">Register</button></span>
     </div>
 </div>
 

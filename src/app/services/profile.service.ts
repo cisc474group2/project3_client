@@ -21,6 +21,10 @@ export class ProfileService {
     return this.http.put(this.path+'users' + "/" + userID, {email:email, type_obj: type_obj});
   }
   
- 
+  updateEventsList(userID: string, reg_events: string){
+    var x = this.path + 'users' + "/" + userID + "/" + 'registered';
+    console.log(x);
+    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: reg_events});
+  }
 
 }

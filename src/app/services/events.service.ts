@@ -41,6 +41,14 @@ export class EventsService {
         return event.data;
       }),catchError(err=>{return throwError(err.message||'server error')}));
   }
+
+
+  updateUserList(eventID: string, registered_ind: string){
+    var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
+    console.log(x);
+    return this.http.put(x, {registered_ind: registered_ind});
+  }
+  
   getBusiness(busID: string): Observable<any>{
     return this.http.get(this.path+'users/bus' + "/" + busID);
   }

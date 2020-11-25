@@ -81,5 +81,7 @@ export class AuthService {
   logout(){
     this.token=null;
     this.CurrentUser.next(null);
+  
   }
+
 }

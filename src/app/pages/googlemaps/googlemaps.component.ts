@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserGeolocationService } from 'src/app/services/user-geolocation.service';
+//@ts-ignore
 import { Config } from '../../../assets/Config';
 import { EventsService } from 'src/app/services/events.service';
 
