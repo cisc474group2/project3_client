@@ -147,7 +147,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.profileSvc.updateUser(this.authSvc.userObject._id, 
-      this.profileForm.controls.email.value, this.authSvc.userObject.type_obj).subscribe(response=>{
+      this.profileForm.controls.email.value, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
         this.router.navigate['login'];
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
     }
