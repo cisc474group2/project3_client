@@ -17,8 +17,8 @@ export class ProfileService {
   }
 
 
-  updateUser(userID: string, email:string, type_obj: IndModel | BusModel){
-    return this.http.put(this.path+'users' + "/" + userID, {email:email, type_obj: type_obj});
+  updateUser(userID: string, email:string, type_obj: IndModel | BusModel, reg_events:string[]){
+    return this.http.put(this.path+'users' + "/" + userID, {email:email, type_obj: type_obj, reg_events: reg_events});
   }
   
   updateEventsList(userID: string, new_event: string){

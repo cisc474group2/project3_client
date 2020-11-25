@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   events_list=[];
   i = 0;
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
+    
     this.g = eventSvc.getEventsFormattedBusinessName();
     // eventSvc.getEvents().subscribe(result=>{
     //   this.events_list=result.data;
@@ -32,11 +33,16 @@ export class HomeComponent implements OnInit {
   }
 
   registerUser(event_id){
-    var user_id = this.authSvc.userObject._id;
-    console.log(event_id);
-    console.log(user_id);
-    this.profileSvc.updateEventsList(user_id, event_id);
-    this.eventSvc.updateUserList(event_id, user_id);
-  }
+    this.authSvc.authorize();
+    this.authSvc.userObject.reg_events.push(event_id);
+    this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+      this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+        console.log(response);
+      },err=>{console.error(err);});
+    
+      this.eventSvc.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
+        console.log(response);
+      },err=>{console.error(err);});
+    }
 
 }
