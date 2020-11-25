@@ -25,21 +25,8 @@ export class HomeComponent implements OnInit {
     //     this.i++;
     //   }
     // });
-  
+    this.authSvc.authorize();
   }
-
-
-
-// load everything at same time
-
-
-
-
-
-
-
-
-
 
   ngOnInit(): void {
   }
