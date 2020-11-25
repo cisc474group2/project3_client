@@ -4,6 +4,9 @@
         <div class="event" *ngFor='let event of googleMapMarkerContainer'>
             <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.title" [label]="event.label"></agm-marker>
         </div>
+        <agm-info-window [disableAutoPan]="true">
+            Hi, this is the content of the <strong>info window</strong>
+          </agm-info-window>
     </agm-map>
 </div>
 <div>Lat: {{this.lat}}</div>

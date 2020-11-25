@@ -25,13 +25,15 @@ export class GooglemapsComponent {
       this.lat = geolocService.lat.value;
       this.lng = geolocService.lng.value;
       this.googleMapType = 'ROADMAP';
-      this.zoom = 12;
+      this.zoom = 13;
       eventSvc.event_list.subscribe(events => {
         this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
         events.forEach( event => {
           this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description));
-        })
+        });
+        console.log("loaded all events into map");
       });
+
     })
   }
 }

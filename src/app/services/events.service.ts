@@ -47,8 +47,9 @@ export class EventsService {
 
   getEventsFormattedBusinessName(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
-    this.geoloc.lat.subscribe(res => {
-      if (res == null) {
+    this.geoloc.accuracy.subscribe(res => {
+      // If the user has declined geoloation features, it will just load all events
+      if (res == -1) {
         this.getEvents().subscribe(result => {
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
@@ -66,7 +67,8 @@ export class EventsService {
           });
         });
       }
-      else {
+      //If the user has accepted geolocation features, it will pull all events from that location
+      else if (res != -1 && res != null){
         this.getLocalEvents().subscribe(result => {
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
@@ -84,6 +86,7 @@ export class EventsService {
           });
         });
       }
+      //Else it will not load anything else.
     });
     this.event_list.next(event_model_list);
     return event_model_list;
