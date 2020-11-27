@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
     
     this.g = eventSvc.getEventsFormattedBusinessName();
+<<<<<<< HEAD
     // eventSvc.getEvents().subscribe(result=>{
     //   this.events_list=result.data;
     //   while(this.i < this.events_list.length){
@@ -27,6 +28,8 @@ export class HomeComponent implements OnInit {
     //   }
     // });
     this.authSvc.authorize();
+=======
+>>>>>>> b484e41b438da8cd46608654dd229948a4dddead
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
@@ -24,7 +24,23 @@ export class ProfileService {
   updateEventsList(userID: string, new_event: string){
     var x = this.path + 'users' + "/" + userID + "/" + 'registered';
     console.log(x);
+<<<<<<< HEAD
     return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: new_event});
+=======
+
+    // const body = new HttpParams()
+    //   .set('reg_events', reg_events);
+
+    // return this.http.post(x,
+    //   body.toString(),
+    //   {
+    //     headers: new HttpHeaders()
+    //       .set('Content-Type', 'application/x-www-form-urlencoded')
+    //   }
+    // );
+
+    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: reg_events});
+>>>>>>> b484e41b438da8cd46608654dd229948a4dddead
   }
 
 }
