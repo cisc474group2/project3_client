@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   events_list=[];
   i = 0;
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
-    this.g = eventSvc.getEventsFormattedBusinessName().formatAddress().convertTimestamp();
+    this.g = eventSvc.getEventsFormat();
   }
 
   ngOnInit(): void {

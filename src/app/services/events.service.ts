@@ -65,7 +65,7 @@ export class EventsService {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
   }
 
-  getEventsFormattedBusinessName(): Array<EventModel> {
+  getEventsFormat(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
     this.geoloc.accuracy.subscribe(res => {
       // If the user has declined geoloation features, it will just load all events
@@ -75,9 +75,9 @@ export class EventsService {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
                 unformatted_event.description,
-                unformatted_event.event_address,
-                unformatted_event.start_time,
-                unformatted_event.end_time,
+                this.formatAddress(unformatted_event.event_address),
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time),
                 unformatted_event._id,
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
@@ -94,9 +94,9 @@ export class EventsService {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
                 unformatted_event.description,
-                unformatted_event.event_address,
-                unformatted_event.start_time,
-                unformatted_event.end_time,
+                this.formatAddress(unformatted_event.event_address),
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time),
                 unformatted_event._id,
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
@@ -112,22 +112,19 @@ export class EventsService {
     return event_model_list;
   }
 
-  convertTimestamp(start_time, end_time){
+  convertTimestamp(time){
     var timestamp = '';
-    if(start_time.substring(0,10) === end_time.substring(0,10)){
-      timestamp = start_time.substring(5,10).replace(/[-]/, "/") + " ";
-      if(start_time.substring(11,13) < 12){
-        timestamp += start_time.substring(11,16) + "AM";
-      }else{
-        timestamp += start_time.substring(11,16) + "PM";
-      }
-      timestamp += " - ";
-      if(end_time.substring(11,13) < 12){
-        timestamp += end_time.substring(11,16) + "AM";
-      }else{
-        timestamp += end_time.substring(11,16) + "PM";
-      }
+    timestamp = time.substring(5,10).replace(/[-]/, "/") + " ";
+    if(time.substring(11,13) < 12){
+      timestamp += time.substring(11,16) + "AM";
     }else{
+      timestamp += time.substring(11,16) + "PM";
+    }
+  return timestamp;
+  }
+
+  convertFullTimestamp(start_time, end_time){
+    var timestamp = '';
       timestamp = start_time.substring(5,10).replace(/[-]/, "/") + " ";
       if(start_time.substring(11,13) < 12){
         timestamp += start_time.substring(11,16) + "AM";
@@ -139,8 +136,7 @@ export class EventsService {
         timestamp += end_time.substring(11,16) + "AM";
       }else{
         timestamp += end_time.substring(11,16) + "PM";
-      }
-    }return timestamp;
+      }return timestamp;
   }
 
   formatAddress(event_address){
