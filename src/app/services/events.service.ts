@@ -43,12 +43,6 @@ export class EventsService {
   }
 
 
-<<<<<<< HEAD
-  updateUserList(eventID: string, ind_id: string){
-    var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
-    console.log(x);
-    return this.http.put(x, {registered_ind: ind_id});
-=======
   updateUserList(eventID: string, registered_ind: string) {
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
     console.log(x);
@@ -65,7 +59,6 @@ export class EventsService {
     // );
 
     return this.http.put(x, {registered_ind: registered_ind});
->>>>>>> b484e41b438da8cd46608654dd229948a4dddead
   }
 
   getBusiness(busID: string): Observable<any> {
@@ -119,18 +112,39 @@ export class EventsService {
     return event_model_list;
   }
 
+  convertTimestamp(start_time, end_time){
+    var timestamp = '';
+    if(start_time.substring(0,10) === end_time.substring(0,10)){
+      timestamp = start_time.substring(5,10).replace(/[-]/, "/") + " ";
+      if(start_time.substring(11,13) < 12){
+        timestamp += start_time.substring(11,16) + "AM";
+      }else{
+        timestamp += start_time.substring(11,16) + "PM";
+      }
+      timestamp += " - ";
+      if(end_time.substring(11,13) < 12){
+        timestamp += end_time.substring(11,16) + "AM";
+      }else{
+        timestamp += end_time.substring(11,16) + "PM";
+      }
+    }else{
+      timestamp = start_time.substring(5,10).replace(/[-]/, "/") + " ";
+      if(start_time.substring(11,13) < 12){
+        timestamp += start_time.substring(11,16) + "AM";
+      }else{
+        timestamp += start_time.substring(11,16) + "PM";
+      }
+      timestamp += " - " + end_time.substring(5,10).replace(/[-]/, "/") + " ";
+      if(end_time.substring(11,13) < 12){
+        timestamp += end_time.substring(11,16) + "AM";
+      }else{
+        timestamp += end_time.substring(11,16) + "PM";
+      }
+    }return timestamp;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  formatAddress(event_address){
+    return event_address.replace(/[+]/g, " ");
+  }
 
 }

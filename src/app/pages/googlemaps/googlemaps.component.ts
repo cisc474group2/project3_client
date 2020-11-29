@@ -6,6 +6,7 @@ import { UserGeolocationService } from 'src/app/services/user-geolocation.servic
 //@ts-ignore
 import { Config } from '../../../assets/Config';
 import { EventsService } from 'src/app/services/events.service';
+import { EventModel } from '../../../assets/model';
 
 @Component({
   selector: 'app-googlemaps',
@@ -20,6 +21,7 @@ export class GooglemapsComponent {
   googleMapType:string;
   
   googleMapMarkerContainer:Array<GoogleMapMarker>;
+  g:Array<EventModel>;
 
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService) {
     geolocService.lat.subscribe(res => {

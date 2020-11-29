@@ -24,9 +24,6 @@ export class ProfileService {
   updateEventsList(userID: string, new_event: string){
     var x = this.path + 'users' + "/" + userID + "/" + 'registered';
     console.log(x);
-<<<<<<< HEAD
-    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: new_event});
-=======
 
     // const body = new HttpParams()
     //   .set('reg_events', reg_events);
@@ -39,8 +36,7 @@ export class ProfileService {
     //   }
     // );
 
-    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: reg_events});
->>>>>>> b484e41b438da8cd46608654dd229948a4dddead
+    return this.http.put(this.path + 'users' + "/" + userID + "/" + 'registered', {reg_events: new_event});
   }
 
 }

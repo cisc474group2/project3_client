@@ -14,22 +14,7 @@ export class HomeComponent implements OnInit {
   events_list=[];
   i = 0;
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
-    
-    this.g = eventSvc.getEventsFormattedBusinessName();
-<<<<<<< HEAD
-    // eventSvc.getEvents().subscribe(result=>{
-    //   this.events_list=result.data;
-    //   while(this.i < this.events_list.length){
-    //     eventSvc.getBusiness(this.events_list[this.i].bus_id).subscribe(busResult=>{
-    //       this.businessName = busResult.data.type_obj.bus_name;
-    //       //this.events_list[this.i].bus_id = this.businessName;
-    //     });
-    //     this.i++;
-    //   }
-    // });
-    this.authSvc.authorize();
-=======
->>>>>>> b484e41b438da8cd46608654dd229948a4dddead
+    this.g = eventSvc.getEventsFormattedBusinessName().formatAddress().convertTimestamp();
   }
 
   ngOnInit(): void {

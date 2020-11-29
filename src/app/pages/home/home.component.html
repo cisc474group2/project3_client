@@ -1,49 +1,15 @@
-<h1 style="text-align: center; padding-top: 2.5%;">Events Near You</h1>
+<h1 style="text-align: center; padding: 2.5%;">Events Near You</h1>
 
 <div class="card" *ngFor='let card of g'>
     <div class="card-header">
         <span id="title">{{card.title}}</span>
+        <span><button type="button" class="btn btn-primary" (click)="registerUser(card._id)">Register</button></span>
     </div>
     <div class="card-body">
-        <span>{{card.bus_id}}</span>
-        <span>{{card.description}}</span>
-        <span>Going: {{card.registered_ind.length}}</span>
-        <span>{{card.event_address}}</span>
-        <span>{{card.start_time}}</span>
-        <span>{{card.end_time}}</span>
-        <span><button (click)="registerUser(card._id)">Register</button></span>
+        <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
+        <div><i class="fas fa-comment-alt"></i><span>{{card.description}}</span></div>
+        <div><i class="fas fa-male"></i><span>Going: {{card.registered_ind.length}}</span></div>
+        <div><i class="fas fa-map-marker-alt"></i><span>{{eventSvc.formatAddress(card.event_address)}}</span></div>
+        <div><i class="fas fa-clock"></i><span>{{eventSvc.convertTimestamp(card.start_time, card.end_time)}}</span></div>
     </div>
 </div>
-
-<!-- <div style="split left">
-    <div *ngIf='g.length>0'>
-        <ul>
-            <li class= "event" *ngFor='let event of g'>
-                <span id="title">{{event.title}}</span>
-                <span>{{event.bus_id}}</span>
-                <span>{{event.description}}</span>
-                <span>Going: {{event.registered_ind.length}}</span>
-                <span>{{event.event_address}}</span>
-                <span>{{event.start_time}}</span>
-                <span>{{event.end_time}}</span>
-            </li>
-        </ul>
-        </div>
-        <div *ngIf='g.length==0'>No records found</div>
-        <div class="card" *ngFor='let card of g'>
-            <div class="card-header">
-                <span id="title">{{card.title}}</span>
-            </div>
-            <div class="card-body">
-                <span>{{card.bus_id}}</span>
-                <span>{{card.description}}</span>
-                <span>Going: {{card.registered_ind.length}}</span>
-                <span>{{card.event_address}}</span>
-                <span>{{card.start_time}}</span>
-                <span>{{card.end_time}}</span>
-            </div>
-        </div>
-</div>
-<div class="split right">
-    <app-googlemaps></app-googlemaps>
-</div> -->
