@@ -1,15 +1,4 @@
 .map {
-    width: 50vw;
-    min-height: 50vh;
-    height: 0;
-
-    agm-map {
-        height: 100%;
-        width: 100%;
-    }
-}
-
-/*.map {
     width: 95vw;
     min-height: 50vh;
     height: 0;
@@ -21,13 +10,8 @@
         height: 100%;
         width: 100%;
     }
-}*/
-
-/*.event{
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
 }
+
 #title{
     font-size: 2em;
 }
@@ -42,4 +26,8 @@
   i{
     width: 2em;
     text-align: center;
-  }*/
+  }
+
+  agm-marker[label]{
+    background-color: white !important;
+}

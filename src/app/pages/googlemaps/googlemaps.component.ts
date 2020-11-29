@@ -23,7 +23,6 @@ export class GooglemapsComponent {
   googleMapType:string;
   
   googleMapMarkerContainer:Array<GoogleMapMarker>;
-  g:Array<EventModel>;
   c:Array<EventModel>;
 
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
@@ -31,19 +30,21 @@ export class GooglemapsComponent {
       this.lat = geolocService.lat.value;
       this.lng = geolocService.lng.value;
       this.googleMapType = 'ROADMAP';
-      this.zoom = 13;
+      this.zoom = 15;
       eventSvc.event_list.subscribe(events => {
         this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
         events.forEach( event => {
-          this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description));
+          this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
         });
         console.log("loaded all events into map");
       });
-
     })
+    this.googleMapMarkerContainer.forEach(marker => {
+      //marker.addEventListener("click", this.showEvent(marker._id));
+    });
   }
 
-  /*registerUser(event_id){
+  registerUser(event_id){
     this.authSvc.authorize();
     this.authSvc.userObject.reg_events.push(event_id);
     this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
@@ -57,28 +58,23 @@ export class GooglemapsComponent {
     }
 
     showEvent(_id){
-      console.log(this.c);
-      console.log(this.g);
-      this.eventServ.getOneEvent(_id).subscribe(result =>{
-          if(result._id == _id){
-            this.c = this.eventServ.getOneEventFormat(_id);
-          }
-      });
-      console.log(this.c);
-      document.getElementById('event-card').removeAttribute("display");
-    }*/
+      this.c = this.eventServ.getOneEventFormat(_id);
+      document.getElementById('card').removeAttribute("display");
+    }
 }
 
-export class GoogleMapMarker {
+export class GoogleMapMarker{
   lat:number;
   lng:number;
   title:string;
-  lable:string;
+  label:string;
+  _id: string;
 
-  public constructor(lat:number, lng:number, title:string, lable:string) {  
+  public constructor(lat:number, lng:number, title:string, label:string, _id: string) {  
     this.lat = lat;
     this.lng = lng;
     this.title = title;
-    this.lable = lable;
+    this.label = label;
+    this._id = _id;
   }
 }
