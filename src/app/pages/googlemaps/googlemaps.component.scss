@@ -1,12 +1,45 @@
 .map {
-    width: 95vw;
+    width: 50vw;
     min-height: 50vh;
     height: 0;
-    vertical-align: middle;
-    margin: 0 auto;
 
     agm-map {
         height: 100%;
         width: 100%;
     }
 }
+
+/*.map {
+    width: 95vw;
+    min-height: 50vh;
+    height: 0;
+    vertical-align: middle;
+    margin: 0 auto;
+    margin-bottom: 2.5%;
+
+    agm-map {
+        height: 100%;
+        width: 100%;
+    }
+}*/
+
+/*.event{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+}
+#title{
+    font-size: 2em;
+}
+  .btn{
+    float: right;
+    vertical-align: middle;
+    margin: 0 auto;
+  }
+  .card{
+    margin-bottom: 2.5%;
+  }
+  i{
+    width: 2em;
+    text-align: center;
+  }*/

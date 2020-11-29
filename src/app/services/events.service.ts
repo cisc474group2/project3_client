@@ -17,6 +17,10 @@ export class EventsService {
   constructor(private http: HttpClient, private geoloc: UserGeolocationService) {
   }
 
+  getOneEvent(_id: string): Observable<any> {
+    return this.http.get(this.path + 'events/' + _id);
+  }
+
   getEvents(): Observable<any> {
     return this.http.get(this.path + 'events');
   }
@@ -63,6 +67,27 @@ export class EventsService {
 
   getBusiness(busID: string): Observable<any> {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
+  }
+
+  getOneEventFormat(_id){
+    let event = Array<EventModel>();
+    this.getOneEvent(_id).subscribe(result => {
+      result.data.forEach(unformatted_event => {
+        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+          event.push(new EventModel(unformatted_event.title,
+            unformatted_event.description,
+            this.formatAddress(unformatted_event.event_address),
+            this.convertTimestamp(unformatted_event.start_time),
+            this.convertTimestamp(unformatted_event.end_time),
+            unformatted_event._id,
+            business.data.type_obj.bus_name,
+            unformatted_event.registered_ind,
+            unformatted_event.event_geoloc,
+            unformatted_event.create_date))
+        });
+      });
+    });
+    return event;
   }
 
   getEventsFormat(): Array<EventModel> {

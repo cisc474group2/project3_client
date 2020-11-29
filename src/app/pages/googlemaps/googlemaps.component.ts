@@ -26,7 +26,7 @@ export class GooglemapsComponent {
   g:Array<EventModel>;
   c:Array<EventModel>;
 
-  constructor(http:HttpClient, geolocService:UserGeolocationService, private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
+  constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
     geolocService.lat.subscribe(res => {
       this.lat = geolocService.lat.value;
       this.lng = geolocService.lng.value;
@@ -41,10 +41,9 @@ export class GooglemapsComponent {
       });
 
     })
-    this.g = eventSvc.getEventsFormat();
   }
 
-  registerUser(event_id){
+  /*registerUser(event_id){
     this.authSvc.authorize();
     this.authSvc.userObject.reg_events.push(event_id);
     this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
@@ -52,20 +51,22 @@ export class GooglemapsComponent {
         console.log(response);
       },err=>{console.error(err);});
     
-      this.eventSvc.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
+      this.eventServ.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
         console.log(response);
       },err=>{console.error(err);});
     }
 
     showEvent(_id){
-      //this.g = this.eventSvc.getOneEventFormat(_id);
-      this.g.forEach(result =>{
-        if(result._id == _id){
-          this.c.push(result);
-        }
+      console.log(this.c);
+      console.log(this.g);
+      this.eventServ.getOneEvent(_id).subscribe(result =>{
+          if(result._id == _id){
+            this.c = this.eventServ.getOneEventFormat(_id);
+          }
       });
-      document.getElementById('event-card').setAttribute("display", "block");
-    }
+      console.log(this.c);
+      document.getElementById('event-card').removeAttribute("display");
+    }*/
 }
 
 export class GoogleMapMarker {
