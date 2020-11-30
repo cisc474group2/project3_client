@@ -137,6 +137,7 @@ export class EventsService {
       }
       //Else it will not load anything else.
     });
+    event_model_list = this.sortList(event_model_list);
     this.event_list.next(event_model_list);
     return event_model_list;
   }
@@ -182,7 +183,7 @@ export class EventsService {
         else return 0;
       }
     });
-    
+
     return unsorted;
   }
 
