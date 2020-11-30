@@ -13,9 +13,6 @@ import { BusModel, Geoloc, IndModel } from '../../../assets/model';
 })
 export class ProfileComponent implements OnInit {
   
-  profileForm: FormGroup;
-  individualForm: FormGroup;
-  businessForm: FormGroup;
   returnUrl: string;
   error: string;
   loading = false;
@@ -69,89 +66,13 @@ export class ProfileComponent implements OnInit {
       }
   });
 
-    this.profileForm=this.formBuilder.group({
-      email: ['',Validators.required]
-    });
-    this.individualForm=this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required]
-    });
-
-    this.businessForm=this.formBuilder.group({
-      businessName: ['', Validators.required],
-      businessStreet: ['', Validators.required],
-      businessApt: [''],
-      businessCity: ['', Validators.required],
-      businessState: ['', Validators.required],
-      businessZip: ['', Validators.required],
-      contactName: ['', Validators.required],
-      businessPhone: ['', Validators.required]
-    });
-    
-    this.profileForm.setValue({
-      email: this.email 
-    });
-
-  if(this.authSvc.userObject.type == 'I'){
-    this.individualForm.setValue({
-      firstName: this.fName,
-      lastName: this.lName
-    });
-  }
-
-  else{
-    this.businessForm.setValue({
-      businessName: this.busName,
-      contactName: this.cName,
-      businessPhone: this.cPhone,
-      businessStreet: this.mailAddress[0],
-      businessApt: this.mailAddress[1],
-      businessCity: this.mailAddress[2], 
-      businessState: this.mailAddress[3],
-      businessZip: this.mailAddress[4]
-    });
-  }
-
-
     
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
+}
   
   editProfile(){
-    this.notEditingProfile = false;
+    this.router.navigate(['profile/edit']);
   }
     
-
-  // take info from form and update db entry
-  updateInfo(){
-    this.loading = true;
-    this.submitted = true;
-    if(this.profileForm.invalid || (this.authSvc.userObject.type == 'I' && this.individualForm.invalid) || (this.authSvc.userObject.type == 'B' && this.businessForm.invalid)){
-      return;
-    }
-
-    if(this.authSvc.userObject.type == 'I'){
-      this.authSvc.userObject.type_obj.fName = this.individualForm.controls.firstName.value;
-      this.authSvc.userObject.type_obj.lName = this.individualForm.controls.lastName.value;
-    }
-
-    else{
-      this.authSvc.userObject.type_obj.bus_name = this.businessForm.controls.businessName.value;
-      this.authSvc.userObject.type_obj.cName = this.businessForm.controls.contactName.value;
-      this.authSvc.userObject.type_obj.cPhone = this.businessForm.controls.businessPhone.value;
-      this.authSvc.userObject.type_obj.mailAddress = this.businessForm.controls.businessStreet.value + "+" 
-      + this.businessForm.controls.businessApt.value + "+"
-      + this.businessForm.controls.businessCity.value + "+"
-      + this.businessForm.controls.businessState.value
-      + "+" + this.businessForm.controls.businessZip.value;
-    }
-
-    this.profileSvc.updateUser(this.authSvc.userObject._id, 
-      this.profileForm.controls.email.value, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
-        this.router.navigate['login'];
-      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
-    }
-
-  
 
 }

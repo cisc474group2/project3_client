@@ -19,6 +19,7 @@ import { fromEventPattern } from 'rxjs';
 import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
 import { AgmCoreModule } from '@agm/core';
 import { Config } from 'src/assets/Config';
+import {EditprofileComponent} from './pages/profile/edit/editprofile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { Config } from 'src/assets/Config';
     RegisterComponent,
     PosteventComponent,
     ProfileComponent,
-    GooglemapsComponent
+    GooglemapsComponent,
+    EditprofileComponent
   ],
   imports: [
     BrowserModule,
