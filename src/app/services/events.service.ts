@@ -66,6 +66,24 @@ export class EventsService {
     return this.http.put(x, {registered_ind: registered_ind});
   }
 
+  deleteFromUserList(eventID: string, registered_ind: string) {
+    var x = this.path + 'events' + "/" + eventID + "/" + 'registered/delete';
+    console.log(x);
+
+    // const body = new HttpParams()
+    //   .set('registered_ind', registered_ind);
+
+    // return this.http.post(x,
+    //   body.toString(),
+    //   {
+    //     headers: new HttpHeaders()
+    //       .set('Content-Type', 'application/x-www-form-urlencoded')
+    //   }
+    // );
+
+    return this.http.put(x, {registered_ind: registered_ind});
+  }
+
   getBusiness(busID: string): Observable<any> {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
   }
