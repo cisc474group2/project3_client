@@ -32,12 +32,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm=this.formBuilder.group({
       individual: ['', Validators.required],
-      email: ['',Validators.required],
+      email: ['',Validators.email],
       password: ['',Validators.required]
     });
     this.individualForm=this.formBuilder.group({
         firstName: ['', Validators.required],
-        lastName: ['', Validators.required]
+        lastName: ['', Validators.required],
+        zip: ['', Validators.required]
     });
 
     this.businessForm=this.formBuilder.group({
@@ -96,7 +97,8 @@ export class RegisterComponent implements OnInit {
     if (this.individualRegister) {
       this.type_obj = new IndModel(
         this.individualForm.controls.firstName.value, 
-        this.individualForm.controls.lastName.value);
+        this.individualForm.controls.lastName.value,
+        this.individualForm.controls.zip.value);
     }
     else {
       
