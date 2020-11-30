@@ -172,4 +172,18 @@ export class EventsService {
     return event_address.replace(/[+]/g, " ");
   }
 
+  private sortList(unsorted:Array<EventModel>):Array<EventModel> {
+    unsorted.sort((a, b) => {
+      if (a.title > b.title) {return 1;}
+      else if (a.title < b.title) {return -1;}
+      else {
+        if (a.create_date > b.create_date) {return 1;}
+        else if (a.create_date < b.create_date) {return -1;}
+        else return 0;
+      }
+    });
+    
+    return unsorted;
+  }
+
 }
