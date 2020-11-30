@@ -24,14 +24,20 @@ export class UserModel {
 export class IndModel {
 	first_name = '';
 	last_name = '';
+	zip:number;
+	geoloc:Geoloc;
 
-	public constructor(fname:string, lname:string) {
+	public constructor(fname:string, lname:string, zip:number=0, geoloc:Geoloc=new Geoloc(0, 0)) {
 		this.first_name = fname;
 		this.last_name = lname;
+		this.geoloc = geoloc;
+		this.zip = zip;
 	}
 	toObject():any{
         return {first_name:this.first_name,
-            last_name:this.last_name
+			last_name:this.last_name,
+			zip:this.zip,
+			geoloc:this.geoloc
         };
     }
 }

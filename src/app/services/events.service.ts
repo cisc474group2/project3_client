@@ -114,7 +114,7 @@ export class EventsService {
       }
       //If the user has accepted geolocation features, it will pull all events from that location
       else if (res != -1 && res != null) {
-        this.getLocalEvents().subscribe(result => {
+        this.getLocalEventsCustRad(50).subscribe(result => {
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
