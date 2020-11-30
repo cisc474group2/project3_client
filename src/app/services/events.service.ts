@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 import { UserGeolocationService } from './user-geolocation.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
 
-  constructor(private http: HttpClient, private geoloc: UserGeolocationService) {
+  constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
   }
 
   getOneEvent(_id: string): Observable<any> {
@@ -83,7 +84,8 @@ export class EventsService {
             business.data.type_obj.bus_name,
             unformatted_event.registered_ind,
             unformatted_event.event_geoloc,
-            unformatted_event.create_date))
+            unformatted_event.create_date,
+            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
         });
       });
     });
@@ -107,7 +109,8 @@ export class EventsService {
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
-                unformatted_event.create_date))
+                unformatted_event.create_date,
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
             });
           });
         });
@@ -126,13 +129,15 @@ export class EventsService {
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
-                unformatted_event.create_date))
+                unformatted_event.create_date,
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
             });
           });
         });
       }
       //Else it will not load anything else.
     });
+    event_model_list = this.sortList(event_model_list);
     this.event_list.next(event_model_list);
     return event_model_list;
   }
@@ -166,6 +171,20 @@ export class EventsService {
 
   formatAddress(event_address){
     return event_address.replace(/[+]/g, " ");
+  }
+
+  private sortList(unsorted:Array<EventModel>):Array<EventModel> {
+    unsorted = unsorted.sort((a, b) => {
+      if (a.title > b.title) {return 1;}
+      else if (a.title < b.title) {return -1;}
+      else {
+        if (a.create_date > b.create_date) {return 1;}
+        else if (a.create_date < b.create_date) {return -1;}
+        else return 0;
+      }
+    });
+
+    return unsorted;
   }
 
 }

@@ -99,8 +99,9 @@ export class EventModel{
     start_time='';
     end_time='';
 	create_date:Date|null = null;
+	registered:boolean;
 	
-	public constructor(title:string, description:string, event_address:string, start_time:string, end_time:string, _id:string='', bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null ){
+	public constructor(title:string, description:string, event_address:string, start_time:string, end_time:string, _id:string='', bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null, registered:boolean=false){
 		this._id = _id;
 		this.title = title;
 		this.bus_id = bus_id;
@@ -112,6 +113,7 @@ export class EventModel{
 		this.event_geoloc = geoloc;
 		this.registered_ind = registered_ind;
 		this.create_date = create_date;
+		this.registered = registered;
 	}
     toObject():any{
 		return {
