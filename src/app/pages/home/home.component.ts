@@ -13,14 +13,10 @@ export class HomeComponent implements OnInit {
   g:Array<EventModel>;
   events_list=[];
   i = 0;
+  loggedIn = this.authSvc.loggedIn;
+
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
     this.g = eventSvc.getEventsFormat();
-    this.g.forEach(element => {
-      if(!this.authSvc.userObject.reg_events.includes(element._id)){
-        document.getElementById('card._id').classList.remove('btn-primary');
-        document.getElementById('card._id').classList.add('btn-secondary');
-      }
-    });
   }
 
   ngOnInit(): void {
@@ -38,11 +34,9 @@ export class HomeComponent implements OnInit {
       
         this.eventSvc.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
           console.log(response);
+          this.g = this.eventSvc.getEventsFormat();
         },err=>{console.error(err);});
 
-        document.getElementById('').innerHTML='Unregister';
-        document.getElementById('card._id').classList.remove('btn-primary');
-        document.getElementById('card._id').classList.add('btn-secondary');
     }
   }
 
