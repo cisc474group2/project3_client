@@ -4,6 +4,7 @@ import { EventModel, Geoloc } from '../../../assets/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from 'src/app/services/events.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-postevent',
@@ -19,7 +20,7 @@ export class PosteventComponent implements OnInit {
   error: string;
   event: EventModel;
 
-  constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService) { 
+  constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService, private profileSvc: ProfileService) { 
     this.authSvc.authorize();
   }
 
@@ -68,6 +69,8 @@ export class PosteventComponent implements OnInit {
       this.eventsForm.controls.end_time.value
       )
       .subscribe(response=>{
+        this.authSvc.userObject.type_obj.hostedEvents.push(response['data']._id);
+        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events);
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 

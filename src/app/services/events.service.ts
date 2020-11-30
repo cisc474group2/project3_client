@@ -155,6 +155,7 @@ export class EventsService {
       }
       //Else it will not load anything else.
     });
+    event_model_list = this.sortList(event_model_list);
     this.event_list.next(event_model_list);
     return event_model_list;
   }
@@ -188,6 +189,20 @@ export class EventsService {
 
   formatAddress(event_address){
     return event_address.replace(/[+]/g, " ");
+  }
+
+  private sortList(unsorted:Array<EventModel>):Array<EventModel> {
+    unsorted = unsorted.sort((a, b) => {
+      if (a.title > b.title) {return 1;}
+      else if (a.title < b.title) {return -1;}
+      else {
+        if (a.create_date > b.create_date) {return 1;}
+        else if (a.create_date < b.create_date) {return -1;}
+        else return 0;
+      }
+    });
+
+    return unsorted;
   }
 
 }
