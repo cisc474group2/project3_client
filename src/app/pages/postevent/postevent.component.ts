@@ -74,6 +74,7 @@ export class PosteventComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
+      this.eventSvc.getEventsFormat();
       this.router.navigate(['home']);
   }
  
