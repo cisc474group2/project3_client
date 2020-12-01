@@ -9,6 +9,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { EventModel } from '../../../assets/model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-googlemaps',
@@ -49,7 +50,6 @@ export class GooglemapsComponent {
     }
 
     registerUser(event_id){
-      console.log('register');
       this.authSvc.authorize();
       if(!this.authSvc.userObject.reg_events.includes(event_id)){
         this.authSvc.userObject.reg_events.push(event_id);
@@ -68,7 +68,6 @@ export class GooglemapsComponent {
     }
   
     unregisterUser(event_id){
-      console.log('unregister');
       this.authSvc.authorize();
       if(this.authSvc.userObject.reg_events.includes(event_id)){
         var index = this.authSvc.userObject.reg_events.indexOf(event_id);

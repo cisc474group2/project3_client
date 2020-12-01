@@ -106,7 +106,7 @@ export class EventsService {
             unformatted_event.data.registered_ind,
             unformatted_event.data.event_geoloc,
             unformatted_event.data.create_date,
-            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
+            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false))
         });
     });
 
