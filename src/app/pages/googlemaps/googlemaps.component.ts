@@ -25,6 +25,7 @@ export class GooglemapsComponent {
   googleMapMarkerContainer:Array<GoogleMapMarker>;
   g:Array<EventModel>;
   clicked;
+  loggedIn = this.authSvc.loggedIn;
 
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
     geolocService.lat.subscribe(res => {
@@ -43,10 +44,47 @@ export class GooglemapsComponent {
   }
 
     showEvent(_id){
-      console.log('clicked');
       this.clicked = true;
-      //this.g = this.eventServ.getEventsFormat();
       this.g = this.eventServ.getOneEventFormat(_id);
+    }
+
+    registerUser(event_id){
+      console.log('register');
+      this.authSvc.authorize();
+      if(!this.authSvc.userObject.reg_events.includes(event_id)){
+        this.authSvc.userObject.reg_events.push(event_id);
+  
+        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+          this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+            console.log(response);
+          },err=>{console.error(err);});
+        
+          this.eventServ.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
+            console.log(response);
+            this.g = this.eventServ.getOneEventFormat(event_id);
+          },err=>{console.error(err);});
+  
+      }
+    }
+  
+    unregisterUser(event_id){
+      console.log('unregister');
+      this.authSvc.authorize();
+      if(this.authSvc.userObject.reg_events.includes(event_id)){
+        var index = this.authSvc.userObject.reg_events.indexOf(event_id);
+        this.authSvc.userObject.reg_events.splice(index, 1);
+  
+        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+          this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+            console.log(response);
+          },err=>{console.error(err);});
+        
+          this.eventServ.deleteFromUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
+            console.log(response);
+            this.g = this.eventServ.getOneEventFormat(event_id);
+          },err=>{console.error(err);});
+  
+      }
     }
 }
 

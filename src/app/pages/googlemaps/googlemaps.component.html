@@ -15,7 +15,8 @@
 <div class="card" *ngFor='let card of g'>
     <div class="card-header">
         <span id="title">{{card.title}}</span>
-        <span><button type="button" class="btn btn-primary">Register (re-add functionality later)</button></span>
+        <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card._id)">Register</button></span>
+        <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-secondary" (click)="unregisterUser(card._id)">Unregister</button></span>
     </div>
     <div class="card-body">
         <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
