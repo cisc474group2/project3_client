@@ -90,8 +90,13 @@ export class EventsService {
 
   getOneEventFormat(_id){
     let event = Array<EventModel>();
-    this.getOneEvent(_id).subscribe(unformatted_event => {
-        unformatted_event.getBusiness(unformatted_event.bus_id).subscribe(business => {
+    this.getOneEvent(_id).subscribe(response => {
+      console.log(response);
+    });
+    
+    this.getOneEvent(_id).subscribe(result => {
+      result.data.forEach(unformatted_event => {
+        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
           event.push(new EventModel(unformatted_event.title,
             unformatted_event.description,
             this.formatAddress(unformatted_event.event_address),
@@ -104,7 +109,9 @@ export class EventsService {
             unformatted_event.create_date,
             (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
         });
+      });
     });
+
     return event;
   }
 
