@@ -94,22 +94,20 @@ export class EventsService {
       console.log(response);
     });
     
-    this.getOneEvent(_id).subscribe(result => {
-      result.data.forEach(unformatted_event => {
-        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-          event.push(new EventModel(unformatted_event.title,
-            unformatted_event.description,
-            this.formatAddress(unformatted_event.event_address),
-            this.convertTimestamp(unformatted_event.start_time),
-            this.convertTimestamp(unformatted_event.end_time),
-            unformatted_event._id,
+    this.getOneEvent(_id).subscribe(unformatted_event => {
+        this.getBusiness(unformatted_event.data.bus_id).subscribe(business => {
+          event.push(new EventModel(unformatted_event.data.title,
+            unformatted_event.data.description,
+            this.formatAddress(unformatted_event.data.event_address),
+            this.convertTimestamp(unformatted_event.data.start_time),
+            this.convertTimestamp(unformatted_event.data.end_time),
+            unformatted_event.data._id,
             business.data.type_obj.bus_name,
-            unformatted_event.registered_ind,
-            unformatted_event.event_geoloc,
-            unformatted_event.create_date,
+            unformatted_event.data.registered_ind,
+            unformatted_event.data.event_geoloc,
+            unformatted_event.data.create_date,
             (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
         });
-      });
     });
 
     return event;
