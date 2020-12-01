@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
           console.log(response);
         },err=>{console.error(err);});
       
-        this.eventSvc.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
-          console.log(response);
-          this.g = this.eventSvc.getEventsFormat();
-        },err=>{console.error(err);});
+      this.eventSvc.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
+        console.log(response);
+        this.g = this.eventSvc.getEventsFormat();
+      },err=>{console.error(err);});
 
     }
   }

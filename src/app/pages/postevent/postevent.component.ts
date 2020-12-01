@@ -69,12 +69,14 @@ export class PosteventComponent implements OnInit {
       this.eventsForm.controls.end_time.value
       )
       .subscribe(response=>{
-        this.authSvc.userObject.type_obj.hostedEvents.push(response['data']._id);
+        console.log(response);
+        this.authSvc.userObject.type_obj.hostedEvents.push(response._id);
+        this.eventSvc.getEventsFormat();
         this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events);
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
-      this.eventSvc.getEventsFormat();
+      
       this.router.navigate(['home']);
   }
  
