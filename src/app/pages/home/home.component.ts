@@ -25,8 +25,6 @@ export class HomeComponent implements OnInit {
   registerUser(event_id){
     this.authSvc.authorize();
     if(!this.authSvc.userObject.reg_events.includes(event_id)){
-      console.log('register');
-      console.log(this.authSvc.userObject.reg_events);
       this.authSvc.userObject.reg_events.push(event_id);
 
       this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
@@ -44,9 +42,6 @@ export class HomeComponent implements OnInit {
 
   unregisterUser(event_id){
     this.authSvc.authorize();
-    console.log('unregister');
-    console.log(this.authSvc.userObject.reg_events.indexOf(event_id));
-    console.log(this.authSvc.userObject.reg_events);
     if(this.authSvc.userObject.reg_events.includes(event_id)){
       var index = this.authSvc.userObject.reg_events.indexOf(event_id);
       this.authSvc.userObject.reg_events.splice(index, 1);

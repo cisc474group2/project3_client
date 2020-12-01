@@ -20,10 +20,11 @@ export class GooglemapsComponent {
   lng:number;
   //center: google.maps.LatLngLiteral;
   zoom:number;
-  googleMapType:string;
+  googleMapType:string
   
   googleMapMarkerContainer:Array<GoogleMapMarker>;
-  c:Array<EventModel>;
+  g:Array<EventModel>;
+  clicked;
 
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
     geolocService.lat.subscribe(res => {
@@ -39,27 +40,13 @@ export class GooglemapsComponent {
         console.log("loaded all events into map");
       });
     })
-    this.googleMapMarkerContainer.forEach(marker => {
-      //marker.addEventListener("click", this.showEvent(marker._id));
-    });
   }
 
-  registerUser(event_id){
-    this.authSvc.authorize();
-    this.authSvc.userObject.reg_events.push(event_id);
-    this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
-      this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
-        console.log(response);
-      },err=>{console.error(err);});
-    
-      this.eventServ.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
-        console.log(response);
-      },err=>{console.error(err);});
-    }
-
     showEvent(_id){
-      this.c = this.eventServ.getOneEventFormat(_id);
-      document.getElementById('card').removeAttribute("display");
+      console.log('clicked');
+      this.clicked = true;
+      //this.g = this.eventServ.getEventsFormat();
+      this.g = this.eventServ.getOneEventFormat(_id);
     }
 }
 
