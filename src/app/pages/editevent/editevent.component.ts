@@ -7,11 +7,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
-  selector: 'app-postevent',
-  templateUrl: './postevent.component.html',
-  styleUrls: ['./postevent.component.scss']
+  selector: 'app-editevent',
+  templateUrl: './editevent.component.html',
+  styleUrls: ['./editevent.component.scss']
 })
-export class PosteventComponent implements OnInit {
+export class EditeventComponent implements OnInit {
 
   submitted=false;
   loading =false;
@@ -19,12 +19,28 @@ export class PosteventComponent implements OnInit {
   eventsForm: FormGroup;
   error: string;
   event: EventModel;
+  title: string;
+  description: string;
+  eventAddress: string[];
+  start_time: string;
+  end_time: string;
 
   constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService, private profileSvc: ProfileService) { 
     this.authSvc.authorize();
+    this.title = this.eventSvc.current_event.title;
+    this.description = this.eventSvc.current_event.description;
+    this.eventAddress = this.eventSvc.current_event.actual_address.split("+");
+    this.start_time = this.eventSvc.current_event.start_time;
+    this.end_time = this.eventSvc.current_event.end_time;
   }
 
   ngOnInit(): void {
+
+    this.title = this.eventSvc.current_event.title;
+    this.description = this.eventSvc.current_event.description;
+    this.eventAddress = this.eventSvc.current_event.actual_address.split("+");
+    this.start_time = this.eventSvc.current_event.start_time;
+    this.end_time = this.eventSvc.current_event.end_time;
     
     //Authorize w/ Business accounts only
 
@@ -44,17 +60,30 @@ export class PosteventComponent implements OnInit {
       start_time: '',
       end_time: ''
     });
+
+    this.eventsForm.setValue({
+      title: this.title,
+      description: this.description,
+      eventStreet: this.eventAddress[0],
+      eventApt: this.eventAddress[1],
+      eventCity: this.eventAddress[2],
+      eventState: this.eventAddress[3],
+      eventZip: this.eventAddress[4],
+      start_time: this.start_time,
+      end_time: this.end_time
+    });
+
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  postEvent(){
+  editEvent(){
     this.submitted == true;
-    console.log(this.eventsForm)
     if (this.eventsForm.invalid) {
       return;
     }
     this.loading = true;
     
+
     this.eventSvc.postEvent(
       this.eventsForm.controls.title.value,
       this.authSvc.userObject._id,
@@ -69,12 +98,7 @@ export class PosteventComponent implements OnInit {
       this.eventsForm.controls.end_time.value
       )
       .subscribe(response=>{
-        
-        this.authSvc.userObject.type_obj.hostedEvents.push(response._id);
         this.eventSvc.getEventsFormat();
-        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
-          this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{ 
-          },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
