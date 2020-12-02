@@ -28,6 +28,7 @@ export class GooglemapsComponent {
   clicked;
   loggedIn = this.authSvc.loggedIn;
 
+
   constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
     geolocService.lat.subscribe(res => {
       this.lat = geolocService.lat.value;
