@@ -22,6 +22,7 @@ export class GooglemapsComponent {
   //center: google.maps.LatLngLiteral;
   zoom:number;
   googleMapType:string
+  loaded:boolean;
   
   googleMapMarkerContainer:Array<GoogleMapMarker>;
   g:Array<EventModel>;
@@ -35,12 +36,20 @@ export class GooglemapsComponent {
       this.lng = geolocService.lng.value;
       this.googleMapType = 'ROADMAP';
       this.zoom = 15;
+      this.loaded = false;
       eventSvc.event_list.subscribe(events => {
-        this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
-        events.forEach( event => {
-          this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
-        });
-        console.log("loaded all events into map");
+        if (events != null) {
+          this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
+          events.forEach( event => {
+            this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
+          });
+          this.loaded = true;
+          console.log("loaded all events into map");
+        }
+        else {
+          this.loaded = false;
+          console.log("events_list == null");
+        }
       });
     })
   }

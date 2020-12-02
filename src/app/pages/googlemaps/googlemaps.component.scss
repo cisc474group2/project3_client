@@ -1,9 +1,16 @@
 .map {
-    width: 95vw;
+    // width: 95vw;
+    // min-height: 50vh;
+    // height: 0;
+    // vertical-align: middle;
+    // margin: 0 auto;
+    // margin-bottom: 2.5%;
+    width: 45vw;
     min-height: 50vh;
+    float: right;
     height: 0;
     vertical-align: middle;
-    margin: 0 auto;
+    margin: 2.5% auto;
     margin-bottom: 2.5%;
 
     agm-map {
