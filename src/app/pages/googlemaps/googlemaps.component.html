@@ -1,25 +1,4 @@
-<<<<<<< HEAD
-<div class="map">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
-        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-        <div class="event" *ngFor='let event of googleMapMarkerContainer'>
-            <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.label" [label]="event.title" labelClass="customLabel" (markerClick)="showEvent(event._id)"></agm-marker>
-        </div>
-        <agm-info-window [disableAutoPan]="true">
-            Hi, this is the content of the <strong>info window</strong>
-          </agm-info-window>
-    </agm-map>
-    <div style = "text-align: right; padding-top: 0.5%;">Lat: {{this.lat}}, Lng: {{this.lng}}</div>
-</div>
-
-<div *ngIf="clicked">
-<div class="card" *ngFor='let card of g'>
-    <div class="card-header">
-        <span id="title">{{card.title}}</span>
-        <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card._id)">Register</button></span>
-        <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-secondary" (click)="unregisterUser(card._id)">Unregister</button></span>
-=======
-<div *ngIf="loaded">
+<div *ngIf="loaded" class="mapPage">
     <div class="map">
         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
@@ -31,10 +10,14 @@
               </agm-info-window>
         </agm-map>
         <div style = "text-align: right; padding-top: 0.5%;">Lat: {{this.lat}}, Lng: {{this.lng}}</div>
->>>>>>> a04a9b4e9cbd6d6e8ea3b6610d57007ab65d45f1
+    </div>
+
+    <div class="details">
+    <div *ngIf="!clicked" class="beforeClick">
+        Click a marker to see the event details.
     </div>
     
-    <div *ngIf="clicked">
+    <div *ngIf="clicked" class="afterClick">
     <div class="card" *ngFor='let card of g'>
         <div class="card-header">
             <span id="title">{{card.title}}</span>
@@ -49,9 +32,14 @@
             <div><i class="fas fa-clock"></i><span>{{card.start_time}} - {{card.end_time}}</span></div>
         </div>
     </div>
+    </div>
+    </div>
 </div>
+
 <div *ngIf="!loaded">
-    <div class="spinner-border" role="status">
+    <div class="d-flex justify-content-center" style="padding-top: 45vh; vertical-align: middle;">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
+    </div>
     </div>
 </div>
