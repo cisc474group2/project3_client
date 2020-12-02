@@ -14,8 +14,10 @@ export class EventsService {
 
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
+    this.events_loaded.next(false);
   }
 
   getOneEvent(_id: string): Observable<any> {
@@ -115,10 +117,13 @@ export class EventsService {
 
   getEventsFormat(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
+    let count = 1;
     this.geoloc.accuracy.subscribe(res => {
       // If the user has declined geoloation features, it will just load all events
+      //console.log(res, this.geoloc.lat, this.geoloc.lng);
       if (res == -1) {
         this.getEvents().subscribe(result => {
+          //console.log(result.data);
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
@@ -131,7 +136,18 @@ export class EventsService {
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+
+              if (count == result.data.length) {
+                this.events_loaded.next(true);
+                console.log(this.sortList(event_model_list));
+                this.event_list.next(event_model_list);
+                console.log("all events loaded");
+              }
+              else {
+                count ++;
+                //console.log(count, " ", this.event_list);
+              }
             });
           });
         });
@@ -139,6 +155,7 @@ export class EventsService {
       //If the user has accepted geolocation features, it will pull all events from that location
       else if (res != -1 && res != null) {
         this.getLocalEventsCustRad(50).subscribe(result => {
+          //console.log(result.data);
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
@@ -151,15 +168,29 @@ export class EventsService {
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false))
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+
+              if (count == result.data.length) {
+                this.events_loaded.next(true);
+                console.log(this.sortList(event_model_list));
+                this.event_list.next(event_model_list);
+                console.log("all events loaded");
+              }
+              else {
+                count ++;
+                //console.log(count, " ", this.event_list);
+              }
             });
           });
         });
       }
+      else {
+        this.events_loaded.next(false);
+      }
       //Else it will not load anything else.
     });
-    event_model_list = this.sortList(event_model_list);
-    this.event_list.next(event_model_list);
+    //event_model_list = this.sortList(event_model_list);
+    //this.event_list.next(event_model_list);
     return event_model_list;
   }
 
@@ -195,14 +226,15 @@ export class EventsService {
   }
 
   private sortList(unsorted:Array<EventModel>):Array<EventModel> {
+    let tmp = 0;
     unsorted = unsorted.sort((a, b) => {
-      if (a.title > b.title) {return 1;}
-      else if (a.title < b.title) {return -1;}
-      else {
+      tmp = a.title.localeCompare(b.title);
+      if (tmp == 0) {
         if (a.create_date > b.create_date) {return 1;}
         else if (a.create_date < b.create_date) {return -1;}
         else return 0;
       }
+      return tmp;
     });
 
     return unsorted;

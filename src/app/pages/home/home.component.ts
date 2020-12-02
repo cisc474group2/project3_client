@@ -59,4 +59,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  eventsLoaded():boolean {
+    return this.eventSvc.events_loaded.value;
+  }
+
 }
