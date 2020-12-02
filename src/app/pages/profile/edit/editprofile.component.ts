@@ -12,6 +12,7 @@ import { ProfileService} from 'src/app/services/profile.service';
   styleUrls: ['./editprofile.component.scss']
 })
 export class EditprofileComponent implements OnInit {
+  
   profileForm: FormGroup;
   individualForm: FormGroup;
   businessForm: FormGroup;

@@ -3,6 +3,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { EventModel } from '../../../assets/model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   i = 0;
   loggedIn = this.authSvc.loggedIn;
 
-  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
+  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
     this.g = eventSvc.getEventsFormat();
   }
 
@@ -67,7 +68,8 @@ export class HomeComponent implements OnInit {
   }
 
   editEvent(event: EventModel){
-    return event;
+    this.eventSvc.current_event = event;
+    this.router.navigate(['editevent']);
   }
 
   eventsLoaded():boolean {

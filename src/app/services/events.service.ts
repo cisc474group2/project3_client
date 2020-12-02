@@ -15,6 +15,7 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  current_event: EventModel;
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
     this.events_loaded.next(false);
@@ -39,6 +40,18 @@ export class EventsService {
 
   postEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any> {
     return this.http.post<any>(this.path + 'events', { title: title, bus_id: busID, description: description, registered_ind: registered_ind, event_address: event_address, start_time: start_time, end_time: end_time })
+      .pipe(map(event => {
+        title = event.data.title
+        description = event.data.description
+        event_address = event.data.event_address
+        start_time = event.data.start_time
+        end_time = event.data.end_time
+        return event.data;
+      }), catchError(err => { return throwError(err.message || 'server error') }));
+  }
+
+  editEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any> {
+    return this.http.put<any>(this.path + 'events', { title: title, bus_id: busID, description: description, registered_ind: registered_ind, event_address: event_address, start_time: start_time, end_time: end_time })
       .pipe(map(event => {
         title = event.data.title
         description = event.data.description
@@ -109,7 +122,8 @@ export class EventsService {
             unformatted_event.data.event_geoloc,
             unformatted_event.data.create_date,
             (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false,
-            business.data._id))
+            business.data._id,
+            unformatted_event.event_address))
         });
     });
 
@@ -139,7 +153,8 @@ export class EventsService {
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
                 (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false,
-                business.data._id));
+                business.data._id,
+                unformatted_event.event_address));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
@@ -172,7 +187,8 @@ export class EventsService {
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
                 (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false,
-                business.data._id));
+                business.data._id,
+                unformatted_event.event_address));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
