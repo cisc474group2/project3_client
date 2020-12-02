@@ -108,7 +108,8 @@ export class EventsService {
             unformatted_event.data.registered_ind,
             unformatted_event.data.event_geoloc,
             unformatted_event.data.create_date,
-            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false))
+            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false,
+            business.data._id))
         });
     });
 
@@ -136,7 +137,8 @@ export class EventsService {
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false,
+                business.data._id));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
@@ -168,7 +170,8 @@ export class EventsService {
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false,
+                business.data._id));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);

@@ -1,0 +1,66 @@
+<form [formGroup]="eventsForm" (ngSubmit)="postEvent()">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.title.errors }" />
+        <div *ngIf="submitted && eventsForm.controls.title.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.title.errors.required">Title is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.description.errors }" />
+    </div>
+    <div class="form-group">
+        <label for="eventStreet">Street Address</label>
+        <input type="text" formControlName="eventStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventStreet.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventStreet.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventStreet.errors.required">eventStreet is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventApt">Unit/P.O. Box</label>
+        <input type="text" formControlName="eventApt" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventApt.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventApt.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventApt.errors.required">eventApt is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventCity">City</label>
+        <input type="text" formControlName="eventCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventCity.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventCity.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventCity.errors.required">eventCity is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventState">State</label>
+        <input type="text" formControlName="eventState" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventState.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventState.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventState.errors.required">eventState is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="eventZip">Zip</label>
+        <input type="text" formControlName="eventZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.eventZip.errors }"/>
+        <div *ngIf="submitted && eventsForm.controls.eventZip.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.eventZip.errors.required">eventZip is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="start_time">Start</label>
+        <input type="datetime-local" formControlName="start_time" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.start.errors }" />
+        <div *ngIf="submitted && eventsForm.controls.start.errors" class="invalid-feedback">
+            <div *ngIf="eventsForm.controls.start.errors.required">Start time is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="end_time">End</label>
+        <input type="datetime-local" formControlName="end_time" class="form-control" [ngClass]="{ 'is-invalid': submitted && eventsForm.controls.end.errors }" />
+    </div>
+
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Submit
+        </button>
+    </div>
+</form>

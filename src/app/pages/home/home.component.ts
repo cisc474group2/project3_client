@@ -59,6 +59,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  currentBusiness(id: string):boolean{
+    if(this.authSvc.userObject != null){
+      return id == this.authSvc.userObject._id;
+    }
+    else return false;
+  }
+
+  editEvent(event: EventModel){
+    return event;
+  }
+
   eventsLoaded():boolean {
     return this.eventSvc.events_loaded.value;
   }

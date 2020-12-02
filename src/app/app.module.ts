@@ -20,6 +20,7 @@ import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
 import { AgmCoreModule } from '@agm/core';
 import { Config } from 'src/assets/Config';
 import {EditprofileComponent} from './pages/profile/edit/editprofile.component';
+import {EditeventComponent} from './pages/editevent/editevent.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {EditprofileComponent} from './pages/profile/edit/editprofile.component';
     PosteventComponent,
     ProfileComponent,
     GooglemapsComponent,
-    EditprofileComponent
+    EditprofileComponent,
+    EditeventComponent
   ],
   imports: [
     BrowserModule,
