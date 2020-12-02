@@ -118,6 +118,7 @@ export class EventsService {
   getEventsFormat(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
     let count = 1;
+    this.events_loaded.next(false);
     this.geoloc.accuracy.subscribe(res => {
       // If the user has declined geoloation features, it will just load all events
       //console.log(res, this.geoloc.lat, this.geoloc.lng);
