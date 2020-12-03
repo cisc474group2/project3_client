@@ -27,11 +27,6 @@ export class EditeventComponent implements OnInit {
 
   constructor(public authSvc:AuthService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private eventSvc: EventsService, private profileSvc: ProfileService) { 
     this.authSvc.authorize();
-    this.title = this.eventSvc.current_event.title;
-    this.description = this.eventSvc.current_event.description;
-    this.eventAddress = this.eventSvc.current_event.actual_address.split("+");
-    this.start_time = this.eventSvc.current_event.start_time;
-    this.end_time = this.eventSvc.current_event.end_time;
   }
 
   ngOnInit(): void {
@@ -81,10 +76,9 @@ export class EditeventComponent implements OnInit {
     if (this.eventsForm.invalid) {
       return;
     }
-    this.loading = true;
-    
+    this.loading = true; 
 
-    this.eventSvc.postEvent(
+    this.eventSvc.editEvent(
       this.eventsForm.controls.title.value,
       this.authSvc.userObject._id,
       this.eventsForm.controls.description.value,
@@ -99,11 +93,11 @@ export class EditeventComponent implements OnInit {
       )
       .subscribe(response=>{
         this.eventSvc.getEventsFormat();
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['home']);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
       
-      this.router.navigate(['home']);
+      
   }
  
 }

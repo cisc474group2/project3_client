@@ -51,7 +51,7 @@ export class EventsService {
   }
 
   editEvent(title: string, busID: string, description: string, registered_ind: string[], event_address: string, start_time: string, end_time: string): Observable<any> {
-    return this.http.put<any>(this.path + 'events', { title: title, bus_id: busID, description: description, registered_ind: registered_ind, event_address: event_address, start_time: start_time, end_time: end_time })
+    return this.http.put<any>(this.path + 'events' + "/" + this.current_event._id, { title: title, bus_id: busID, description: description, registered_ind: registered_ind, event_address: event_address, start_time: start_time, end_time: end_time })
       .pipe(map(event => {
         title = event.data.title
         description = event.data.description
