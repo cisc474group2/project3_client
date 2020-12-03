@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
     this.authSvc.authorize();
     this.email = this.authSvc.userObject.email;
     this.reg_events = this.authSvc.userObject.reg_events;
+    console.log(this.reg_events);
     if(this.authSvc.userObject.type == 'I'){
       this.fName = this.authSvc.userObject.type_obj.fName;
       this.lName = this.authSvc.userObject.type_obj.lName;
