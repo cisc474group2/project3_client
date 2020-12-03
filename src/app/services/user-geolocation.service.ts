@@ -12,9 +12,31 @@ export class UserGeolocationService {
 
   constructor() {
     
-   }
+  }
 
   getLocation(): void{
+    // navigator.permissions.query({ name: 'geolocation' }).then(res => { 
+    //   console.log(res.state);
+    //   if (res.state === "granted") {
+    //     navigator.geolocation.getCurrentPosition((position) => {
+    //       this.lng.next(position.coords.longitude);
+    //       this.lat.next(position.coords.latitude);
+    //       this.accuracy.next(position.coords.accuracy);
+    //     });
+    //   } 
+    //   else if (res.state === "denied") {
+    //     console.log("Request for Geolocation Denied");
+    //     this.lng.next(null);
+    //     this.lat.next(null);
+    //     this.accuracy.next(-1);
+    //   } 
+    //   else {
+    //     console.log("No Support for Geolocation");
+    //     this.lng.next(null);
+    //     this.lat.next(null);
+    //     this.accuracy.next(null);
+    //   }
+    // });
     if (navigator.permissions.query({ name: 'geolocation' }).then(res => {return res.state === "granted"})) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lng.next(position.coords.longitude);
@@ -32,5 +54,10 @@ export class UserGeolocationService {
       this.lat.next(null);
       this.accuracy.next(null);
     }
+  }
+
+  overrideGeolocLocation(lng:number, lat:number):void {
+    this.lng.next(lng);
+    this.lat.next(lat);
   }
 }

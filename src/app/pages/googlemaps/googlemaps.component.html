@@ -9,6 +9,12 @@
                 Hi, this is the content of the <strong>info window</strong>
               </agm-info-window>
         </agm-map>
+        <mat-google-maps-autocomplete  country="us"
+                               type="address"
+                               placeholderText="Input new location..."
+                               (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                               (onLocationSelected)="onLocationSelected($event)">
+        </mat-google-maps-autocomplete>
         <div style = "text-align: right; padding-top: 0.5%;">Lat: {{this.lat}}, Lng: {{this.lng}}</div>
     </div>
 
