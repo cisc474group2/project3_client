@@ -1,17 +1,18 @@
+.mapPage{
+  width: 95vw;
+  height: 90vh;
+  margin: 0 auto;
+  display: flex;
+}
+
 .map {
-    // width: 95vw;
-    // min-height: 50vh;
-    // height: 0;
-    // vertical-align: middle;
-    // margin: 0 auto;
-    // margin-bottom: 2.5%;
-    width: 45vw;
+    width: 50vw;
     min-height: 50vh;
-    float: right;
-    height: 0;
-    vertical-align: middle;
-    margin: 2.5% auto;
+    height: 90vh;
+    float: left;
+    margin: 0 auto;
     margin-bottom: 2.5%;
+    margin-right: 2.5%;
 
     agm-map {
         height: 100%;
@@ -29,12 +30,26 @@
   }
   .card{
     margin-bottom: 2.5%;
+    width: 45vw;
+    height: 25vh;
   }
   i{
     width: 2em;
     text-align: center;
   }
 
-  agm-marker[label]{
-    background-color: white !important;
+.details{
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+  .beforeClick{
+    padding: 2.5%;
+    font-size: 3em;
+    margin: 0 auto;
+  }
+  .afterClick{
+    padding: 2.5%;
+    margin: 0 auto;
+  }

@@ -22,6 +22,7 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
 import { Config } from 'src/assets/Config';
 import { EditprofileComponent } from './pages/profile/edit/editprofile.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {EditeventComponent} from './pages/editevent/editevent.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     PosteventComponent,
     ProfileComponent,
     GooglemapsComponent,
-    EditprofileComponent
+    EditprofileComponent,
+    EditeventComponent
   ],
   imports: [
     BrowserModule,
