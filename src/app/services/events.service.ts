@@ -145,19 +145,19 @@ export class EventsService {
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               //console.log(unformatted_event);
-              event_model_list.push(new EventModel(unformatted_event.data.title,
-                unformatted_event.data.description,
-                this.formatAddress(unformatted_event.data.event_address),
-                new Date(unformatted_event.data.start_time),
-                new Date(unformatted_event.data.end_time),
-                unformatted_event.data._id,
+              event_model_list.push(new EventModel(unformatted_event.title,
+                unformatted_event.description,
+                this.formatAddress(unformatted_event.event_address),
+                new Date(unformatted_event.start_time),
+                new Date(unformatted_event.end_time),
+                unformatted_event._id,
                 business.data.type_obj.bus_name,
-                unformatted_event.data.registered_ind,
-                unformatted_event.data.event_geoloc,
-                unformatted_event.data.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false ,
-                this.convertTimestamp(unformatted_event.data.start_time),
-                this.convertTimestamp(unformatted_event.data.end_time),
+                unformatted_event.registered_ind,
+                unformatted_event.event_geoloc,
+                unformatted_event.create_date,
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time),
                 business.data._id,
                 unformatted_event.event_address));
 
@@ -182,19 +182,19 @@ export class EventsService {
           result.data.forEach(unformatted_event => {
             //console.log(unformatted_event);
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-              event_model_list.push(new EventModel(unformatted_event.data.title,
-                unformatted_event.data.description,
-                this.formatAddress(unformatted_event.data.event_address),
-                new Date(unformatted_event.data.start_time),
-                new Date(unformatted_event.data.end_time),
-                unformatted_event.data._id,
+              event_model_list.push(new EventModel(unformatted_event.title,
+                unformatted_event.description,
+                this.formatAddress(unformatted_event.event_address),
+                new Date(unformatted_event.start_time),
+                new Date(unformatted_event.end_time),
+                unformatted_event._id,
                 business.data.type_obj.bus_name,
-                unformatted_event.data.registered_ind,
-                unformatted_event.data.event_geoloc,
-                unformatted_event.data.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false ,
-                this.convertTimestamp(unformatted_event.data.start_time),
-                this.convertTimestamp(unformatted_event.data.end_time),
+                unformatted_event.registered_ind,
+                unformatted_event.event_geoloc,
+                unformatted_event.create_date,
+                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time),
                 business.data._id,
                 unformatted_event.event_address));
 

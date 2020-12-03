@@ -34,8 +34,8 @@ export class EditeventComponent implements OnInit {
     this.title = this.eventSvc.current_event.title;
     this.description = this.eventSvc.current_event.description;
     this.eventAddress = this.eventSvc.current_event.actual_address.split("+");
-    this.start_time = this.eventSvc.current_event.start_time;
-    this.end_time = this.eventSvc.current_event.end_time;
+    this.start_time = this.eventSvc.current_event.start_time.toISOString().substring(0, 16);
+    this.end_time = this.eventSvc.current_event.end_time.toISOString().substring(0, 16);
     
     //Authorize w/ Business accounts only
 
@@ -93,10 +93,9 @@ export class EditeventComponent implements OnInit {
       )
       .subscribe(response=>{
         this.eventSvc.getEventsFormat();
-        this.router.navigate(['home']);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
-      
+      this.router.navigate(['home']);
       
   }
  
