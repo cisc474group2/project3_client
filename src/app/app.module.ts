@@ -18,8 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
 import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
 import { AgmCoreModule } from '@agm/core';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { Config } from 'src/assets/Config';
-import {EditprofileComponent} from './pages/profile/edit/editprofile.component';
+import { EditprofileComponent } from './pages/profile/edit/editprofile.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -41,8 +43,10 @@ import {EditprofileComponent} from './pages/profile/edit/editprofile.component';
     BrowserAnimationsModule,
     MaterialModule,
     AgmCoreModule.forRoot({
-      apiKey: Config.GOOGLE_API
-    })
+      apiKey: Config.GOOGLE_API,
+      libraries: ['places']
+    }),
+    MatGoogleMapsAutocompleteModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]

@@ -6,10 +6,12 @@ import { UserGeolocationService } from 'src/app/services/user-geolocation.servic
 //@ts-ignore
 import { Config } from '../../../assets/Config';
 import { EventsService } from 'src/app/services/events.service';
-import { EventModel } from '../../../assets/model';
+import { EventModel, Geoloc } from '../../../assets/model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-googlemaps',
@@ -29,25 +31,26 @@ export class GooglemapsComponent {
   clicked;
   loggedIn = this.authSvc.loggedIn;
 
-  constructor(http:HttpClient, geolocService:UserGeolocationService, eventSvc:EventsService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
+  constructor(http:HttpClient, private geolocService:UserGeolocationService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) {
     geolocService.lat.subscribe(res => {
+      //console.log("changed location");
       this.lat = geolocService.lat.value;
       this.lng = geolocService.lng.value;
       this.googleMapType = 'ROADMAP';
       this.zoom = 15;
       this.loaded = false;
-      eventSvc.event_list.subscribe(events => {
+      eventServ.event_list.subscribe(events => {
         if (events != null) {
           this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
           events.forEach( event => {
             this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
           });
           this.loaded = true;
-          console.log("loaded all events into map");
+          //console.log("loaded all events into map");
         }
         else {
           this.loaded = false;
-          console.log("events_list == null");
+          //console.log("events_list == null");
         }
       });
     })
@@ -94,6 +97,20 @@ export class GooglemapsComponent {
   
       }
     }
+
+    onAutocompleteSelected(result: PlaceResult) {
+      console.log('onAutocompleteSelected: ', result);
+    }
+   
+    onLocationSelected(location: Location) {
+      this.geolocService.overrideGeolocLocation(location.longitude, location.latitude);
+      this.eventServ.getLocalEvents();
+      //this.lat = location.latitude;
+      //this.lng = location.longitude;
+
+    }
+
+
 }
 
 export class GoogleMapMarker{

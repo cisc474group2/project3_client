@@ -101,14 +101,16 @@ export class EventsService {
           event.push(new EventModel(unformatted_event.data.title,
             unformatted_event.data.description,
             this.formatAddress(unformatted_event.data.event_address),
-            this.convertTimestamp(unformatted_event.data.start_time),
-            this.convertTimestamp(unformatted_event.data.end_time),
+            new Date(unformatted_event.data.start_time),
+            new Date(unformatted_event.data.end_time),
             unformatted_event.data._id,
             business.data.type_obj.bus_name,
             unformatted_event.data.registered_ind,
             unformatted_event.data.event_geoloc,
             unformatted_event.data.create_date,
-            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false))
+            (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event.data._id):false ,
+            this.convertTimestamp(unformatted_event.data.start_time),
+            this.convertTimestamp(unformatted_event.data.end_time)))
         });
     });
 
@@ -127,17 +129,23 @@ export class EventsService {
           //console.log(result.data);
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+              //console.log(unformatted_event);
               event_model_list.push(new EventModel(unformatted_event.title,
                 unformatted_event.description,
                 this.formatAddress(unformatted_event.event_address),
-                this.convertTimestamp(unformatted_event.start_time),
-                this.convertTimestamp(unformatted_event.end_time),
+                new Date(unformatted_event.start_time),
+                new Date(unformatted_event.end_time),
                 unformatted_event._id,
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+                (this.authSvc.userObject!=null) ? 
+                  this.authSvc.userObject.reg_events.includes(unformatted_event._id) : 
+                  false,
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time)
+              ));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
@@ -158,18 +166,24 @@ export class EventsService {
         this.getLocalEventsCustRad(50).subscribe(result => {
           //console.log(result.data);
           result.data.forEach(unformatted_event => {
+            //console.log(unformatted_event);
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               event_model_list.push(new EventModel(unformatted_event.title,
                 unformatted_event.description,
                 this.formatAddress(unformatted_event.event_address),
-                this.convertTimestamp(unformatted_event.start_time),
-                this.convertTimestamp(unformatted_event.end_time),
+                new Date(unformatted_event.start_time),
+                new Date(unformatted_event.end_time),
                 unformatted_event._id,
                 business.data.type_obj.bus_name,
                 unformatted_event.registered_ind,
                 unformatted_event.event_geoloc,
                 unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false));
+                (this.authSvc.userObject!=null) ? 
+                  this.authSvc.userObject.reg_events.includes(unformatted_event._id) : 
+                  false,
+                this.convertTimestamp(unformatted_event.start_time),
+                this.convertTimestamp(unformatted_event.end_time)
+              ));
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
@@ -228,17 +242,33 @@ export class EventsService {
 
   private sortList(unsorted:Array<EventModel>):Array<EventModel> {
     let tmp = 0;
-    unsorted = unsorted.sort((a, b) => {
-      tmp = a.title.localeCompare(b.title);
+    unsorted = unsorted.sort(this.upcommingSort);
+
+    return unsorted;
+  }
+
+  private alphaSort(a:EventModel, b:EventModel):number {
+    let tmp = a.title.localeCompare(b.title);
       if (tmp == 0) {
         if (a.create_date > b.create_date) {return 1;}
         else if (a.create_date < b.create_date) {return -1;}
         else return 0;
       }
       return tmp;
-    });
-
-    return unsorted;
   }
 
+  private upcommingSort(a:EventModel, b:EventModel):number {
+    if (a.start_time > b.start_time) return 1;
+    else if (a.start_time < b.start_time) return -1;
+    else {
+      if (a.end_time > b.end_time) return 1;
+      else if (a.end_time < b.end_time) return -1;
+      else {
+        let tmp = a.title.localeCompare(b.title);
+        if (tmp > 0) return 1;
+        else if (tmp < 0) return -1;
+        return 0;
+      }
+    }
+  }
 }
