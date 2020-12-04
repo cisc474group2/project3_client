@@ -1,6 +1,7 @@
 import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService} from 'src/app/services/profile.service';
@@ -32,6 +33,8 @@ export class ProfileComponent implements OnInit {
   hostedEvents: EventModel[];
   showIfIndividual = false;
   showIfBusiness = false;
+  checkingRegisteredEvents = true;
+  checkingHostedEvents = false;
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
     this.authSvc.authorize();
@@ -135,6 +138,19 @@ export class ProfileComponent implements OnInit {
   
   editProfile(){
     this.router.navigate(['profile/edit']);
-  }    
+  }
 
+  onTabSelectChange(tab:MatTabChangeEvent) {
+    switch (tab.index) {
+    case 0:
+      this.checkingHostedEvents = false;
+      this.checkingRegisteredEvents = true;
+      break;
+    case 1:
+      this.checkingHostedEvents = true;
+      this.checkingRegisteredEvents = false;
+      break;
+    } 
+
+  }
 }

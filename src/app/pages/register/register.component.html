@@ -15,7 +15,7 @@
             <div *ngIf="registerForm.controls.password.errors.required">Password is required</div>
         </div>
     </div>
-    <div class="form-group">
+    <div id="indBus" class="form-group">
         <label for="individual">Individual</label>
         <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
         <label for="business">Business</label>
@@ -62,9 +62,9 @@
             <div *ngIf="businessForm.controls.businessName.errors.required">Username is required</div>
         </div>
     </div>
-    <div class="form-group" *ngIf="showIfBusiness">
+    <!--<div id="businessAddress" class="form-group" *ngIf="showIfBusiness">
         Business Address
-    </div>
+    </div>-->
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessStreet">Street</label>
         <input type="text" formControlName="businessStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessStreet.errors }"/>
@@ -88,7 +88,7 @@
     </div>
     <div class="form-group" *ngIf="showIfBusiness">
         <label for="businessState">State</label>
-        <select>
+        <select id="stateBox" formControlName="businessState" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }">
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -141,7 +141,7 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
         </select>	
-        <input type="text" formControlName="businessState" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }"/>
+        <!--<input type="text" formControlName="businessState" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }"/>-->
         <div *ngIf="submitted && businessForm.controls.businessState.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessState.errors.required">businessState is required</div>
         </div>
