@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { EventModel } from 'src/assets/model';
+import { EventModel, Geoloc } from 'src/assets/model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,9 @@ export class UserGeolocationService {
   public lat: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public lng: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public accuracy: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public userGeoloc: BehaviorSubject<Geoloc> = new BehaviorSubject<Geoloc>(null);
 
   constructor() {
-    
   }
 
   getLocation(): void{
@@ -42,6 +42,7 @@ export class UserGeolocationService {
         this.lng.next(position.coords.longitude);
         this.lat.next(position.coords.latitude);
         this.accuracy.next(position.coords.accuracy);
+        this.userGeoloc.next(new Geoloc(this.lng.value, this.lat.value));
       });
     } else if (navigator.permissions.query({ name: 'geolocation' }).then(res => {return res.state === "denied"})) {
       console.log("Request for Geolocation Denied");
@@ -59,5 +60,6 @@ export class UserGeolocationService {
   overrideGeolocLocation(lng:number, lat:number):void {
     this.lng.next(lng);
     this.lat.next(lat);
+    this.userGeoloc.next(new Geoloc(lat, lng));
   }
 }
