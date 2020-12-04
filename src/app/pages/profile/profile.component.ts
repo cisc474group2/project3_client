@@ -140,6 +140,27 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['profile/edit']);
   }
 
+  unregisterUser(event){
+    this.authSvc.authorize();
+    if(this.authSvc.userObject.reg_events.includes(event._id)){
+      var index = this.authSvc.userObject.reg_events.indexOf(event._id);
+      this.authSvc.userObject.reg_events.splice(index, 1);
+
+      this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+        this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+          console.log(response);
+          //this.eventSvc.getEventsFormat();
+          event.registered = !event.registered;
+          event.registered_ind.length--;
+        },err=>{console.error(err);});
+      
+
+        this.eventSvc.deleteFromUserList(event._id, this.authSvc.userObject._id).subscribe(response=>{
+          console.log(response);
+        },err=>{console.error(err);});
+    }
+  }
+
   onTabSelectChange(tab:MatTabChangeEvent) {
     switch (tab.index) {
     case 0:
@@ -152,5 +173,37 @@ export class ProfileComponent implements OnInit {
       break;
     } 
 
+  }
+
+  editEvent(event: EventModel){
+    this.eventSvc.current_event = event;
+    this.router.navigate(['editevent']);
+  }
+
+  registerUser(event){
+    this.authSvc.authorize();
+    if(!this.authSvc.userObject.reg_events.includes(event._id)){
+      this.authSvc.userObject.reg_events.push(event._id);
+
+        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+          this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+            console.log(response);
+            //this.eventSvc.getEventsFormat();
+            event.registered = !event.registered;
+            event.registered_ind.length++;
+          },err=>{console.error(err);});
+
+
+          this.eventSvc.updateUserList(event._id, this.authSvc.userObject._id).subscribe(response=>{
+            console.log(response);
+          },err=>{console.error(err);});
+    }
+  }
+
+  currentBusiness(id: string):boolean{
+    if(this.authSvc.userObject != null){
+      return id == this.authSvc.userObject._id;
+    }
+    else return false;
   }
 }
