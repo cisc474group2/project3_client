@@ -33,8 +33,7 @@ export class ProfileComponent implements OnInit {
   hostedEvents: EventModel[];
   showIfIndividual = false;
   showIfBusiness = false;
-  checkingProfile = true;
-  checkingRegisteredEvents = false;
+  checkingRegisteredEvents = true;
   checkingHostedEvents = false;
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
@@ -144,17 +143,10 @@ export class ProfileComponent implements OnInit {
   onTabSelectChange(tab:MatTabChangeEvent) {
     switch (tab.index) {
     case 0:
-      this.checkingProfile = true;
-      this.checkingHostedEvents = false;
-      this.checkingRegisteredEvents = false;
-      break;
-    case 1:
-      this.checkingProfile = false;
       this.checkingHostedEvents = false;
       this.checkingRegisteredEvents = true;
       break;
-    case 2:
-      this.checkingProfile = false;
+    case 1:
       this.checkingHostedEvents = true;
       this.checkingRegisteredEvents = false;
       break;

@@ -1,12 +1,11 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <h2 style="margin:auto; width: 50%; text-align: center; margin-top: 1%">Your Profile</h2>
-<mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
-    <mat-tab label="Profile"></mat-tab>
+<mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="end">
     <mat-tab label="Registered Events"></mat-tab>
     <mat-tab label="Hosted Events" *ngIf="showIfBusiness"></mat-tab>
   </mat-tab-group>
 
-<div id=left *ngIf="checkingProfile">
+<div id=left>
     <label for="email" class="label">Email:</label>
         <div name="email">{{email}}<br><br></div>
     <label for="fName" class="label" *ngIf="showIfIndividual">First Name:</label>
