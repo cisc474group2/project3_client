@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   submitted = false;
   notEditingProfile = true;
   email: string;
-  reg_events: string[] = [];
+  reg_events;
   fName: string;
   lName: string;
   busName: string;
@@ -35,28 +35,9 @@ export class ProfileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
     this.authSvc.authorize();
-    this.email = this.authSvc.userObject.email;
-    this.reg_events = this.authSvc.userObject.reg_events;
-    for(let i=0;i<this.reg_events.length;i++){
-      this.eventSvc.getOneEvent(this.reg_events[i]).subscribe(response=>{
-        if(i=0){
-          document.getElementById("reg_events").innerHTML="";
-        }
-        document.getElementById("reg_events").innerHTML+=`<div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                              <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#reg_events" href="#eventBody${i}">
-                                                                  ${response.data.title}
-                                                                </a>
-                                                              </h4>
-                                                            </div>
-                                                            <div id="eventBody${i}" class="panel-collapse collapse">
-                                                              <div class="panel-body"> Body
-                                                              </div>
-                                                            </div>
-                                                          </div>`;
-      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
-    }
+   
+    this.reg_events = this.getFormattedEvents();
+    
     if(this.authSvc.userObject.type == 'I'){
       this.fName = this.authSvc.userObject.type_obj.fName;
       this.lName = this.authSvc.userObject.type_obj.lName;
@@ -76,13 +57,40 @@ export class ProfileComponent implements OnInit {
       for(let i=0;i<this.hostedEvents.length;i++){
         this.eventSvc.getOneEvent(this.hostedEvents[i]).subscribe(response=>{
           if(i=0){
-            document.getElementById("hostedEvents").innerHTML="";
+           // document.getElementById("hostedEvents").innerHTML="";
           }
-          document.getElementById("hostedEvents").innerHTML+=``;
+          //document.getElementById("hostedEvents").innerHTML+=``;
         },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
       }
     }
     
+   }
+
+   getFormattedEvents(): EventModel[]{
+    let event_model_list = Array<EventModel>();
+    this.eventSvc.getBulkEvents().subscribe(response=>{
+      response.data.forEach(event=>{
+      this.eventSvc.getBusiness(event.bus_id).subscribe(business => {
+        //console.log(event);
+        event_model_list.push(new EventModel(event.title,
+          event.description,
+          this.eventSvc.formatAddress(event.event_address),
+          new Date(event.start_time),
+          new Date(event.end_time),
+          event._id,
+          business.data.type_obj.bus_name,
+          event.registered_ind,
+          event.event_geoloc,
+          event.create_date,
+          (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(event._id):false ,
+          this.eventSvc.convertTimestamp(event.start_time),
+          this.eventSvc.convertTimestamp(event.end_time),
+          business.data._id,
+          event.event_address));
+    })
+  })});
+  return event_model_list;
+
    }
 
   ngOnInit(): void {
@@ -91,6 +99,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['login'])
       }
       else{
+        this.email = this.authSvc.userObject.email;
         if(this.authSvc.userObject.type == 'I'){
           this.showIfIndividual = true;
           this.showIfBusiness = false;

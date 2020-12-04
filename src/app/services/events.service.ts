@@ -103,6 +103,10 @@ export class EventsService {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
   }
 
+  getBulkEvents(){
+    return this.http.post<any>(this.path + 'events' + "/" + "bulk", {reg_events: this.authSvc.userObject.reg_events});
+  }
+
   getOneEventFormat(_id){
     let event = Array<EventModel>();
     this.getOneEvent(_id).subscribe(response => {
