@@ -163,7 +163,7 @@ export class EventsService {
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
-                console.log(this.sortList(event_model_list));
+                //console.log(this.sortList(event_model_list));
                 this.event_list.next(event_model_list);
                 console.log("all events loaded");
               }
@@ -200,9 +200,9 @@ export class EventsService {
 
               if (count == result.data.length) {
                 this.events_loaded.next(true);
-                console.log(this.sortList(event_model_list));
+                //console.log(this.sortList(event_model_list));
                 this.event_list.next(event_model_list);
-                console.log("all events loaded");
+                console.log("local events loaded");
               }
               else {
                 count ++;
@@ -253,14 +253,14 @@ export class EventsService {
     return event_address.replace(/[+]/g, " ");
   }
 
-  private sortList(unsorted:Array<EventModel>):Array<EventModel> {
+  public sortList(unsorted:Array<EventModel>, sortFun):Array<EventModel> {
     let tmp = 0;
-    unsorted = unsorted.sort(this.upcommingSort);
+    unsorted = unsorted.sort(sortFun);
 
     return unsorted;
   }
 
-  private alphaSort(a:EventModel, b:EventModel):number {
+  alphaSort(a:EventModel, b:EventModel):number {
     let tmp = a.title.localeCompare(b.title);
       if (tmp == 0) {
         if (a.create_date > b.create_date) {return 1;}
@@ -270,12 +270,27 @@ export class EventsService {
       return tmp;
   }
 
-  private upcommingSort(a:EventModel, b:EventModel):number {
+  upcommingSort(a:EventModel, b:EventModel):number {
     if (a.start_time > b.start_time) return 1;
     else if (a.start_time < b.start_time) return -1;
     else {
       if (a.end_time > b.end_time) return 1;
       else if (a.end_time < b.end_time) return -1;
+      else {
+        let tmp = a.title.localeCompare(b.title);
+        if (tmp > 0) return 1;
+        else if (tmp < 0) return -1;
+        return 0;
+      }
+    }
+  }
+
+  hotSort(a:EventModel, b:EventModel):number {
+    if (b.registered_ind.length - a.registered_ind.length != 0) 
+      return b.registered_ind.length - a.registered_ind.length;
+    else {
+      if (a.start_time > b.start_time) return 1;
+      else if (a.start_time < b.start_time) return -1;
       else {
         let tmp = a.title.localeCompare(b.title);
         if (tmp > 0) return 1;

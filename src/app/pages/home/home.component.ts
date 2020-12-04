@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { EventModel } from '../../../assets/model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home',
@@ -75,5 +76,22 @@ export class HomeComponent implements OnInit {
   eventsLoaded():boolean {
     return this.eventSvc.events_loaded.value;
   }
+  
 
+  onTabSelectChange(tab:MatTabChangeEvent) {
+    switch (tab.index) {
+    case 0:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
+      break;
+    case 1:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+      break;
+    case 2:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
+      break;
+    case 3:
+
+      break;
+    }
+  }
 }
