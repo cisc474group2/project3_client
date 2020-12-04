@@ -15,6 +15,7 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);S
   current_event: EventModel;
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
@@ -254,7 +255,9 @@ export class EventsService {
   }
 
   public sortList(unsorted:Array<EventModel>, sortFun):Array<EventModel> {
-    let tmp = 0;
+    unsorted.map(event => {
+      event.usrLoc = this.geoloc.userGeoloc.value; 
+    })
     unsorted = unsorted.sort(sortFun);
 
     return unsorted;
@@ -298,5 +301,33 @@ export class EventsService {
         return 0;
       }
     }
+  }
+
+  distanceSort(a:EventModel, b:EventModel):number {
+    return EventsService.getDistanceFromLatLonInMile(
+      a.event_geoloc.lat, a.event_geoloc.lng, 
+      a.usrLoc.lat, a.usrLoc.lng)
+  - EventsService.getDistanceFromLatLonInMile(
+      b.event_geoloc.lat, b.event_geoloc.lng, 
+      a.usrLoc.lat, a.usrLoc.lng);
+  }
+
+
+  static getDistanceFromLatLonInMile(a_lat:number, a_lng:number, b_lat:number, b_lng:number):number {
+    let R = 3958.8; // Radius of the earth in mile
+    let dLat = this.deg2rad(b_lat-a_lat);  // deg2rad below
+    let dLon = this.deg2rad(b_lng-a_lng); 
+    let a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(this.deg2rad(a_lat)) * Math.cos(this.deg2rad(b_lat)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2); 
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    let d = R * c; // Distance in mile
+    console.log(d);
+    return d;
+  }
+  
+  static deg2rad(deg):number {
+    return deg * (Math.PI/180)
   }
 }

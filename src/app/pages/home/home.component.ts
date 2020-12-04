@@ -5,6 +5,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { UserGeolocationService } from '../../services/user-geolocation.service';
 
 @Component({
   selector: 'app-home',
@@ -77,7 +78,11 @@ export class HomeComponent implements OnInit {
     return this.eventSvc.events_loaded.value;
   }
   
-
+  //Popular Events
+  //Near Me
+  //New Events
+  //Right Now
+  //My Events
   onTabSelectChange(tab:MatTabChangeEvent) {
     switch (tab.index) {
     case 0:
@@ -87,7 +92,7 @@ export class HomeComponent implements OnInit {
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
       break;
     case 2:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.distanceSort));
       break;
     case 3:
 

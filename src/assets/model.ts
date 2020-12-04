@@ -76,13 +76,13 @@ export class Geoloc {
 	lat:number;
 
 	public constructor(lng:number, lat:number) {
-		this.lat = 0.0;
-		this.lng = 0.0;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	toObject():any{
-        return {lat:this.lat,
-            lng:this.lng
+		return {lng:this.lng,
+			lat:this.lat
         };
 	}
 	
@@ -106,6 +106,8 @@ export class EventModel{
 	completed:boolean = false;
 	actual_bus_id:string='';
 	actual_address:string='';
+	usrLoc: Geoloc = null;
+	distToEvent:number = 0;  
 
 	
 	public constructor(title:string, description:string, event_address:string, start_time:Date, end_time:Date, _id:string='', bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null, registered:boolean=false, cust_str_start:string='', cust_str_end:string='', actual_bus_id: string='', actual_address: string=''){

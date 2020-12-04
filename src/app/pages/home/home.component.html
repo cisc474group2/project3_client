@@ -1,11 +1,11 @@
 <h1 style="text-align: center; padding: 2.5%;">Events Near You</h1>
 <div *ngIf="eventsLoaded()">
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
-        <mat-tab label="Hot"> Hot </mat-tab>
-        <mat-tab label="Top"> Top </mat-tab>
-        <mat-tab label="New"> New </mat-tab>
-        <mat-tab label="Ongoing"> Ongoing </mat-tab>
-        <mat-tab *ngIf="loggedIn" label="Own">Own</mat-tab>
+        <mat-tab label="Popular Events"></mat-tab>
+        <mat-tab label="Near Me"></mat-tab>
+        <mat-tab label="New Events"></mat-tab>
+        <mat-tab label="Right Now"></mat-tab>
+        <mat-tab *ngIf="loggedIn" label="My Events"></mat-tab>
       </mat-tab-group>
       
     <div class="card" *ngFor='let card of g'>
