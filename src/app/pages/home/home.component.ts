@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
             console.log(response);
             //this.eventSvc.getEventsFormat();
             event.registered = !event.registered;
+            event.registered_ind.length++;
           },err=>{console.error(err);});
 
 
@@ -54,6 +55,7 @@ export class HomeComponent implements OnInit {
           console.log(response);
           //this.eventSvc.getEventsFormat();
           event.registered = !event.registered;
+          event.registered_ind.length--;
         },err=>{console.error(err);});
       
 
