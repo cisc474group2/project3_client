@@ -61,40 +61,44 @@ export class GooglemapsComponent {
       this.g = this.eventServ.getOneEventFormat(_id);
     }
 
-    registerUser(event_id){
+    registerUser(event){
       this.authSvc.authorize();
-      if(!this.authSvc.userObject.reg_events.includes(event_id)){
-        this.authSvc.userObject.reg_events.push(event_id);
+      if(!this.authSvc.userObject.reg_events.includes(event._id)){
+        this.authSvc.userObject.reg_events.push(event._id);
   
-        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
-          this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
-            console.log(response);
-          },err=>{console.error(err);});
-        
-          this.eventServ.updateUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
-            console.log(response);
-            this.g = this.eventServ.getOneEventFormat(event_id);
-          },err=>{console.error(err);});
+          this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
+            this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
+              console.log(response);
+              //this.eventSvc.getEventsFormat();
+              event.registered = !event.registered;
+              event.registered_ind.length++;
+            },err=>{console.error(err);});
   
+  
+            this.eventServ.updateUserList(event._id, this.authSvc.userObject._id).subscribe(response=>{
+              console.log(response);
+            },err=>{console.error(err);});
       }
     }
   
-    unregisterUser(event_id){
+    unregisterUser(event){
       this.authSvc.authorize();
-      if(this.authSvc.userObject.reg_events.includes(event_id)){
-        var index = this.authSvc.userObject.reg_events.indexOf(event_id);
+      if(this.authSvc.userObject.reg_events.includes(event._id)){
+        var index = this.authSvc.userObject.reg_events.indexOf(event._id);
         this.authSvc.userObject.reg_events.splice(index, 1);
   
         this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
           this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{
             console.log(response);
+            //this.eventSvc.getEventsFormat();
+            event.registered = !event.registered;
+            event.registered_ind.length--;
           },err=>{console.error(err);});
         
-          this.eventServ.deleteFromUserList(event_id, this.authSvc.userObject._id).subscribe(response=>{
-            console.log(response);
-            this.g = this.eventServ.getOneEventFormat(event_id);
-          },err=>{console.error(err);});
   
+          this.eventServ.deleteFromUserList(event._id, this.authSvc.userObject._id).subscribe(response=>{
+            console.log(response);
+          },err=>{console.error(err);});
       }
     }
 
