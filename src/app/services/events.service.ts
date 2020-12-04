@@ -313,11 +313,11 @@ export class EventsService {
 
   distanceSort(a:EventModel, b:EventModel):number {
     return EventsService.getDistanceFromLatLonInMile(
-      a.event_geoloc.lat, a.event_geoloc.lng, 
-      a.usrLoc.lat, a.usrLoc.lng)
-  - EventsService.getDistanceFromLatLonInMile(
       b.event_geoloc.lat, b.event_geoloc.lng, 
-      a.usrLoc.lat, a.usrLoc.lng);
+      a.usrLoc.lat, a.usrLoc.lng) - 
+      EventsService.getDistanceFromLatLonInMile(
+        a.event_geoloc.lat, a.event_geoloc.lng, 
+        a.usrLoc.lat, a.usrLoc.lng);
   }
 
   nowSort(a:EventModel, b:EventModel):number {

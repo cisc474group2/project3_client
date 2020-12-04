@@ -108,7 +108,7 @@ export class GooglemapsComponent {
    
     onLocationSelected(location: Location) {
       this.geolocService.overrideGeolocLocation(location.longitude, location.latitude);
-      this.eventServ.getLocalEvents();
+      this.eventServ.getEventsFormat();
       //this.lat = location.latitude;
       //this.lng = location.longitude;
 

@@ -15,6 +15,7 @@ import { UserGeolocationService } from '../../services/user-geolocation.service'
 export class HomeComponent implements OnInit {
   g:Array<EventModel>;
   public loggedIn = this.authSvc.loggedIn;
+  public currentIndex = 0;
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
     eventSvc.getEventsFormat();
@@ -102,6 +103,9 @@ export class HomeComponent implements OnInit {
       break;
     case 3:
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.nowSort));
+      break;
+    case 4:
+      this.currentIndex = 4;
       break;
     default:
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
