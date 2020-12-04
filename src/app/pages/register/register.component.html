@@ -140,8 +140,7 @@
             <option value="WV">West Virginia</option>
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
-        </select>	
-        <!--<input type="text" formControlName="businessState" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }"/>-->
+        </select>
         <div *ngIf="submitted && businessForm.controls.businessState.errors" class="invalid-feedback">
             <div *ngIf="businessForm.controls.businessState.errors.required">businessState is required</div>
         </div>
