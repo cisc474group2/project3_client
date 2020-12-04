@@ -1,28 +1,39 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<h2>Profile</h2>
-<div>
+<h2 style="margin:auto; width: 50%; text-align: center; margin-top: 1%">Your Profile</h2>
+<div id=left >
+    <label for="email" class="label">Email:</label>
+        <div name="email">{{email}}<br><br></div>
+    <label for="fName" class="label" *ngIf="showIfIndividual">First Name:</label>
+        <div *ngIf="showIfIndividual" name="fName">{{fName}}<br><br></div>
+    <label for="lName" class="label" *ngIf="showIfIndividual">Last Name:</label>
+        <div *ngIf="showIfIndividual" name="lName">{{lName}}<br><br></div>
+    <label for="busName" class="label" *ngIf="showIfBusiness">Business Name:</label>
+        <div *ngIf="showIfBusiness" name="busName">{{busName}}<br><br></div>
+    <label for="cName" class="label" *ngIf="showIfBusiness">Contact Name:</label>
+        <div *ngIf="showIfBusiness" name="cName">{{cName}}<br><br></div>
+    <label for="cPhone" class="label" *ngIf="showIfBusiness">Contact Phone:</label>
+        <div *ngIf="showIfBusiness" name="cPhone">{{cPhone}}<br><br></div>
+    <label for="mailAddress" class="label" *ngIf="showIfBusiness">Mail Address:</label>
+        <div *ngIf="showIfBusiness" name="mailAddress">{{mailAddress}}<br><br></div>
     <div class="form-group">
         <button [disabled]="loading" (click)="editProfile()" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Edit Profile
         </button>
     </div>
-    <label for="email">Email</label>
-        <div name="email">{{email}}</div>
-    <label for="fName" *ngIf="showIfIndividual">First Name</label>
-        <div *ngIf="showIfIndividual" name="fName">{{fName}}</div>
-    <label for="lName" *ngIf="showIfIndividual">Last Name</label>
-        <div *ngIf="showIfIndividual" name="lName">{{lName}}</div>
-    <label for="busName" *ngIf="showIfBusiness">Business Name</label>
-        <div *ngIf="showIfBusiness" name="busName">{{busName}}</div>
-    <label for="reg_events">Registered Events</label>
-        <div name="reg_events">{{reg_events}}</div>
-    <label for="cName" *ngIf="showIfBusiness">Contact Name</label>
-        <div *ngIf="showIfBusiness" name="cName">{{cName}}</div>
-    <label for="cPhone" *ngIf="showIfBusiness">Contact Phone</label>
-        <div *ngIf="showIfBusiness" name="cPhone">{{cPhone}}</div>
-    <label for="mailAddress" *ngIf="showIfBusiness">Mail Address</label>
-        <div *ngIf="showIfBusiness" name="mailAddress">{{mailAddress}}</div>
-    <label for="hostedEvents" *ngIf="showIfBusiness">Hosted Events</label>
-        <div *ngIf="showIfBusiness" name="hostedEvents">{{hostedEvents}}</div>
+</div>
+<div id=right>
+    <label for="reg_events" class="label">Registered Events:</label>
+        <div class="panel-group" id="reg_events">
+            
+        </div>
+    <label for="hostedEvents" class="label" *ngIf="showIfBusiness">Hosted Events:</label>
+        <!--<div *ngIf="showIfBusiness" class="panel-group" id="hostedEvents">
+            
+        </div>-->
+        <button data-toggle="collapse" data-target="#demo">Collapsible</button>
+
+<div id="demo" class="collapse">
+Lorem ipsum dolor text....
+</div>
 </div>

@@ -4,7 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService} from 'src/app/services/profile.service';
+import { EventsService } from 'src/app/services/events.service';
+import { EventModel } from '../../../assets/model';
 import { BusModel, Geoloc, IndModel } from '../../../assets/model';
+import { title } from 'process';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +22,7 @@ export class ProfileComponent implements OnInit {
   submitted = false;
   notEditingProfile = true;
   email: string;
-  reg_events: [];
+  reg_events: string[] = [];
   fName: string;
   lName: string;
   busName: string;
@@ -30,10 +33,30 @@ export class ProfileComponent implements OnInit {
   showIfIndividual = false;
   showIfBusiness = false;
 
-  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService) {
+  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
     this.authSvc.authorize();
     this.email = this.authSvc.userObject.email;
     this.reg_events = this.authSvc.userObject.reg_events;
+    for(let i=0;i<this.reg_events.length;i++){
+      this.eventSvc.getOneEvent(this.reg_events[i]).subscribe(response=>{
+        if(i=0){
+          document.getElementById("reg_events").innerHTML="";
+        }
+        document.getElementById("reg_events").innerHTML+=`<div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                              <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#reg_events" href="#eventBody${i}">
+                                                                  ${response.data.title}
+                                                                </a>
+                                                              </h4>
+                                                            </div>
+                                                            <div id="eventBody${i}" class="panel-collapse collapse">
+                                                              <div class="panel-body"> Body
+                                                              </div>
+                                                            </div>
+                                                          </div>`;
+      },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+    }
     if(this.authSvc.userObject.type == 'I'){
       this.fName = this.authSvc.userObject.type_obj.fName;
       this.lName = this.authSvc.userObject.type_obj.lName;
@@ -43,9 +66,22 @@ export class ProfileComponent implements OnInit {
       this.cName = this.authSvc.userObject.type_obj.cName;
       this.cPhone = this.authSvc.userObject.type_obj.cPhone;
       this.mailAddress = this.authSvc.userObject.type_obj.mailAddress.split('+');
+      for(let i=0;i<this.mailAddress.length;i++){
+        if(this.mailAddress[i]==""){
+          this.mailAddress.splice(i,1);
+        }
+        this.mailAddress[i]=" "+this.mailAddress[i];
+      }
       this.hostedEvents = this.authSvc.userObject.type_obj.hostedEvents;
+      for(let i=0;i<this.hostedEvents.length;i++){
+        this.eventSvc.getOneEvent(this.hostedEvents[i]).subscribe(response=>{
+          if(i=0){
+            document.getElementById("hostedEvents").innerHTML="";
+          }
+          document.getElementById("hostedEvents").innerHTML+=``;
+        },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+      }
     }
-  
     
    }
 
@@ -72,7 +108,6 @@ export class ProfileComponent implements OnInit {
   
   editProfile(){
     this.router.navigate(['profile/edit']);
-  }
-    
+  }    
 
 }
