@@ -96,12 +96,19 @@ export class EventModel{
     registered_ind:string[]=[];
     event_geoloc:Geoloc = new Geoloc(0, 0);
     event_address='';
-    start_time='';
-    end_time='';
+	start_time:Date;
+	cust_str_start_time:string;
+	end_time:Date;
+	cust_str_end_time:string;
 	create_date:Date|null = null;
 	registered:boolean;
+	inProgress:boolean = false;
+	completed:boolean = false;
+	actual_bus_id:string='';
+	actual_address:string='';
+
 	
-	public constructor(title:string, description:string, event_address:string, start_time:string, end_time:string, _id:string='', bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null, registered:boolean=false){
+	public constructor(title:string, description:string, event_address:string, start_time:Date, end_time:Date, _id:string='', bus_id:string='', registered_ind:string[]=[], geoloc:Geoloc = new Geoloc(0, 0), create_date:Date=null, registered:boolean=false, cust_str_start:string='', cust_str_end:string='', actual_bus_id: string='', actual_address: string=''){
 		this._id = _id;
 		this.title = title;
 		this.bus_id = bus_id;
@@ -114,6 +121,13 @@ export class EventModel{
 		this.registered_ind = registered_ind;
 		this.create_date = create_date;
 		this.registered = registered;
+		this.cust_str_start_time = cust_str_start;
+		this.cust_str_end_time = cust_str_end;
+		let now = new Date(Date.now());
+		if (this.start_time < now && this.end_time > now) this.inProgress = true;
+		if (this.end_time < now) this.completed = true;
+		this.actual_bus_id = actual_bus_id;
+		this.actual_address = actual_address;
 	}
     toObject():any{
 		return {

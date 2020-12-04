@@ -1,4 +1,4 @@
-<div *ngIf="loaded">
+<div *ngIf="loaded" class="mapPage">
     <div class="map">
         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
@@ -9,10 +9,21 @@
                 Hi, this is the content of the <strong>info window</strong>
               </agm-info-window>
         </agm-map>
+        <mat-google-maps-autocomplete  country="us"
+                               type="address"
+                               placeholderText="Input new location..."
+                               (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                               (onLocationSelected)="onLocationSelected($event)">
+        </mat-google-maps-autocomplete>
         <div style = "text-align: right; padding-top: 0.5%;">Lat: {{this.lat}}, Lng: {{this.lng}}</div>
     </div>
+
+    <div class="details">
+    <div *ngIf="!clicked" class="beforeClick">
+        Click a marker to see the event details.
+    </div>
     
-    <div *ngIf="clicked">
+    <div *ngIf="clicked" class="afterClick">
     <div class="card" *ngFor='let card of g'>
         <div class="card-header">
             <span id="title">{{card.title}}</span>
@@ -27,9 +38,14 @@
             <div><i class="fas fa-clock"></i><span>{{card.start_time}} - {{card.end_time}}</span></div>
         </div>
     </div>
+    </div>
+    </div>
 </div>
+
 <div *ngIf="!loaded">
-    <div class="spinner-border" role="status">
+    <div class="d-flex justify-content-center" style="padding-top: 45vh; vertical-align: middle;">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
+    </div>
     </div>
 </div>

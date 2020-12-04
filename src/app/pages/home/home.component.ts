@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { EventModel } from '../../../assets/model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +17,7 @@ export class HomeComponent implements OnInit {
   i = 0;
   loggedIn = this.authSvc.loggedIn;
 
-  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService) { 
+  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
     this.g = eventSvc.getEventsFormat();
   }
 
@@ -59,8 +61,37 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  currentBusiness(id: string):boolean{
+    if(this.authSvc.userObject != null){
+      return id == this.authSvc.userObject._id;
+    }
+    else return false;
+  }
+
+  editEvent(event: EventModel){
+    this.eventSvc.current_event = event;
+    this.router.navigate(['editevent']);
+  }
+
   eventsLoaded():boolean {
     return this.eventSvc.events_loaded.value;
   }
+  
 
+  onTabSelectChange(tab:MatTabChangeEvent) {
+    switch (tab.index) {
+    case 0:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
+      break;
+    case 1:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+      break;
+    case 2:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
+      break;
+    case 3:
+
+      break;
+    }
+  }
 }
