@@ -1,6 +1,12 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <h2 style="margin:auto; width: 50%; text-align: center; margin-top: 1%">Your Profile</h2>
-<div id=left>
+<mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
+    <mat-tab label="Profile"></mat-tab>
+    <mat-tab label="Registered Events"></mat-tab>
+    <mat-tab label="Hosted Events" *ngIf="showIfBusiness"></mat-tab>
+  </mat-tab-group>
+
+<div id=left *ngIf="checkingProfile">
     <label for="email" class="label">Email:</label>
         <div name="email">{{email}}<br><br></div>
     <label for="fName" class="label" *ngIf="showIfIndividual">First Name:</label>
@@ -22,7 +28,7 @@
         </button>
     </div>
 </div>
-<div id=right>
+<div id=right *ngIf="checkingRegisteredEvents">
     <label for="reg_events" class="label">Registered Events:</label>
     <div class="card" *ngFor='let card of reg_events'>
         <div class="card-header">
@@ -37,6 +43,9 @@
             <div><i class="fas fa-clock"></i><span>{{card.inProgress}} ->><<- {{card.completed}}</span></div>
         </div>
     </div>
+</div>
+
+<div *ngIf="checkingHostedEvents">
     <label for="hostedEvents" class="label" *ngIf="showIfBusiness">Hosted Events:</label>
     <div class="card" *ngFor='let card of hostedEvents'>
         <div class="card-header">
@@ -52,6 +61,7 @@
         </div>
     </div>
 </div>
+
 
 
      
