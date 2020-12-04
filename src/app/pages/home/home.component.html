@@ -1,5 +1,5 @@
-<h1 style="text-align: center; padding: 2.5%;">Events Near You</h1>
 <div *ngIf="eventsLoaded()">
+    <h1 style="text-align: center; padding: 2.5%;">Events Near You</h1>
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
         <mat-tab label="Hot"> Hot </mat-tab>
         <mat-tab label="Top"> Top </mat-tab>
@@ -11,9 +11,9 @@
     <div class="card" *ngFor='let card of g'>
         <div class="card-header">
             <span id="title">{{card.title}}</span>
-            <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary" (click)="editEvent(card)">Edit Event</button></span>
-            <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card._id)">Register</button></span>
-            <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-secondary" (click)="unregisterUser(card._id)">Unregister</button></span>
+            <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary" (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
+            <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card)">Register</button></span>
+            <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger" (click)="unregisterUser(card)">Unregister</button></span>
             
         </div>
         <div class="card-body">
@@ -27,7 +27,8 @@
     </div>
 </div>
 <div *ngIf="!eventsLoaded()">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" style="font-size: 2em; padding-top: 40vh; vertical-align: middle;">Welcome to your Community Board...</div>
+    <div class="d-flex justify-content-center" style="padding-top: 2vh; vertical-align: middle;">
         <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
           <span class="sr-only">Loading...</span>
         </div>
