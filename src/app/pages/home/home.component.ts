@@ -14,12 +14,13 @@ import { UserGeolocationService } from '../../services/user-geolocation.service'
 })
 export class HomeComponent implements OnInit {
   g:Array<EventModel>;
-  events_list=[];
-  i = 0;
-  loggedIn = this.authSvc.loggedIn;
+  public loggedIn = this.authSvc.loggedIn;
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
-    this.g = eventSvc.getEventsFormat();
+    eventSvc.getEventsFormat();
+    eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
+      this.g = event_list;
+    })
   }
 
   ngOnInit(): void {
@@ -93,13 +94,17 @@ export class HomeComponent implements OnInit {
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
       break;
     case 1:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.distanceSort));
+
       break;
     case 2:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.distanceSort));
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
       break;
     case 3:
-
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.nowSort));
+      break;
+    default:
+      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
       break;
     }
   }

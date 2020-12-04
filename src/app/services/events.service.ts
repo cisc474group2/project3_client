@@ -320,6 +320,24 @@ export class EventsService {
       a.usrLoc.lat, a.usrLoc.lng);
   }
 
+  nowSort(a:EventModel, b:EventModel):number {
+    if (a.inProgress) return 1;
+    else {
+      if (a.start_time > b.start_time) return 0;
+      else if (a.start_time < b.start_time) return -1;
+      else {
+        if (a.end_time > b.end_time) return 0;
+        else if (a.end_time < b.end_time) return -1;
+        else {
+          let tmp = a.title.localeCompare(b.title);
+          if (tmp > 0) return 0;
+          else if (tmp < 0) return -1;
+          return 0;
+        }
+      }
+    }
+  }
+
 
   static getDistanceFromLatLonInMile(a_lat:number, a_lng:number, b_lat:number, b_lng:number):number {
     let R = 3958.8; // Radius of the earth in mile
@@ -331,7 +349,7 @@ export class EventsService {
       Math.sin(dLon/2) * Math.sin(dLon/2); 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
     let d = R * c; // Distance in mile
-    console.log(d);
+    //console.log(d);
     return d;
   }
   
