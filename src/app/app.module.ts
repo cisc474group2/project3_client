@@ -23,6 +23,7 @@ import { Config } from 'src/assets/Config';
 import { EditprofileComponent } from './pages/profile/edit/editprofile.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {EditeventComponent} from './pages/editevent/editevent.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {EditeventComponent} from './pages/editevent/editevent.component';
       apiKey: Config.GOOGLE_API,
       libraries: ['places']
     }),
-    MatGoogleMapsAutocompleteModule
+    MatGoogleMapsAutocompleteModule,
+    NgbModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
