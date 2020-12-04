@@ -12,8 +12,8 @@
         <div class="card-header">
             <span id="title">{{card.title}}</span>
             <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary" (click)="editEvent(card)">Edit Event</button></span>
-            <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card._id)">Register</button></span>
-            <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-secondary" (click)="unregisterUser(card._id)">Unregister</button></span>
+            <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary" (click)="registerUser(card)">Register</button></span>
+            <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-secondary" (click)="unregisterUser(card)">Unregister</button></span>
             
         </div>
         <div class="card-body">
