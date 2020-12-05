@@ -9,7 +9,7 @@
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
         <mat-tab label="Popular Events"></mat-tab>
         <mat-tab label="Near Me"></mat-tab>
-        <mat-tab label="New Events"></mat-tab>
+        <mat-tab label="Upcoming"></mat-tab>
         <mat-tab label="Right Now"></mat-tab>
         <mat-tab label="Map View">
             <app-googlemaps></app-googlemaps>
@@ -18,7 +18,7 @@
     </mat-tab-group>
     <div *ngIf="currentIndex != 4">
         <div class="card" *ngFor='let card of g'>
-            <div class="card-header">
+            <div class="card-header" style="background-color:#A8DADC; color:#FFFFFF;">
                 <span id="title">{{card.title}}</span>
                 <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary"
                         (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="!eventsLoaded() && !noEventsFound()">
+<div *ngIf="!eventsLoaded() && !noEventsFound()" style="height:90vh;">
     <div class="d-flex justify-content-center" style="font-size: 2em; padding-top: 40vh; vertical-align: middle;">
         Welcome to your Community Board...</div>
     <div class="d-flex justify-content-center" style="padding-top: 2vh; vertical-align: middle;">
