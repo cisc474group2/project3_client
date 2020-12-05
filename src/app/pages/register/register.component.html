@@ -42,7 +42,7 @@
     </div>
     <div class="form-group" *ngIf="showIfIndividual">
         <label for="zip">Zip</label>
-        <input type="number" formControlName="zip" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.zip.errors }"/>
+        <input type="text" formControlName="zip" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.zip.errors }"/>
         <div *ngIf="submitted && individualForm.controls.zip.errors" class="invalid-feedback">
             <div *ngIf="individualForm.controls.zip.errors.required">zipcode is required</div>
         </div>
