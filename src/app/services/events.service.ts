@@ -15,6 +15,10 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public profile_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public profile_business_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public profile_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public profile_business_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_now: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_old: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
@@ -69,36 +73,13 @@ export class EventsService {
 
   updateUserList(eventID: string, registered_ind: string) {
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
-    console.log(x);
-
-    // const body = new HttpParams()
-    //   .set('registered_ind', registered_ind);
-
-    // return this.http.post(x,
-    //   body.toString(),
-    //   {
-    //     headers: new HttpHeaders()
-    //       .set('Content-Type', 'application/x-www-form-urlencoded')
-    //   }
-    // );
+   
 
     return this.http.put(x, {registered_ind: registered_ind});
   }
 
   deleteFromUserList(eventID: string, registered_ind: string) {
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered/delete';
-    console.log(x);
-
-    // const body = new HttpParams()
-    //   .set('registered_ind', registered_ind);
-
-    // return this.http.post(x,
-    //   body.toString(),
-    //   {
-    //     headers: new HttpHeaders()
-    //       .set('Content-Type', 'application/x-www-form-urlencoded')
-    //   }
-    // );
 
     return this.http.put(x, {registered_ind: registered_ind});
   }
@@ -113,6 +94,77 @@ export class EventsService {
 
   getBulkBusinessEvents(){
     return this.http.post<any>(this.path + 'events' + "/" + "bulk", {reg_events: this.authSvc.userObject.type_obj.hostedEvents});
+  }
+
+  getProfileEventList(){
+    let event_model_list = Array<EventModel>();
+    let count = 1;
+    this.getBulkEvents().subscribe(result=>{
+        result.data.forEach(unformatted_event => {
+          this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+            event_model_list.push(new EventModel(unformatted_event.title,
+              unformatted_event.description,
+              this.formatAddress(unformatted_event.event_address),
+              new Date(unformatted_event.start_time),
+              new Date(unformatted_event.end_time),
+              unformatted_event._id,
+              business.data.type_obj.bus_name,
+              unformatted_event.registered_ind,
+              unformatted_event.event_geoloc,
+              unformatted_event.create_date,
+              (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+              this.convertTimestamp(unformatted_event.start_time),
+              this.convertTimestamp(unformatted_event.end_time),
+              business.data._id,
+              unformatted_event.event_address));
+
+            if (count == result.data.length) {
+              this.profile_events_loaded.next(true);
+              this.profile_event_list.next(event_model_list);
+            }
+            else {
+              count++;
+            }
+          });
+        });
+      });
+  }
+
+  getProfileBusinessEventList(){
+    let event_model_list = Array<EventModel>();
+    let count = 1;
+    this.getBulkBusinessEvents().subscribe(result=>{
+        result.data.forEach(unformatted_event => {
+          this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+            event_model_list.push(new EventModel(unformatted_event.title,
+              unformatted_event.description,
+              this.formatAddress(unformatted_event.event_address),
+              new Date(unformatted_event.start_time),
+              new Date(unformatted_event.end_time),
+              unformatted_event._id,
+              business.data.type_obj.bus_name,
+              unformatted_event.registered_ind,
+              unformatted_event.event_geoloc,
+              unformatted_event.create_date,
+              (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+              this.convertTimestamp(unformatted_event.start_time),
+              this.convertTimestamp(unformatted_event.end_time),
+              business.data._id,
+              unformatted_event.event_address));
+
+            if (count == result.data.length) {
+              this.profile_business_events_loaded.next(true);
+              this.profile_business_event_list.next(event_model_list);
+            }
+            else {
+              count++;
+            }
+          });
+        });
+      });
+        
+
+    
   }
 
   getOneEventFormat(_id){

@@ -1,8 +1,8 @@
 [X]	Clear and reset database
 [-]	Fix error where no events leads to infinite load
 [ ]	Loading screen while profile events load in
-[ ]		- Load profile events on login
-[ ]		- Reload Bug
+[X]		- Load profile events on login
+[X]		- Reload Bug
 [ ]	Loading circle for button on toggle
 [ ]	Loation search bar on main screen
 [ ]	Style
