@@ -1,11 +1,13 @@
-Loading screen while profile events load in
-	- Load profile events on login
-	- Reload Bug
-Loading circle for button on toggle
-Loation search bar on main screen
-Style
-	- Cards
-		* Header / Body stying
-	- Everything Else
-	- Less white
-	- Dark mode toggle?
+[X]	Clear and reset database
+[-]	Fix error where no events leads to infinite load
+[ ]	Loading screen while profile events load in
+[X]		- Load profile events on login
+[X]		- Reload Bug
+[ ]	Loading circle for button on toggle
+[ ]	Loation search bar on main screen
+[ ]	Style
+[ ]		- Cards
+[ ]			* Header / Body stying
+[ ]		- Everything Else
+[ ]		- Less white
+[ ]		- Dark mode toggle?

@@ -84,6 +84,10 @@ export class HomeComponent implements OnInit {
     return this.eventSvc.events_loaded.value;
   }
   
+  noEventsFound():boolean {
+    return this.eventSvc.zero_events.value;
+  }
+
   //Popular Events
   //Near Me
   //New Events
@@ -92,16 +96,19 @@ export class HomeComponent implements OnInit {
   onTabSelectChange(tab:MatTabChangeEvent) {
     switch (tab.index) {
     case 0:
+      this.currentIndex = 0;
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
       break;
     case 1:
+      this.currentIndex = 1;
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.distanceSort));
-
       break;
     case 2:
+      this.currentIndex = 2;
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
       break;
     case 3:
+      this.currentIndex = 3;
       this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.nowSort));
       break;
     case 4:
