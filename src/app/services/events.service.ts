@@ -15,13 +15,7 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  public profile_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
-  public profile_business_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
-  public profile_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  public profile_business_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
-  public events_now: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
-  public events_old: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public events_all: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public zero_events: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   current_event: EventModel;
 
@@ -142,17 +136,9 @@ export class EventsService {
             console.log("no events found locally");
           } else {
             result.data.forEach(unformatted_event => {
+
               this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-                //console.log(unformatted_event);
-                // if (new Date(unformatted_event.start_time).getDate > now) { // Upcomming Events
 
-                // }
-                // else if (new Date(unformatted_event.start_time).getDate < now && new Date(unformatted_event.end_time).getDate > now) { // In Progress 
-
-                // }
-                // else {  // Old
-
-                // }
                 event_model_list.push(new EventModel(unformatted_event.title,
                   unformatted_event.description,
                   this.formatAddress(unformatted_event.event_address),
@@ -172,8 +158,8 @@ export class EventsService {
                 if (count == result.data.length && result.data.length != 0) {
                   if (this.events_loaded.value == false) toSort = true;
                   this.events_loaded.next(true);
-                  //console.log(this.sortList(event_model_list));
-                  this.event_list.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.event_list.next(this.events_all.value);
                   console.log("all events loaded");
                 } else if (result.data.length == 0) {
                   this.zero_events.next(true);
@@ -220,7 +206,8 @@ export class EventsService {
                   if (this.events_loaded.value == false) toSort = true;
                   this.events_loaded.next(true);
                   //console.log(this.sortList(event_model_list));
-                  this.event_list.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.event_list.next(this.events_all.value);
                   console.log("local events loaded");
                 } else {
                   count ++;
@@ -276,7 +263,7 @@ export class EventsService {
     unsorted.map(event => {
       event.usrLoc = this.geoloc.userGeoloc.value; 
     })
-    console.log(unsorted);
+    //console.log(unsorted);
     unsorted = unsorted.sort(sortFun);
 
     return unsorted;
@@ -349,6 +336,13 @@ export class EventsService {
         }
       }
     }
+  }
+
+  nowFilter(events: EventModel[]): EventModel[] {
+    let now = Date.now
+    return events.filter((x) => {
+      return x.start_time.getDate > now && x.end_time.getDate < now;
+    })
   }
 
 
