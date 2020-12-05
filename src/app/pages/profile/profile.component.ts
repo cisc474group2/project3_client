@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
     this.authSvc.authorize();
    
+    
     if(this.authSvc.userObject.type == 'I'){
       this.fName = this.authSvc.userObject.type_obj.fName;
       this.lName = this.authSvc.userObject.type_obj.lName;
@@ -54,62 +55,11 @@ export class ProfileComponent implements OnInit {
         }
         this.mailAddress[i]=" "+this.mailAddress[i];
       }
-      this.hostedEvents = this.authSvc.userObject.type_obj.hostedEvents;
     }
     
   }
 
-   getFormattedEvents(): EventModel[]{
-    let event_model_list = Array<EventModel>();
-    this.eventSvc.getBulkEvents().subscribe(response=>{
-      response.data.forEach(event=>{
-      this.eventSvc.getBusiness(event.bus_id).subscribe(business => {
-        //console.log(event);
-        event_model_list.push(new EventModel(event.title,
-          event.description,
-          this.eventSvc.formatAddress(event.event_address),
-          new Date(event.start_time),
-          new Date(event.end_time),
-          event._id,
-          business.data.type_obj.bus_name,
-          event.registered_ind,
-          event.event_geoloc,
-          event.create_date,
-          (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(event._id):false ,
-          this.eventSvc.convertTimestamp(event.start_time),
-          this.eventSvc.convertTimestamp(event.end_time),
-          business.data._id,
-          event.event_address));
-    })
-  })});
-  return event_model_list;
-   }
 
-   getFormattedHostEvents():EventModel[]{
-    let event_model_list = Array<EventModel>();
-    this.eventSvc.getBulkBusinessEvents().subscribe(response=>{
-      response.data.forEach(event=>{
-      this.eventSvc.getBusiness(event.bus_id).subscribe(business => {
-        //console.log(event);
-        event_model_list.push(new EventModel(event.title,
-          event.description,
-          this.eventSvc.formatAddress(event.event_address),
-          new Date(event.start_time),
-          new Date(event.end_time),
-          event._id,
-          business.data.type_obj.bus_name,
-          event.registered_ind,
-          event.event_geoloc,
-          event.create_date,
-          (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(event._id):false ,
-          this.eventSvc.convertTimestamp(event.start_time),
-          this.eventSvc.convertTimestamp(event.end_time),
-          business.data._id,
-          event.event_address));
-    })
-  })});
-  return event_model_list;
-   }
 
   ngOnInit(): void {
     this.authSvc.CurrentUser.subscribe(user => {
@@ -118,14 +68,23 @@ export class ProfileComponent implements OnInit {
       }
       else{
         this.email = this.authSvc.userObject.email;
-        this.reg_events = this.getFormattedEvents();
-
+        this.eventSvc.getEventsFormat();
+        this.eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
+            this.reg_events = event_list.filter((x) => {
+              return this.authSvc.userObject.reg_events.includes(x._id);
+            });
+            if(this.authSvc.userObject.type === 'B'){
+              this.hostedEvents = event_list.filter((x) => {
+                return this.authSvc.userObject.type_obj.hostedEvents.includes(x._id);
+              })
+            }
+        });
+        
         if(this.authSvc.userObject.type == 'I'){
           this.showIfIndividual = true;
           this.showIfBusiness = false;
         }
         else{
-          this.hostedEvents = this.getFormattedHostEvents();
           this.showIfBusiness = true;
           this.showIfIndividual = false;
         }

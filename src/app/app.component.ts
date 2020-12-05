@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserGeolocationService } from './services/user-geolocation.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EventsService } from './services/events.service';
+import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-root',
@@ -22,7 +25,7 @@ export class AppComponent {
       return false;
     }
   }
-  constructor(public authSvc:AuthService, public geoloc:UserGeolocationService, private router: Router) {
+  constructor(public authSvc:AuthService, public geoloc:UserGeolocationService, private eventSvc:EventsService, private router: Router) {
     authSvc.authorize();
     geoloc.getLocation();
   }

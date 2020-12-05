@@ -15,7 +15,8 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);S
+  public events_all: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public zero_events: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   current_event: EventModel;
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
@@ -66,36 +67,13 @@ export class EventsService {
 
   updateUserList(eventID: string, registered_ind: string) {
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered';
-    console.log(x);
-
-    // const body = new HttpParams()
-    //   .set('registered_ind', registered_ind);
-
-    // return this.http.post(x,
-    //   body.toString(),
-    //   {
-    //     headers: new HttpHeaders()
-    //       .set('Content-Type', 'application/x-www-form-urlencoded')
-    //   }
-    // );
+   
 
     return this.http.put(x, {registered_ind: registered_ind});
   }
 
   deleteFromUserList(eventID: string, registered_ind: string) {
     var x = this.path + 'events' + "/" + eventID + "/" + 'registered/delete';
-    console.log(x);
-
-    // const body = new HttpParams()
-    //   .set('registered_ind', registered_ind);
-
-    // return this.http.post(x,
-    //   body.toString(),
-    //   {
-    //     headers: new HttpHeaders()
-    //       .set('Content-Type', 'application/x-www-form-urlencoded')
-    //   }
-    // );
 
     return this.http.put(x, {registered_ind: registered_ind});
   }
@@ -144,6 +122,8 @@ export class EventsService {
   getEventsFormat(): Array<EventModel> {
     let event_model_list = Array<EventModel>();
     let count = 1;
+    let toSort = false;
+    let now = new Date().getDate;
     this.events_loaded.next(false);
     this.geoloc.accuracy.subscribe(res => {
       // If the user has declined geoloation features, it will just load all events
@@ -151,74 +131,91 @@ export class EventsService {
       if (res == -1) {
         this.getEvents().subscribe(result => {
           //console.log(result.data);
-          result.data.forEach(unformatted_event => {
-            this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-              //console.log(unformatted_event);
-              event_model_list.push(new EventModel(unformatted_event.title,
-                unformatted_event.description,
-                this.formatAddress(unformatted_event.event_address),
-                new Date(unformatted_event.start_time),
-                new Date(unformatted_event.end_time),
-                unformatted_event._id,
-                business.data.type_obj.bus_name,
-                unformatted_event.registered_ind,
-                unformatted_event.event_geoloc,
-                unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
-                this.convertTimestamp(unformatted_event.start_time),
-                this.convertTimestamp(unformatted_event.end_time),
-                business.data._id,
-                unformatted_event.event_address));
+          if (result.data.length == 0) {
+            this.zero_events.next(true);
+            console.log("no events found locally");
+          } else {
+            result.data.forEach(unformatted_event => {
 
-              if (count == result.data.length) {
-                this.events_loaded.next(true);
-                //console.log(this.sortList(event_model_list));
-                this.event_list.next(event_model_list);
-                console.log("all events loaded");
-              }
-              else {
-                count ++;
-                //console.log(count, " ", this.event_list);
-              }
+              this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+
+                event_model_list.push(new EventModel(unformatted_event.title,
+                  unformatted_event.description,
+                  this.formatAddress(unformatted_event.event_address),
+                  new Date(unformatted_event.start_time),
+                  new Date(unformatted_event.end_time),
+                  unformatted_event._id,
+                  business.data.type_obj.bus_name,
+                  unformatted_event.registered_ind,
+                  unformatted_event.event_geoloc,
+                  unformatted_event.create_date,
+                  (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+                  this.convertTimestamp(unformatted_event.start_time),
+                  this.convertTimestamp(unformatted_event.end_time),
+                  business.data._id,
+                  unformatted_event.event_address));
+  
+                if (count == result.data.length && result.data.length != 0) {
+                  if (this.events_loaded.value == false) toSort = true;
+                  this.events_loaded.next(true);
+                  this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.event_list.next(this.events_all.value);
+                  console.log("all events loaded");
+                } else if (result.data.length == 0) {
+                  this.zero_events.next(true);
+                  console.log("no events found")
+                }
+                else {
+                  count ++;
+                  //console.log(count, " ", this.event_list);
+                }
+              });
             });
-          });
+          }
         });
       }
       //If the user has accepted geolocation features, it will pull all events from that location
       else if (res != -1 && res != null) {
         this.getLocalEventsCustRad(50).subscribe(result => {
           //console.log(result.data);
-          result.data.forEach(unformatted_event => {
-            //console.log(unformatted_event);
-            this.getBusiness(unformatted_event.bus_id).subscribe(business => {
-              event_model_list.push(new EventModel(unformatted_event.title,
-                unformatted_event.description,
-                this.formatAddress(unformatted_event.event_address),
-                new Date(unformatted_event.start_time),
-                new Date(unformatted_event.end_time),
-                unformatted_event._id,
-                business.data.type_obj.bus_name,
-                unformatted_event.registered_ind,
-                unformatted_event.event_geoloc,
-                unformatted_event.create_date,
-                (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
-                this.convertTimestamp(unformatted_event.start_time),
-                this.convertTimestamp(unformatted_event.end_time),
-                business.data._id,
-                unformatted_event.event_address));
-
-              if (count == result.data.length) {
-                this.events_loaded.next(true);
-                //console.log(this.sortList(event_model_list));
-                this.event_list.next(event_model_list);
-                console.log("local events loaded");
-              }
-              else {
-                count ++;
-                //console.log(count, " ", this.event_list);
-              }
+          if (result.data.length == 0) {
+            this.zero_events.next(true);
+            console.log("no events found locally");
+          }
+          else {
+            result.data.forEach(unformatted_event => {
+              //console.log(unformatted_event);
+              this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+                event_model_list.push(new EventModel(unformatted_event.title,
+                  unformatted_event.description,
+                  this.formatAddress(unformatted_event.event_address),
+                  new Date(unformatted_event.start_time),
+                  new Date(unformatted_event.end_time),
+                  unformatted_event._id,
+                  business.data.type_obj.bus_name,
+                  unformatted_event.registered_ind,
+                  unformatted_event.event_geoloc,
+                  unformatted_event.create_date,
+                  (this.authSvc.userObject!=null)?this.authSvc.userObject.reg_events.includes(unformatted_event._id):false ,
+                  this.convertTimestamp(unformatted_event.start_time),
+                  this.convertTimestamp(unformatted_event.end_time),
+                  business.data._id,
+                  unformatted_event.event_address));
+  
+                if (count == result.data.length) {
+                  if (this.events_loaded.value == false) toSort = true;
+                  this.events_loaded.next(true);
+                  //console.log(this.sortList(event_model_list));
+                  this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
+                  this.event_list.next(this.events_all.value);
+                  console.log("local events loaded");
+                } else {
+                  count ++;
+                  //console.log(count, " ", this.event_list);
+                }
+              });
             });
-          });
+          }
         });
       }
       else {
@@ -266,6 +263,7 @@ export class EventsService {
     unsorted.map(event => {
       event.usrLoc = this.geoloc.userGeoloc.value; 
     })
+    //console.log(unsorted);
     unsorted = unsorted.sort(sortFun);
 
     return unsorted;
@@ -312,12 +310,14 @@ export class EventsService {
   }
 
   distanceSort(a:EventModel, b:EventModel):number {
-    return EventsService.getDistanceFromLatLonInMile(
+    let a_dist = EventsService.getDistanceFromLatLonInMile(
+      a.event_geoloc.lat, a.event_geoloc.lng, 
+      a.usrLoc.lat, a.usrLoc.lng);
+    let b_dist = EventsService.getDistanceFromLatLonInMile(
       b.event_geoloc.lat, b.event_geoloc.lng, 
-      a.usrLoc.lat, a.usrLoc.lng) - 
-      EventsService.getDistanceFromLatLonInMile(
-        a.event_geoloc.lat, a.event_geoloc.lng, 
-        a.usrLoc.lat, a.usrLoc.lng);
+      a.usrLoc.lat, a.usrLoc.lng);
+    if (a_dist - b_dist != 0) return (a_dist > b_dist) ? 1 : -1;
+    else return 0;
   }
 
   nowSort(a:EventModel, b:EventModel):number {
@@ -336,6 +336,13 @@ export class EventsService {
         }
       }
     }
+  }
+
+  nowFilter(events: EventModel[]): EventModel[] {
+    let now = Date.now
+    return events.filter((x) => {
+      return x.start_time.getDate > now && x.end_time.getDate < now;
+    })
   }
 
 

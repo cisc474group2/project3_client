@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.individualForm=this.formBuilder.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        zip: ['', Validators.required]
+        zip: ['', Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?')]
     });
 
     this.businessForm=this.formBuilder.group({

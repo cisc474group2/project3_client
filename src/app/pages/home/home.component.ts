@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserGeolocationService } from '../../services/user-geolocation.service';
+import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-home',
@@ -16,15 +18,23 @@ export class HomeComponent implements OnInit {
   g:Array<EventModel>;
   public loggedIn = this.authSvc.loggedIn;
   public currentIndex = 0;
+  public locality_name:string;
+  public locality_state:string;
 
-  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
-    eventSvc.getEventsFormat();
-    eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
-      this.g = event_list;
-    })
+  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router, private geoloc:UserGeolocationService) { 
+    this.geoloc.currentLocal.subscribe(city => {
+      this.locality_name = this.geoloc.currentLocal.value;
+    });
+    this.geoloc.currentAdministrativeAreaLevel1.subscribe(state => {
+      this.locality_state = this.geoloc.currentAdministrativeAreaLevel1.value;
+    });
   }
 
   ngOnInit(): void {
+    this.eventSvc.getEventsFormat();
+    this.eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
+      this.g = event_list;
+    })
   }
 
   registerUser(event){
@@ -84,32 +94,50 @@ export class HomeComponent implements OnInit {
     return this.eventSvc.events_loaded.value;
   }
   
+  noEventsFound():boolean {
+    return this.eventSvc.zero_events.value;
+  }
+
+  onAutocompleteSelected(result: PlaceResult) {
+    console.log('onAutocompleteSelected: ', result);
+  }
+ 
+  onLocationSelected(location: Location) {
+    this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
+    this.eventSvc.getEventsFormat();
+    console.log(this.geoloc.userGeoloc.value);
+  }
+
   //Popular Events
   //Near Me
   //New Events
   //Right Now
   //My Events
   onTabSelectChange(tab:MatTabChangeEvent) {
+    //console.log(tab);
     switch (tab.index) {
-    case 0:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
-      break;
-    case 1:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.distanceSort));
-
-      break;
-    case 2:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.upcommingSort));
-      break;
-    case 3:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.nowSort));
-      break;
-    case 4:
-      this.currentIndex = 4;
-      break;
-    default:
-      this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
-      break;
-    }
+      case 0:
+        this.currentIndex = 0;
+        this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.hotSort));
+        break;
+      case 1:
+        this.currentIndex = 1;
+        this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.distanceSort));
+        break;
+      case 2:
+        this.currentIndex = 2;
+        this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
+        break;
+      case 3:
+        this.currentIndex = 3;
+        this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.nowFilter(this.eventSvc.events_all.value), this.eventSvc.nowSort));
+        break;
+      case 4:
+        this.currentIndex = 4;
+        break;
+      default:
+        this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+        break;
+      }
   }
 }
