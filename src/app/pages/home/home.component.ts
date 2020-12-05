@@ -20,13 +20,14 @@ export class HomeComponent implements OnInit {
   public currentIndex = 0;
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
-    eventSvc.getEventsFormat();
-    eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
-      this.g = event_list;
-    })
+    
   }
 
   ngOnInit(): void {
+    this.eventSvc.getEventsFormat();
+    this.eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
+      this.g = event_list;
+    })
   }
 
   registerUser(event){
