@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService, private eventSvc:EventsService) {
     this.authSvc.authorize();
-    eventSvc.getProfileEventList();
+   
     
     if(this.authSvc.userObject.type == 'I'){
       this.fName = this.authSvc.userObject.type_obj.fName;
@@ -68,17 +68,18 @@ export class ProfileComponent implements OnInit {
       }
       else{
         this.email = this.authSvc.userObject.email;
-
-        this.eventSvc.profile_event_list.subscribe((profile_event_list:Array<EventModel>) => {
-          this.reg_events = profile_event_list;
+        this.eventSvc.getEventsFormat();
+        this.eventSvc.event_list.subscribe((event_list:Array<EventModel>) => {
+            this.reg_events = event_list.filter((x) => {
+              return this.authSvc.userObject.reg_events.includes(x._id);
+            });
+            if(this.authSvc.userObject.type === 'B'){
+              this.hostedEvents = event_list.filter((x) => {
+                return this.authSvc.userObject.type_obj.hostedEvents.includes(x._id);
+              })
+            }
         });
-       
-        this.eventSvc.getProfileBusinessEventList();
-        this.eventSvc.profile_business_event_list.subscribe((profile_business_event_list:Array<EventModel>) => {
-          this.hostedEvents = profile_business_event_list;
-        });
-    
-
+        
         if(this.authSvc.userObject.type == 'I'){
           this.showIfIndividual = true;
           this.showIfBusiness = false;
