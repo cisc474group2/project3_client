@@ -18,9 +18,16 @@ export class HomeComponent implements OnInit {
   g:Array<EventModel>;
   public loggedIn = this.authSvc.loggedIn;
   public currentIndex = 0;
+  public locality_name:string;
+  public locality_state:string;
 
-  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router) { 
-    
+  constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router, private geoloc:UserGeolocationService) { 
+    this.geoloc.currentLocal.subscribe(city => {
+      this.locality_name = this.geoloc.currentLocal.value;
+    });
+    this.geoloc.currentAdministrativeAreaLevel1.subscribe(state => {
+      this.locality_state = this.geoloc.currentAdministrativeAreaLevel1.value;
+    });
   }
 
   ngOnInit(): void {

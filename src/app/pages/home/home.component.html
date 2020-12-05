@@ -5,7 +5,7 @@
                           (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
 <div *ngIf="eventsLoaded()">
-    <h1 style="text-align: center; padding: 2.5%; padding-bottom:1%;">Events Near You</h1>
+    <h1 style="text-align: center; padding: 2.5%; padding-bottom:1%;">Happening in {{locality_name}}, {{locality_state}}</h1>
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
         <mat-tab label="Popular Events"></mat-tab>
         <mat-tab label="Near Me"></mat-tab>
