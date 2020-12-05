@@ -15,7 +15,8 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);S
+  public events_reload: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
+  public zero_events: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   current_event: EventModel;
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
@@ -151,6 +152,10 @@ export class EventsService {
       if (res == -1) {
         this.getEvents().subscribe(result => {
           //console.log(result.data);
+          if (result.data.length == 0) {
+            this.zero_events.next(true);
+            console.log("no events found locally");
+          }
           result.data.forEach(unformatted_event => {
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
               //console.log(unformatted_event);
@@ -170,11 +175,14 @@ export class EventsService {
                 business.data._id,
                 unformatted_event.event_address));
 
-              if (count == result.data.length) {
+              if (count == result.data.length && result.data.length != 0) {
                 this.events_loaded.next(true);
                 //console.log(this.sortList(event_model_list));
                 this.event_list.next(event_model_list);
                 console.log("all events loaded");
+              } else if (result.data.length == 0) {
+                this.zero_events.next(true);
+                console.log("no events found")
               }
               else {
                 count ++;
@@ -188,6 +196,10 @@ export class EventsService {
       else if (res != -1 && res != null) {
         this.getLocalEventsCustRad(50).subscribe(result => {
           //console.log(result.data);
+          if (result.data.length == 0) {
+            this.zero_events.next(true);
+            console.log("no events found locally");
+          }
           result.data.forEach(unformatted_event => {
             //console.log(unformatted_event);
             this.getBusiness(unformatted_event.bus_id).subscribe(business => {
@@ -212,8 +224,7 @@ export class EventsService {
                 //console.log(this.sortList(event_model_list));
                 this.event_list.next(event_model_list);
                 console.log("local events loaded");
-              }
-              else {
+              } else {
                 count ++;
                 //console.log(count, " ", this.event_list);
               }

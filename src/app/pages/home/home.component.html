@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="!eventsLoaded()">
+<div *ngIf="!eventsLoaded() && !noEventsFound()">
     <div class="d-flex justify-content-center" style="font-size: 2em; padding-top: 40vh; vertical-align: middle;">
         Welcome to your Community Board...</div>
     <div class="d-flex justify-content-center" style="padding-top: 2vh; vertical-align: middle;">
@@ -43,4 +43,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
+</div>
+<div *ngIf="noEventsFound()">
+    Haha lol
 </div>
