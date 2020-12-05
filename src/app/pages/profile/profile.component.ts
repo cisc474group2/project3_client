@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
   submitted = false;
   notEditingProfile = true;
   email: string;
-  reg_events;
+  reg_events:EventModel[];
   fName: string;
   lName: string;
   busName: string;

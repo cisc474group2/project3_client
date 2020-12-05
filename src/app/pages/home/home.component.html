@@ -1,8 +1,8 @@
-<mat-google-maps-autocomplete country="us"
-                          type="address"
-                          placeholderText="Input new location..."
-                          (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                          (onLocationSelected)="onLocationSelected($event)">
+<mat-google-maps-autocomplete 
+    [types]="['(regions)']"
+    placeholderText="Input new location..."
+    (onAutocompleteSelected)="onAutocompleteSelected($event)"
+    (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
 <div *ngIf="eventsLoaded()">
     <h1 style="text-align: center; padding: 2.5%; padding-bottom:1%;">Happening in {{locality_name}}, {{locality_state}}</h1>
