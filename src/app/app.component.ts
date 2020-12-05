@@ -36,14 +36,4 @@ export class AppComponent {
     this.router.navigate(['login']);
     return false;
   }
-
-  onAutocompleteSelected(result: PlaceResult) {
-    console.log('onAutocompleteSelected: ', result);
-  }
- 
-  onLocationSelected(location: Location) {
-    this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
-    this.eventSvc.getEventsFormat();
-    console.log(this.geoloc.userGeoloc.value);
-  }
 }

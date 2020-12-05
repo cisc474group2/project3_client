@@ -44,4 +44,8 @@ export class UserGeolocationService {
     this.userGeoloc.next(new Geoloc(lat, lng));
     console.log("geoloc override triggered!\n", this.userGeoloc.value);
   }
+
+  reverseGeocodeGetCityName(lng:number, lat:number):string {
+    
+  }
 }

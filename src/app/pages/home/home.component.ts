@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserGeolocationService } from '../../services/user-geolocation.service';
+import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-home',
@@ -86,6 +88,16 @@ export class HomeComponent implements OnInit {
   
   noEventsFound():boolean {
     return this.eventSvc.zero_events.value;
+  }
+
+  onAutocompleteSelected(result: PlaceResult) {
+    console.log('onAutocompleteSelected: ', result);
+  }
+ 
+  onLocationSelected(location: Location) {
+    this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
+    this.eventSvc.getEventsFormat();
+    console.log(this.geoloc.userGeoloc.value);
   }
 
   //Popular Events

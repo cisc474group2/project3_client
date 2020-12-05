@@ -1,3 +1,9 @@
+<mat-google-maps-autocomplete country="us"
+                          type="address"
+                          placeholderText="Input new location..."
+                          (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                          (onLocationSelected)="onLocationSelected($event)">
+</mat-google-maps-autocomplete>
 <div *ngIf="eventsLoaded()">
     <h1 style="text-align: center; padding: 2.5%; padding-bottom:1%;">Events Near You</h1>
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
