@@ -1,5 +1,3 @@
-Clear and reset database
-Fix error where no events leads to infinite load
 Loading screen while profile events load in
 	- Load profile events on login
 	- Reload Bug
