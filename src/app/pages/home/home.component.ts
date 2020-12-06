@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
   }
 
   onAutocompleteSelected(result: PlaceResult) {
-    console.log('onAutocompleteSelected: ', result);
+    //console.log('onAutocompleteSelected: ', result);
   }
  
   onLocationSelected(location: Location) {

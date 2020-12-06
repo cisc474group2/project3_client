@@ -57,24 +57,21 @@ export class UserGeolocationService {
       'Accept': 'type/javascript',
       // 'Access-Control-Allow-Headers': '*',
       // 'Access-Control-Allow-Origin': '*'
+      // These are bad lines, very, very, bad lines
+      //    They should feel bad.  They know what they did. 12/5/2020
     }
     let requestOptions = {
       headers: new HttpHeaders(headerDict)
     }
     try {
-      this.http.get(Config.GOOGLE_REVERSE_GEOCODING
-        .replace('<<OUT>>', 'json')
-        .replace('<<LAT>>', this.lat.value.toString())
-        .replace('<<LNG>>', this.lng.value.toString())
-        .replace('<<KEY>>', Config.GOOGLE_API), requestOptions).subscribe((res:Object) => {
-          console.log(res);
-          console.log(this);
+      this.http.get(this.path + "events/getTitleInfo/" + this.lat.value + '/' + this.lng.value).subscribe((res:Object) => {
+          //console.log(res);
           //@ts-ignore
-          this.currentAdministrativeAreaLevel1.next(res.results[0].address_components.filter((x) => {
+          this.currentAdministrativeAreaLevel1.next(res.data.results[0].address_components.filter((x) => {
             return x.types.includes('administrative_area_level_1');
           })[0].short_name);
           //@ts-ignore
-          this.currentLocal.next(res.results[0].address_components.filter((x) => {
+          this.currentLocal.next(res.data.results[0].address_components.filter((x) => {
             return x.types.includes('locality');
           })[0].long_name);
         });     
