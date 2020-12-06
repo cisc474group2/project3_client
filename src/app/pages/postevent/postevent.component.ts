@@ -71,10 +71,14 @@ export class PosteventComponent implements OnInit {
       .subscribe(response=>{
         
         this.authSvc.userObject.type_obj.hostedEvents.push(response._id);
+        this.authSvc.userObject.reg_events.push(response._id);
         this.eventSvc.getEventsFormat();
         this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, 
           this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response=>{ 
           },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+          this.eventSvc.updateUserList(response._id, this.authSvc.userObject._id).subscribe(response=>{
+            //console.log(response);
+          },err=>{console.error(err);});
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
 
