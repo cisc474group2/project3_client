@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   public currentIndex = 0;
   public locality_name:string;
   public locality_state:string;
+  labelText = "Change current location"
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router, private geoloc:UserGeolocationService) { 
     this.geoloc.currentLocal.subscribe(city => {
