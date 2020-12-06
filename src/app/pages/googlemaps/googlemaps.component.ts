@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, range } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserGeolocationService } from 'src/app/services/user-geolocation.service';
 //@ts-ignore
@@ -40,11 +40,31 @@ export class GooglemapsComponent {
       this.zoom = 15;
       this.loaded = false;
       eventServ.event_list.subscribe(events => {
+        let map = new Map<number[], number>();
+
         if (events != null) {
           this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
           events.forEach( event => {
+            // console.log(map.get([event.event_geoloc.lng, event.event_geoloc.lat]));
+            // if (map.get([event.event_geoloc.lng, event.event_geoloc.lat]) === undefined) {
+            //   map.set([event.event_geoloc.lng, event.event_geoloc.lat], 1);
+            //   this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, [event._id]));
+            // }
+            // else {
+            //   map.set([event.event_geoloc.lng, event.event_geoloc.lat], map.get([event.event_geoloc.lng, event.event_geoloc.lat]) + 1);
+            //   let gmm:GoogleMapMarker = this.googleMapMarkerContainer.filter((x:GoogleMapMarker) => {return x.lat == event.event_geoloc.lat && x.lng == event.event_geoloc.lng;})[0];
+            //   gmm._id.push(event._id);
+            //   gmm.label = "".concat(gmm._id.length.toString(), ' events at this location');
+            //   gmm.title = gmm.label;
+            //   this.googleMapMarkerContainer.splice(this.googleMapMarkerContainer.findIndex((x:GoogleMapMarker) => {return x.lat == event.event_geoloc.lat && x.lng == event.event_geoloc.lng;}), 1).push(gmm)
+            // }
             this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
           });
+          // let i = 0;
+          // while (i < this.googleMapMarkerContainer.length) {
+          //   console.log(this.googleMapMarkerContainer[4].lat - this.googleMapMarkerContainer[i].lat);
+          //   i = i + 1;
+          // }
           this.loaded = true;
           //console.log("loaded all events into map");
         }
@@ -128,4 +148,5 @@ export class GoogleMapMarker{
     this.label = label;
     this._id = _id;
   }
+
 }

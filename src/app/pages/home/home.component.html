@@ -1,18 +1,15 @@
-
+<mat-google-maps-autocomplete [types]="['(regions)']" placeholderText="Input new location..."
+    (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
+</mat-google-maps-autocomplete>
 <div class="entirePage">
     <div *ngIf="eventsLoaded()">
         <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
-        <mat-google-maps-autocomplete [types]="['(regions)']" placeholderText="Input new location..."
-            (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
-        </mat-google-maps-autocomplete>
         <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
             <mat-tab label="Popular Events"></mat-tab>
             <mat-tab label="Near Me"></mat-tab>
             <mat-tab label="Upcoming"></mat-tab>
             <mat-tab label="Right Now"></mat-tab>
-            <mat-tab label="Map View">
-                <app-googlemaps></app-googlemaps>
-            </mat-tab>
+            <mat-tab label="Map View"></mat-tab>
             <!--<mat-tab *ngIf="loggedIn" label="My Events"></mat-tab>-->
         </mat-tab-group>
         <div *ngIf="currentIndex != 4">
@@ -38,6 +35,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="currentIndex == 4">
+            <app-googlemaps></app-googlemaps>
         </div>
     </div>
     <div *ngIf="!eventsLoaded() && !noEventsFound()" style="height:90vh;">
