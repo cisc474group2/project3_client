@@ -1,10 +1,13 @@
 
 <div class="entirePage">
-    <div *ngIf="eventsLoaded()">
-        <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
-        <mat-google-maps-autocomplete [types]="['(regions)']" placeholderText="Input new location..."
+    <div>
+    <mat-google-maps-autocomplete [addressLabelText]="labelText" [types]="['(regions)']" placeholderText="Input new location..."
             (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
-        </mat-google-maps-autocomplete>
+    </mat-google-maps-autocomplete>
+</div>
+    <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
+    <div *ngIf="eventsLoaded()">
+        
         <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
             <mat-tab label="Popular Events"></mat-tab>
             <mat-tab label="Near Me"></mat-tab>
