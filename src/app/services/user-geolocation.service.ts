@@ -49,6 +49,7 @@ export class UserGeolocationService {
     this.reverseGeocodeGetCityName();
   }
 
+  
   reverseGeocodeGetCityName() {
     this.http.get(Config.GOOGLE_REVERSE_GEOCODING
       .replace('<<OUT>>', 'json')
