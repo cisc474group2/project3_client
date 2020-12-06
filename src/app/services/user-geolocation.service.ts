@@ -53,7 +53,7 @@ export class UserGeolocationService {
   reverseGeocodeGetCityName() {
     //this.router.navigate(['home']);
     let headerDict = {
-      'Accept': 'application/json',
+      'Accept': '*',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Origin': '*'
     }
