@@ -231,6 +231,7 @@ export class EventsService {
 
                 if (count == result.data.length && result.data.length != 0) {
                   if (this.events_loaded.value == false) toSort = true;
+                  this.zero_events.next(false);
                   this.events_loaded.next(true);
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
@@ -279,6 +280,7 @@ export class EventsService {
                 if (count == result.data.length) {
                   if (this.events_loaded.value == false) toSort = true;
                   this.events_loaded.next(true);
+                  this.zero_events.next(false);
                   //console.log(this.sortList(event_model_list));
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);

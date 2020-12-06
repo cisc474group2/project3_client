@@ -4,7 +4,7 @@
 [X]		- Load profile events on login
 [X]		- Reload Bug
 [ ]	Loading circle for button on toggle
-[-]	Loation search bar on main screen
+[X]	Location search bar on main screen
 [x]	Style
 [x]		- Cards
 [x]			* Header / Body stying

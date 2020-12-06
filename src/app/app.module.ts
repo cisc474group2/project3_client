@@ -24,6 +24,7 @@ import { EditprofileComponent } from './pages/profile/edit/editprofile.component
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     GooglemapsComponent,
     EditprofileComponent,
-    EditeventComponent
+    EditeventComponent,
+    NoEventsLandingComponent
   ],
   imports: [
     BrowserModule,
