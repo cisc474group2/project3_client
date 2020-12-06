@@ -49,5 +49,9 @@
     </div>
 </div>
 <div *ngIf="noEventsFound()">
-    Haha lol
+    <div>We Cant find any events near you!</div>
+    <div>
+        <a routerLink="/register" class="btn btn-link">Register</a>
+        <a routerLink="/login" class="btn btn-link">Log in</a>
+    </div>
 </div>
