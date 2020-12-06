@@ -50,6 +50,7 @@ export class UserGeolocationService {
     this.reverseGeocodeGetCityName();
   }
 
+  
   reverseGeocodeGetCityName() {
     //this.router.navigate(['home']);
     let headerDict = {
