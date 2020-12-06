@@ -1,8 +1,8 @@
-<mat-google-maps-autocomplete country="us"
-                          type="address"
-                          placeholderText="Input new location..."
-                          (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                          (onLocationSelected)="onLocationSelected($event)">
+<mat-google-maps-autocomplete 
+    [types]="['(regions)']"
+    placeholderText="Input new location..."
+    (onAutocompleteSelected)="onAutocompleteSelected($event)"
+    (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
 <div *ngIf="eventsLoaded()">
     <h1 style="text-align: center; padding: 2.5%; padding-bottom:1%;">Happening in {{locality_name}}, {{locality_state}}</h1>
@@ -18,13 +18,13 @@
     </mat-tab-group>
     <div *ngIf="currentIndex != 4">
         <div class="card" *ngFor='let card of g'>
-            <div class="card-header" style="background-color:#A8DADC; color:#FFFFFF;">
+            <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">
                 <span id="title">{{card.title}}</span>
-                <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary"
+                <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light" style="background-color: #F1FAEE;"
                         (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
-                <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-primary"
+                <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-success" style="background-color: #60C864;"
                         (click)="registerUser(card)">Register</button></span>
-                <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger"
+                <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger" style="background-color:#C81D35"
                         (click)="unregisterUser(card)">Unregister</button></span>
 
             </div>

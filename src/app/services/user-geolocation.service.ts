@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EventModel, Geoloc } from 'src/assets/model';
 import { Config } from '../../assets/Config';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UserGeolocationService {
   public currentLocal: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public currentAdministrativeAreaLevel1: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router:Router) {
   }
 
   getLocation(): void{
@@ -49,12 +50,24 @@ export class UserGeolocationService {
     this.reverseGeocodeGetCityName();
   }
 
+  
   reverseGeocodeGetCityName() {
+    //this.router.navigate(['home']);
+    let headerDict = {
+      'Accept': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*'
+    }
+    let requestOptions = {
+      headers: new HttpHeaders(headerDict)
+    }
     this.http.get(Config.GOOGLE_REVERSE_GEOCODING
       .replace('<<OUT>>', 'json')
       .replace('<<LAT>>', this.lat.value.toString())
       .replace('<<LNG>>', this.lng.value.toString())
-      .replace('<<KEY>>', Config.GOOGLE_API)).subscribe((res:Object) => {
+      .replace('<<KEY>>', Config.GOOGLE_API), requestOptions).subscribe((res:Object) => {
+        console.log(res);
+        console.log(this);
         //@ts-ignore
         this.currentAdministrativeAreaLevel1.next(res.results[0].address_components.filter((x) => {
           return x.types.includes('administrative_area_level_1');

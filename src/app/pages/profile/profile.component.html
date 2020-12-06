@@ -1,11 +1,13 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <h2 style="margin:auto; width: 50%; text-align: center; margin-top: 1%">Your Profile</h2>
-<mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="end">
+<div style="float:right; margin-right:20%;">
+<mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
     <mat-tab label="Registered Events"></mat-tab>
     <mat-tab label="Hosted Events" *ngIf="showIfBusiness"></mat-tab>
   </mat-tab-group>
+</div>
 
-<div id=left>
+<div id="left">
     <label for="email" class="label">Email:</label>
         <div name="email">{{email}}<br><br></div>
     <label for="fName" class="label" *ngIf="showIfIndividual">First Name:</label>
@@ -21,20 +23,23 @@
     <label for="mailAddress" class="label" *ngIf="showIfBusiness">Mail Address:</label>
         <div *ngIf="showIfBusiness" name="mailAddress">{{mailAddress}}<br><br></div>
     <div class="form-group">
-        <button [disabled]="loading" (click)="editProfile()" class="btn btn-primary">
+        <button [disabled]="loading" (click)="editProfile()" class="btn btn-primary" style="background-color: #60C864;">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Edit Profile
         </button>
     </div>
 </div>
-<div id=right *ngIf="checkingRegisteredEvents">
-    <label for="reg_events" class="label">Registered Events:</label>
+<div id="right" *ngIf="checkingRegisteredEvents">
+    <label for="reg_events" class="label"></label>
     <div class="card" *ngFor='let card of reg_events'>
-        <div class="card-header">
+        <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">
             <span id="title">{{card.title}}</span>
-            <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-secondary" (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
-            <span *ngIf='!card.registered'><button type="button" class="btn btn-primary" (click)="registerUser(card)">Register</button></span>
-            <span *ngIf='card.registered'><button type="button" class="btn btn-danger" (click)="unregisterUser(card)">Unregister</button></span>
+            <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light" style="background-color: #F1FAEE;"
+                (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
+            <span *ngIf='!card.registered'><button type="button" class="btn btn-success" style="background-color: #60C864;"
+                (click)="registerUser(card)">Register</button></span>
+            <span *ngIf='card.registered'><button type="button" class="btn btn-danger" style="background-color:#C81D35"
+                (click)="unregisterUser(card)">Unregister</button></span>
         </div>
         <div class="card-body">
             <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
@@ -46,14 +51,17 @@
     </div>
 </div>
 
-<div *ngIf="checkingHostedEvents">
-    <label for="hostedEvents" class="label" *ngIf="showIfBusiness">Hosted Events:</label>
+<div id="right" *ngIf="checkingHostedEvents">
+    <label for="hostedEvents" class="label" *ngIf="showIfBusiness"></label>
     <div class="card" *ngFor='let card of hostedEvents'>
-        <div class="card-header">
+        <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">
             <span id="title">{{card.title}}</span>
-            <span><button type="button" class="btn btn-secondary" (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
-            <span *ngIf='!card.registered'><button type="button" class="btn btn-primary" (click)="registerUser(card)">Register</button></span>
-            <span *ngIf='card.registered'><button type="button" class="btn btn-danger" (click)="unregisterUser(card)">Unregister</button></span>
+            <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light" style="background-color: #F1FAEE;"
+                (click)="editEvent(card)" style="margin-left:1%;">Edit Event</button></span>
+            <span *ngIf='!card.registered'><button type="button" class="btn btn-success" style="background-color: #60C864;"
+                (click)="registerUser(card)">Register</button></span>
+            <span *ngIf='card.registered'><button type="button" class="btn btn-danger" style="background-color:#C81D35"
+                (click)="unregisterUser(card)">Unregister</button></span>
         </div>
         <div class="card-body">
             <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
@@ -61,7 +69,6 @@
             <div><i class="fas fa-male"></i><span>Going: {{card.registered_ind.length}}</span></div>
             <div><i class="fas fa-map-marker-alt"></i><span>{{card.event_address}}</span></div>
             <div><i class="fas fa-clock"></i><span>{{card.cust_str_start_time}} - {{card.cust_str_end_time}}</span></div>
-            <div><i class="fas fa-clock"></i><span>{{card.inProgress}} ->><<- {{card.completed}}</span></div>
         </div>
     </div>
 </div>
