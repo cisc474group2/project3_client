@@ -4,10 +4,10 @@
 [X]		- Load profile events on login
 [X]		- Reload Bug
 [ ]	Loading circle for button on toggle
-[ ]	Loation search bar on main screen
-[ ]	Style
-[ ]		- Cards
-[ ]			* Header / Body stying
+[-]	Loation search bar on main screen
+[x]	Style
+[x]		- Cards
+[x]			* Header / Body stying
 [ ]		- Everything Else
-[ ]		- Less white
+[x]		- Less white
 [ ]		- Dark mode toggle?
