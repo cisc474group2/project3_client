@@ -1,6 +1,6 @@
 import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BusModel, Geoloc, IndModel } from '../../../assets/model';
