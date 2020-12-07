@@ -32,13 +32,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm=this.formBuilder.group({
       individual: ['', Validators.required],
-      email: ['',Validators.email],
+      email: ['',[Validators.email,Validators.required]],
       password: ['',Validators.required]
     });
     this.individualForm=this.formBuilder.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        zip: ['', Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?')]
+        zip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]]
     });
 
     this.businessForm=this.formBuilder.group({
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
       businessApt: [''],
       businessCity: ['', Validators.required],
       businessState: ['', Validators.required],
-      businessZip: ['', Validators.required],
+      businessZip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]],
       contactName: ['', Validators.required],
       businessPhone: ['', Validators.required]
     });
@@ -125,6 +125,17 @@ export class RegisterComponent implements OnInit {
       .subscribe(response=>{
         this.router.navigate([this.returnUrl]);
       },err=>{this.submitted=false;this.loading=false;this.error=err.message||err;});
+  }
+
+  getErrorMessage(field){
+      if(field.hasError('required')){
+        return 'You must enter a value';
+      }
+      else if(field.hasError('email')){
+        return 'You must enter a valid email';
+      }
+
+      return '';
   }
 
 }
