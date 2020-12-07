@@ -4,6 +4,27 @@
 .mat-tab-group{
   padding-bottom: 1%;
 }
+
+.popup{
+  text-align: center;
+  border: black;
+}
+
+.mat-dialog-title{
+  text-align: center;
+}
+
+.loginButton{
+  float:left;
+  padding-left: 20%;
+  padding-bottom: 1%;
+}
+
+.registerButton{
+  float:right;
+  padding-right: 20%;
+  padding-bottom: 1%;
+}
 // .mat-tab-label {
 //   min-width: 25px !important;
 //   padding: 5px;
@@ -31,17 +52,9 @@ mat-google-maps-autocomplete {
   z-index: 2;
 }
 .radius {
-<<<<<<< HEAD
   width: 12%;
   position: relative;
 
-=======
-  width: 7.5%;
-  float: right;
-  z-index: 2;
-  background-color: #F1FAEE;
-  color:#F1FAEE;
->>>>>>> 107d8b892d47529c5c373c45eb06a06557251741
 }
 .pageTitle {
   text-align: center; 
