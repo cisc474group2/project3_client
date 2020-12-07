@@ -5,7 +5,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './pages/material/material-module'
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent, notLoggedIn, noLocation } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -26,7 +26,7 @@ import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 import {MatInputModule} from '@angular/material/input';
-import {Popup} from './pages/home/home.component';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import {Popup} from './pages/home/home.component';
     EditprofileComponent,
     EditeventComponent,
     NoEventsLandingComponent,
-    Popup
+    notLoggedIn,
+    noLocation
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,7 @@ import {Popup} from './pages/home/home.component';
     NgbModule,
     MatInputModule,
   ],
-  entryComponents: [Popup],
+  entryComponents: [notLoggedIn, noLocation],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
   
