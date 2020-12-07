@@ -11,7 +11,6 @@ import { BusModel, Geoloc, IndModel } from '../../../assets/model';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
   temp;
   individualRegister = false;
   showIfIndividual = false;

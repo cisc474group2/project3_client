@@ -2,17 +2,22 @@
     (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete> -->
 <div>
+   
     <mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']"
     placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
     (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
-<mat-form-field class="radius" appearance="fill">
-    <mat-label>Search Radius</mat-label>
-    <mat-select>
-        <mat-option [value]="50">Default</mat-option>
-        <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
-    </mat-select>
-</mat-form-field>
+
+</div>
+
+<div>
+    <mat-form-field class="radius" appearance="auto" color="primary">
+        <mat-label>Search Radius</mat-label>
+        <mat-select>
+            <mat-option [value]="50">Default</mat-option>
+            <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 
 <div class="entirePage">
@@ -33,7 +38,7 @@
                     <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light"
                             style="background-color: #F1FAEE;" (click)="editEvent(card)" style="margin-left:1%;">Edit
                             Event</button></span>
-                    <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-success"
+                    <span *ngIf='!card.registered'><button type="button" class="btn btn-success"
                             style="background-color: #60C864;" (click)="registerUser(card)">Register</button></span>
                     <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger"
                             style="background-color:#C81D35" (click)="unregisterUser(card)">Unregister</button></span>

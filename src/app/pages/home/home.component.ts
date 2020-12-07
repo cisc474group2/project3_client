@@ -42,6 +42,13 @@ export class HomeComponent implements OnInit {
 
   registerUser(event){
     this.authSvc.authorize();
+    console.log(this.authSvc.userObject);
+    if(this.authSvc.userObject === undefined){
+      alert('hi');
+    }
+    else{
+
+    
     if(!this.authSvc.userObject.reg_events.includes(event._id)){
       this.authSvc.userObject.reg_events.push(event._id);
 
@@ -58,6 +65,7 @@ export class HomeComponent implements OnInit {
             console.log(response);
           },err=>{console.error(err);});
     }
+  }
   }
 
   unregisterUser(event){

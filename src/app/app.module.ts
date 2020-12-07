@@ -25,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-la
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
-    NgbModule
+    NgbModule,
+    MatInputModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
