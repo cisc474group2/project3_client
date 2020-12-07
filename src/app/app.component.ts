@@ -4,7 +4,7 @@ import { UserGeolocationService } from './services/user-geolocation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from './services/events.service';
 import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
-import { UserModel } from '../assets/model';
+import { UserModel, BusModel, IndModel } from '../assets/model';
 import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
@@ -14,7 +14,7 @@ import PlaceResult = google.maps.places.PlaceResult;
 })
 export class AppComponent {
   title = 'Community Board';
-  username:string = '';
+  public username:string = '';
 
   get loggedIn():boolean{
     return this.authSvc.loggedIn;
@@ -32,12 +32,18 @@ export class AppComponent {
     authSvc.authorize();
     geoloc.getLocation();
 
-    authSvc.CurrentUser.subscribe((user:string) => {
-      if (user != null) {
+    authSvc.CurrentUser.subscribe((user:UserModel) => {
+      if (user == null || user == undefined) {
         this.username = '';
       }
       else {
-        this.username = user;
+        if (user.type == "B") {
+          //@ts-ignore
+          this.username = user.type_obj.bus_name;
+        } else if (user.type == "I") {
+          //@ts-ignore
+          this.username = user.type_obj.fName.concat(" ", user.type_obj.lName);
+        }
       }
     });
   }

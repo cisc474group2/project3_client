@@ -202,9 +202,6 @@ export class EventsService {
 
   getOneEventFormat(_id) {
     let event = Array<EventModel>();
-    this.getOneEvent(_id).subscribe(response => {
-      console.log(response);
-    });
 
     this.getOneEvent(_id).subscribe(unformatted_event => {
       this.getBusiness(unformatted_event.data.bus_id).subscribe(business => {
