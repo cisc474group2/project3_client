@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EventModel, Geoloc } from 'src/assets/model';
-import { Config } from '../../assets/Config';
+import { Config } from '../secrets/Config';
 import { Router } from '@angular/router';
 
 @Injectable({
