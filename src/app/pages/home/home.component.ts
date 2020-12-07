@@ -8,6 +8,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserGeolocationService } from '../../services/user-geolocation.service';
 import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
 import PlaceResult = google.maps.places.PlaceResult;
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   public locality_name:string;
   public locality_state:string;
   public radius_options:number[];
+  default_radius = 50;
   labelText = "Change current location"
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router, private geoloc:UserGeolocationService) { 
@@ -141,6 +143,11 @@ export class HomeComponent implements OnInit {
       default:
         this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
         break;
-      }
+    }
+  } 
+
+  onRadiusDropDownChange(dropdown:MatSelectChange) {
+    this.eventSvc.user_radius.next(dropdown.value);
+    this.eventSvc.getEventsFormat();
   }
 }

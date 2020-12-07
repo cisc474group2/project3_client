@@ -8,8 +8,7 @@
 </mat-google-maps-autocomplete>
 <mat-form-field class="radius" appearance="fill">
     <mat-label>Search Radius</mat-label>
-    <mat-select>
-        <mat-option [value]="50">Default</mat-option>
+    <mat-select (selectionChange)="onRadiusDropDownChange($event)" [(value)]="default_radius">
         <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
     </mat-select>
 </mat-form-field>

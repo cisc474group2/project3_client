@@ -4,6 +4,7 @@ import { UserGeolocationService } from './services/user-geolocation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from './services/events.service';
 import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
+import { UserModel } from '../assets/model';
 import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
@@ -13,6 +14,8 @@ import PlaceResult = google.maps.places.PlaceResult;
 })
 export class AppComponent {
   title = 'Community Board';
+  username:string = '';
+
   get loggedIn():boolean{
     return this.authSvc.loggedIn;
   }
@@ -28,6 +31,15 @@ export class AppComponent {
   constructor(public authSvc:AuthService, public geoloc:UserGeolocationService, private eventSvc:EventsService, private router: Router) {
     authSvc.authorize();
     geoloc.getLocation();
+
+    authSvc.CurrentUser.subscribe((user:string) => {
+      if (user != null) {
+        this.username = '';
+      }
+      else {
+        this.username = user;
+      }
+    });
   }
 
 
