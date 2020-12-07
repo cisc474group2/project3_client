@@ -1,0 +1,10 @@
+<h1 mat-dialog-title> Oops, you're not logged in!</h1>
+<div mat-dialog-content class="popup">
+    <p>Click below to login or register for an account.</p>
+    <div class="loginButton">
+        <button mat-raised-button (click)="redirectToLogin()" >Login</button>
+    </div>
+    <div class="registerButton">
+        <button mat-raised-button (click)="redirectToRegister()">Register</button>
+    </div>
+</div>
