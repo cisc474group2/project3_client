@@ -240,7 +240,7 @@ export class EventsService {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
-            console.log("no events found locally");
+            //console.log("no events found locally");
           } else {
             result.data.forEach(unformatted_event => {
 
@@ -268,10 +268,10 @@ export class EventsService {
                   this.events_loaded.next(true);
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
-                  console.log("all events loaded");
+                  //console.log("all events loaded");
                 } else if (result.data.length == 0) {
                   this.zero_events.next(true);
-                  console.log("no events found")
+                  //console.log("no events found")
                 }
                 else {
                   count++;
@@ -288,7 +288,7 @@ export class EventsService {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
-            console.log("no events found locally");
+            //console.log("no events found locally");
           }
           else {
             result.data.forEach(unformatted_event => {
@@ -317,7 +317,7 @@ export class EventsService {
                   //console.log(this.sortList(event_model_list));
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
-                  console.log("local events loaded");
+                  //console.log("local events loaded");
                 } else {
                   count++;
                   //console.log(count, " ", this.event_list);
