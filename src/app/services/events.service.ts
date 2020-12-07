@@ -22,6 +22,7 @@ export class EventsService {
   public profile_business_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public zero_events: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   current_event: EventModel;
+  public user_radius:BehaviorSubject<number> = new BehaviorSubject<number>(50);
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
     this.events_loaded.next(false);
@@ -201,9 +202,6 @@ export class EventsService {
 
   getOneEventFormat(_id) {
     let event = Array<EventModel>();
-    this.getOneEvent(_id).subscribe(response => {
-      console.log(response);
-    });
 
     this.getOneEvent(_id).subscribe(unformatted_event => {
       this.getBusiness(unformatted_event.data.bus_id).subscribe(business => {
@@ -242,7 +240,7 @@ export class EventsService {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
-            console.log("no events found locally");
+            //console.log("no events found locally");
           } else {
             result.data.forEach(unformatted_event => {
 
@@ -270,10 +268,10 @@ export class EventsService {
                   this.events_loaded.next(true);
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
-                  console.log("all events loaded");
+                  //console.log("all events loaded");
                 } else if (result.data.length == 0) {
                   this.zero_events.next(true);
-                  console.log("no events found")
+                  //console.log("no events found")
                 }
                 else {
                   count++;
@@ -286,11 +284,11 @@ export class EventsService {
       }
       //If the user has accepted geolocation features, it will pull all events from that location
       else if (res != -1 && res != null) {
-        this.getLocalEventsCustRad(50).subscribe(result => {
+        this.getLocalEventsCustRad(this.user_radius.value).subscribe(result => {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
-            console.log("no events found locally");
+            //console.log("no events found locally");
           }
           else {
             result.data.forEach(unformatted_event => {
@@ -319,7 +317,7 @@ export class EventsService {
                   //console.log(this.sortList(event_model_list));
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
-                  console.log("local events loaded");
+                  //console.log("local events loaded");
                 } else {
                   count++;
                   //console.log(count, " ", this.event_list);

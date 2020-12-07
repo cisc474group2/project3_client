@@ -25,6 +25,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
+import {MatInputModule} from '@angular/material/input';
+import {Popup} from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-la
     GooglemapsComponent,
     EditprofileComponent,
     EditeventComponent,
-    NoEventsLandingComponent
+    NoEventsLandingComponent,
+    Popup
   ],
   imports: [
     BrowserModule,
@@ -52,9 +55,12 @@ import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-la
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
-    NgbModule
+    NgbModule,
+    MatInputModule,
   ],
+  entryComponents: [Popup],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

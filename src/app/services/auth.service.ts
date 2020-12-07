@@ -10,7 +10,7 @@ import { UserModel, BusModel, IndModel} from "../../assets/model";
 export class AuthService {
   private path='http://localhost:3000/api/security/'
   private _token:string=null;
-  CurrentUser: BehaviorSubject<string>=new BehaviorSubject<string>(null);
+  CurrentUser: BehaviorSubject<UserModel>=new BehaviorSubject<UserModel>(null);
   userObject;
 //CurrentUser: ReplaySubject<string>=new BehaviorSubject<string>();
 //Replay sends ALL versions of the subject
@@ -32,6 +32,7 @@ export class AuthService {
   get loggedIn():boolean{
     return this.token!=null;
   }
+
   constructor(private http:HttpClient) { 
     this.CurrentUser.next(null);
   }
@@ -50,7 +51,7 @@ export class AuthService {
         this.token=null;
       }
       else{
-        this.CurrentUser.next(this.userObject.email)
+        this.CurrentUser.next(this.userObject)
       }
     },err=>{
       this.token=null;
