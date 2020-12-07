@@ -10,7 +10,7 @@ import { UserModel, BusModel, IndModel} from "../../assets/model";
 export class AuthService {
   private path='http://localhost:3000/api/security/'
   private _token:string=null;
-  CurrentUser: BehaviorSubject<string>=new BehaviorSubject<string>(null);
+  CurrentUser: BehaviorSubject<UserModel>=new BehaviorSubject<UserModel>(null);
   userObject;
 //CurrentUser: ReplaySubject<string>=new BehaviorSubject<string>();
 //Replay sends ALL versions of the subject

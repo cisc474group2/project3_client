@@ -21,7 +21,7 @@ export class UserGeolocationService {
   }
 
   getLocation(): void{
-    console.log("asking for location");
+    //console.log("asking for location");
     if (navigator.permissions.query({ name: 'geolocation' }).then(res => {return res.state === "granted"})) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.overrideGeolocLocation(position.coords.longitude, position.coords.latitude);
@@ -30,12 +30,12 @@ export class UserGeolocationService {
         //console.log("resetting user location");
       });
     } else if (navigator.permissions.query({ name: 'geolocation' }).then(res => {return res.state === "denied"})) {
-      console.log("Request for Geolocation Denied");
+      //console.log("Request for Geolocation Denied");
       this.lng.next(null);
       this.lat.next(null);
       this.accuracy.next(-1);
     } else {
-      console.log("No Support for Geolocation");
+      //console.log("No Support for Geolocation");
       this.lng.next(null);
       this.lat.next(null);
       this.accuracy.next(null);
