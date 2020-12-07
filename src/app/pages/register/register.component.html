@@ -5,12 +5,14 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter Email</mat-label>
             <input matInput placeholder="email@address.com" formControlName="email" required>
+            <mat-error>You must enter a valid email</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Enter Password</mat-label>
             <input matInput formControlName="password" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div>Type of Account:<br><br></div>
@@ -36,16 +38,19 @@
         <mat-form-field appearance="fill" id="fName">
             <mat-label>Enter First Name</mat-label>
             <input matInput formControlName="firstName" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill" id="lName">
             <mat-label>Enter Last Name</mat-label>
             <input matInput formControlName="lastName" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfIndividual">
         <mat-form-field appearance="fill">
             <mat-label>Enter Zip Code</mat-label>
             <input matInput placeholder="12345" formControlName="zip" required>
+            <mat-error>You must enter a valid zip code</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group" *ngIf="showIfIndividual">
@@ -60,12 +65,14 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter Business Name</mat-label>
             <input matInput formControlName="businessName" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfBusiness">
         <mat-form-field appearance="fill">
             <mat-label>Enter Business Street Address</mat-label>
-            <input matInput placeholder="123 Street Ave" formControlName="businessAddress" required>
+            <input matInput placeholder="123 Street Ave" formControlName="businessStreet" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfBusiness">
@@ -78,6 +85,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter Business City</mat-label>
             <input matInput formControlName="businessCity" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfBusiness">
@@ -136,24 +144,29 @@
                 <mat-option value="WI">Wisconsin</mat-option>
                 <mat-option value="WY">Wyoming</mat-option>
             </mat-select>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfBusiness">
         <mat-form-field appearance="fill">
             <mat-label>Enter Business Zip</mat-label>
             <input matInput formControlName="businessZip" required>
+            <mat-error>You must enter a valid zip code</mat-error>
         </mat-form-field>
     </div>
     <div *ngIf="showIfBusiness">
         <mat-form-field appearance="fill">
             <mat-label>Enter Contact Name</mat-label>
             <input matInput formControlName="contactName" required>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
-    <div *ngIf="showIfBusiness">
+    <div *ngIf="showIfBusiness" id="phoneBox">
         <mat-form-field appearance="fill">
             <mat-label>Enter Business Phone Number</mat-label>
             <input matInput placeholder="123-123-4567" formControlName="businessPhone" required>
+            <mat-hint>Please format as 123-123-4567</mat-hint>
+            <mat-error>You must enter a value</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group" *ngIf="showIfBusiness">

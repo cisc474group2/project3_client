@@ -16,7 +16,7 @@ export class UserGeolocationService {
   public userGeoloc: BehaviorSubject<Geoloc> = new BehaviorSubject<Geoloc>(null);
   public currentLocal: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public currentAdministrativeAreaLevel1: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-
+  private default_location:number[] = [-75.1653705, 39.9529923];
   constructor(private http: HttpClient, private router:Router) {
   }
 
@@ -28,16 +28,19 @@ export class UserGeolocationService {
         this.accuracy.next(position.coords.accuracy);
         this.userGeoloc.next(new Geoloc(this.lng.value, this.lat.value));
         //console.log("resetting user location");
+      }, (notAllowed) => {  //User blocks geolocation
+        this.overrideGeolocLocation(this.default_location[0], this.default_location[1]);
+        this.accuracy.next(-1);
+        this.userGeoloc.next(new Geoloc(this.lng.value, this.lat.value));
+        //console.log("resetting user location");
       });
     } else if (navigator.permissions.query({ name: 'geolocation' }).then(res => {return res.state === "denied"})) {
       //console.log("Request for Geolocation Denied");
-      this.lng.next(null);
-      this.lat.next(null);
+      this.overrideGeolocLocation(this.default_location[0], this.default_location[1]);
       this.accuracy.next(-1);
     } else {
       //console.log("No Support for Geolocation");
-      this.lng.next(null);
-      this.lat.next(null);
+      this.overrideGeolocLocation(this.default_location[0], this.default_location[1]);
       this.accuracy.next(null);
     }
   }
