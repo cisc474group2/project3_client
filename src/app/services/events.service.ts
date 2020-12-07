@@ -86,14 +86,49 @@ export class EventsService {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
   }
 
-  getBulkEvents() {
-    return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: this.authSvc.userObject.reg_events });
+  getBulkEvents(_id:string[] = null) {
+    if (_id == null) return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: this.authSvc.userObject.reg_events });
+    else return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: _id });
   }
 
   getBulkBusinessEvents() {
     return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: this.authSvc.userObject.type_obj.hostedEvents });
   }
 
+  getBulkEventsFormat(_id:string[]) {
+    let event_model_list = Array<EventModel>();
+    let count = 1;
+    this.getBulkBusinessEvents().subscribe(result => {
+      result.data.forEach(unformatted_event => {
+        this.getBusiness(unformatted_event.bus_id).subscribe(business => {
+          event_model_list.push(new EventModel(unformatted_event.title,
+            unformatted_event.description,
+            this.formatAddress(unformatted_event.event_address),
+            new Date(unformatted_event.start_time),
+            new Date(unformatted_event.end_time),
+            unformatted_event._id,
+            business.data.type_obj.bus_name,
+            unformatted_event.registered_ind,
+            unformatted_event.event_geoloc,
+            unformatted_event.create_date,
+            (this.authSvc.userObject != null) ? this.authSvc.userObject.reg_events.includes(unformatted_event._id) : false,
+            this.convertTimestamp(unformatted_event.start_time),
+            this.convertTimestamp(unformatted_event.end_time),
+            business.data._id,
+            unformatted_event.event_address));
+
+          if (count == result.data.length) {
+            this.profile_business_events_loaded.next(true);
+            this.profile_business_event_list.next(event_model_list);
+          }
+          else {
+            count++;
+          }
+        });
+      });
+    });
+  }
+  
 
   getProfileEventList() {
     let event_model_list = Array<EventModel>();
