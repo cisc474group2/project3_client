@@ -22,6 +22,7 @@ export class EventsService {
   public profile_business_events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public zero_events: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   current_event: EventModel;
+  public user_radius:BehaviorSubject<number> = new BehaviorSubject<number>(50);
 
   constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
     this.events_loaded.next(false);
@@ -286,7 +287,7 @@ export class EventsService {
       }
       //If the user has accepted geolocation features, it will pull all events from that location
       else if (res != -1 && res != null) {
-        this.getLocalEventsCustRad(50).subscribe(result => {
+        this.getLocalEventsCustRad(this.user_radius.value).subscribe(result => {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);

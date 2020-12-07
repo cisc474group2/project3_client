@@ -32,6 +32,7 @@ export class AuthService {
   get loggedIn():boolean{
     return this.token!=null;
   }
+
   constructor(private http:HttpClient) { 
     this.CurrentUser.next(null);
   }
@@ -50,7 +51,7 @@ export class AuthService {
         this.token=null;
       }
       else{
-        this.CurrentUser.next(this.userObject.email)
+        this.CurrentUser.next(this.userObject)
       }
     },err=>{
       this.token=null;

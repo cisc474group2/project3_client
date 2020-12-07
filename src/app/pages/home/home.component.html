@@ -7,17 +7,12 @@
     placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
     (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
-
-</div>
-
-<div>
-    <mat-form-field class="radius" appearance="auto" color="primary">
-        <mat-label>Search Radius</mat-label>
-        <mat-select>
-            <mat-option [value]="50">Default</mat-option>
-            <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+<mat-form-field class="radius" appearance="auto" color="primary">
+    <mat-label>Search Radius</mat-label>
+    <mat-select (selectionChange)="onRadiusDropDownChange($event)" [(value)]="default_radius">
+        <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
 
 <div class="entirePage">

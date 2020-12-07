@@ -31,9 +31,17 @@ mat-google-maps-autocomplete {
   z-index: 2;
 }
 .radius {
+<<<<<<< HEAD
   width: 12%;
   position: relative;
 
+=======
+  width: 7.5%;
+  float: right;
+  z-index: 2;
+  background-color: #F1FAEE;
+  color:#F1FAEE;
+>>>>>>> 107d8b892d47529c5c373c45eb06a06557251741
 }
 .pageTitle {
   text-align: center; 
