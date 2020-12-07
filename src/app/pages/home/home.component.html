@@ -1,16 +1,23 @@
 <!-- <mat-google-maps-autocomplete [types]="['(regions)']" placeholderText="Input new location..."
     (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete> -->
-<mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']" placeholderText="Input new location..."
-            (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
+<div>
+    <mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']"
+    placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
+    (onLocationSelected)="onLocationSelected($event)">
 </mat-google-maps-autocomplete>
-<span id="radius">Search Radius {{search_radius}}</span>
-<div class="entirePage">
-    <div>
-    <!--  -->
+<mat-form-field class="radius" appearance="fill">
+    <mat-label>Search Radius</mat-label>
+    <mat-select>
+        <mat-option [value]="50">Default</mat-option>
+        <mat-option *ngFor="let r of radius_options" [value]="r">{{r}}</mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
+
+<div class="entirePage">
     <div *ngIf="eventsLoaded()">
-    <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
+        <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
         <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
             <mat-tab label="Popular Events"></mat-tab>
             <mat-tab label="Near Me"></mat-tab>

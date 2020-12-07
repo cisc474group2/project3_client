@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   public currentIndex = 0;
   public locality_name:string;
   public locality_state:string;
-  public search_radius:number = 50;
+  public radius_options:number[];
   labelText = "Change current location"
 
   constructor(private eventSvc:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private route: ActivatedRoute, private router: Router, private geoloc:UserGeolocationService) { 
@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
     this.geoloc.currentAdministrativeAreaLevel1.subscribe(state => {
       this.locality_state = this.geoloc.currentAdministrativeAreaLevel1.value;
     });
+    this.radius_options = [5, 10, 25, 50, 100, 250];
   }
 
   ngOnInit(): void {

@@ -40,31 +40,27 @@ export class GooglemapsComponent {
       this.zoom = 15;
       this.loaded = false;
       eventServ.event_list.subscribe(events => {
-        let map = new Map<number[], number>();
+        let map = new Map<string, number>();
 
         if (events != null) {
           this.googleMapMarkerContainer = new Array<GoogleMapMarker>();
           events.forEach( event => {
             // console.log(map.get([event.event_geoloc.lng, event.event_geoloc.lat]));
-            // if (map.get([event.event_geoloc.lng, event.event_geoloc.lat]) === undefined) {
-            //   map.set([event.event_geoloc.lng, event.event_geoloc.lat], 1);
+            // console.log(GoogleMapMarker.roundingStore(event));
+            // if (map.get(GoogleMapMarker.roundingStore(event)) === undefined) {
+            //   map.set(GoogleMapMarker.roundingStore(event), 1);
             //   this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, [event._id]));
             // }
             // else {
-            //   map.set([event.event_geoloc.lng, event.event_geoloc.lat], map.get([event.event_geoloc.lng, event.event_geoloc.lat]) + 1);
-            //   let gmm:GoogleMapMarker = this.googleMapMarkerContainer.filter((x:GoogleMapMarker) => {return x.lat == event.event_geoloc.lat && x.lng == event.event_geoloc.lng;})[0];
+            //   map.set(GoogleMapMarker.roundingStore(event), map.get(GoogleMapMarker.roundingStore(event)) + 1);
+            //   let gmm:GoogleMapMarker = this.googleMapMarkerContainer.filter((x:GoogleMapMarker) => {return GoogleMapMarker.fuzzyCompareBetweenTypes(x, event)})[0];
             //   gmm._id.push(event._id);
             //   gmm.label = "".concat(gmm._id.length.toString(), ' events at this location');
             //   gmm.title = gmm.label;
-            //   this.googleMapMarkerContainer.splice(this.googleMapMarkerContainer.findIndex((x:GoogleMapMarker) => {return x.lat == event.event_geoloc.lat && x.lng == event.event_geoloc.lng;}), 1).push(gmm)
+            //   this.googleMapMarkerContainer.splice(this.googleMapMarkerContainer.findIndex((x:GoogleMapMarker) => {GoogleMapMarker.fuzzyCompareBetweenTypes(x, event);}), 1).push(gmm)
             // }
             this.googleMapMarkerContainer.push(new GoogleMapMarker(event.event_geoloc.lat, event.event_geoloc.lng, event.title, event.description, event._id));
           });
-          // let i = 0;
-          // while (i < this.googleMapMarkerContainer.length) {
-          //   console.log(this.googleMapMarkerContainer[4].lat - this.googleMapMarkerContainer[i].lat);
-          //   i = i + 1;
-          // }
           this.loaded = true;
           //console.log("loaded all events into map");
         }
@@ -147,6 +143,29 @@ export class GoogleMapMarker{
     this.title = title;
     this.label = label;
     this._id = _id;
+  }
+
+  static fuzzyCompare(a:GoogleMapMarker, b:GoogleMapMarker) {
+    return (Math.trunc(a.lat * 10000) == Math.trunc(b.lat * 10000)) &&
+      (Math.trunc(a.lng * 10000) == Math.trunc(b.lng * 10000))
+  }
+
+  mapStore():number[] {
+    return [Math.trunc(10000 * this.lat), Math.trunc(10000 * this.lng)];
+  }
+
+  static roundingStore(lat:number|EventModel, lng:number = 0):string {
+    if (typeof(lat) === 'number') {
+      return ''.concat(Math.trunc(10000 * lat).toString(), ' ', Math.trunc(10000 * lng).toString());
+    }
+    return ''.concat(Math.trunc(10000 * lat.event_geoloc.lat).toString(), ' ', Math.trunc(10000 * lat.event_geoloc.lng).toString());
+  }
+
+  static fuzzyCompareBetweenTypes(a:GoogleMapMarker, b:EventModel) {
+    console.log(a, b);
+    return (Math.trunc(a.lat) == Math.trunc(b.event_geoloc.lat * 10000)) &&
+      (Math.trunc(a.lng) == Math.trunc(b.event_geoloc.lng * 10000))
+
   }
 
 }
