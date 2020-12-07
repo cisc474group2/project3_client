@@ -47,6 +47,6 @@ Thumbs.db
 
 
 # Secrets
-src/app/Secrets/Config.ts
-src/app/Secrets/Config.ts
+src/app/secrets/Config.ts
+src/app/secrets/Config.ts
 .gitsecret/keys/random_seed
