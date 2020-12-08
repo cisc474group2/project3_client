@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
     showIfBusiness = false;
     checkingRegisteredEvents = true;
     checkingHostedEvents = false;
+    profileEventsLoaded = false;
 
     constructor(private formBuilder : FormBuilder, private route : ActivatedRoute, private router : Router, private authSvc : AuthService, private profileSvc : ProfileService, private eventSvc : EventsService) {
         this.authSvc.authorize();
@@ -58,7 +59,35 @@ export class ProfileComponent implements OnInit {
         });
     }
 
+    registeredEvents(){
+        if(this.reg_events === null){
+            return false;
+        }
+        else return this.reg_events.length != 0;
+    
+    }
+
+    areThereHostedEvents(){
+        if(this.hostedEvents === null){
+            return false;
+        }
+        else return this.hostedEvents.length != 0;
+    }
+
+    postEvent(){
+        this.router.navigate(['postevent']);
+    }
+
+    goHome(){
+        this.router.navigate(['home']);
+    }
+
+    eventsLoaded(): boolean{
+        return this.eventSvc.profile_events_loaded.value && this.eventSvc.profile_business_events_loaded.value;
+    }
+
     ngOnInit(): void {
+    
         this.authSvc.CurrentUser.subscribe(user => {
             if (user === null) {
                 this.router.navigate(['login'])
@@ -68,13 +97,8 @@ export class ProfileComponent implements OnInit {
 
 
                 this.eventSvc.profile_event_list.subscribe((event_list : Array < EventModel >) => {
-                    // this.reg_events = event_list.filter((x) => {
-                    // return this.authSvc.userObject.reg_events.includes(x._id);
-                    // });
                     this.reg_events = event_list;
-                    // this.hostedEvents = event_list.filter((x) => {
-                    // return this.authSvc.userObject.type_obj.hostedEvents.includes(x._id);
-                    // })
+                    
                 });
                 if (this.authSvc.userObject.type === 'B') {
                     this.eventSvc.profile_business_event_list.subscribe((event_list) => {
