@@ -136,6 +136,9 @@ mat-google-maps-autocomplete {
   .card{
     margin-bottom: 1%;
   }
+  .clickableCardItem:hover {
+    columns: #2e2e2e;;
+  }
   i{
     width: 2em;
     text-align: center;
