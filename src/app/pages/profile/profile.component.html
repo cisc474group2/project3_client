@@ -34,8 +34,14 @@
             </div>
         </div>
         <div id="right" *ngIf="checkingRegisteredEvents">
-            <div *ngIf="!registeredEvents()">
-                No registered events :(
+            <div *ngIf="!registeredEvents()" style=" text-align: center;">
+               <h2> Can't find any registered events :( </h2>
+               <br>
+               <h2> Click below to find some!</h2>
+               <br>
+               <span><button type="button" class="btn btn-dark bg-dark"
+                style="background-color: #F1FAEE;" (click)="goHome()" style="margin-left:1%;">Register for events!
+                </button></span>
             </div>
             <label for="reg_events" class="label"></label>
             <div class="card" *ngFor='let card of reg_events'>
@@ -61,9 +67,16 @@
         </div>
 
         <div id="right" *ngIf="checkingHostedEvents">
-            <div *ngIf="!areThereHostedEvents()">
-                No hosted events :(
-            </div>
+            <div *ngIf="!areThereHostedEvents()" style=" text-align: center;">
+                <h2> Can't find any hosted events :( </h2>
+                <br>
+                <h2> Click below to create one!</h2>
+                <br>
+                <span><button type="button" class="btn btn-dark bg-dark"
+                 style="background-color: #F1FAEE;" (click)="postEvent()" style="margin-left:1%;">Register for events!
+                 </button></span>
+             </div>
+
             <label for="hostedEvents" class="label" *ngIf="showIfBusiness"></label>
             <div class="card" *ngFor='let card of hostedEvents'>
                 <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">

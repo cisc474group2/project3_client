@@ -74,6 +74,14 @@ export class ProfileComponent implements OnInit {
         else return this.hostedEvents.length != 0;
     }
 
+    postEvent(){
+        this.router.navigate(['postevent']);
+    }
+
+    goHome(){
+        this.router.navigate(['home']);
+    }
+
     eventsLoaded(): boolean{
         return this.eventSvc.profile_events_loaded.value && this.eventSvc.profile_business_events_loaded.value;
     }
