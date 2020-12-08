@@ -15,6 +15,7 @@ export class EventsService {
   private path = "http://localhost:3000/api/"
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public end_of_function: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public events_all: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public profile_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public profile_business_event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
@@ -232,6 +233,7 @@ export class EventsService {
     let toSort = false;
     let now = new Date().getDate;
     this.events_loaded.next(false);
+    this.end_of_function.next(false);
     this.geoloc.accuracy.subscribe(res => {
       // If the user has declined geoloation features, it will just load all events
       //console.log(res, this.geoloc.lat, this.geoloc.lng);
@@ -240,6 +242,7 @@ export class EventsService {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
+            this.end_of_function.next(true);
             //console.log("no events found locally");
           } else {
             result.data.forEach(unformatted_event => {
@@ -265,12 +268,14 @@ export class EventsService {
                 if (count == result.data.length && result.data.length != 0) {
                   if (this.events_loaded.value == false) toSort = true;
                   this.zero_events.next(false);
-                  this.events_loaded.next(true);
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
+                  this.events_loaded.next(true);
+                  this.end_of_function.next(true);
                   //console.log("all events loaded");
                 } else if (result.data.length == 0) {
                   this.zero_events.next(true);
+                  this.end_of_function.next(true);
                   //console.log("no events found")
                 }
                 else {
@@ -288,6 +293,7 @@ export class EventsService {
           //console.log(result.data);
           if (result.data.length == 0) {
             this.zero_events.next(true);
+            this.end_of_function.next(true);
             //console.log("no events found locally");
           }
           else {
@@ -312,11 +318,12 @@ export class EventsService {
 
                 if (count == result.data.length) {
                   if (this.events_loaded.value == false) toSort = true;
-                  this.events_loaded.next(true);
                   this.zero_events.next(false);
                   //console.log(this.sortList(event_model_list));
                   this.events_all.next((toSort) ? event_model_list.sort(this.hotSort) : event_model_list);
                   this.event_list.next(this.events_all.value);
+                  this.events_loaded.next(true);
+                  this.end_of_function.next(true);
                   //console.log("local events loaded");
                 } else {
                   count++;
@@ -329,6 +336,7 @@ export class EventsService {
       }
       else {
         this.events_loaded.next(false);
+        this.end_of_function.next(true);
       }
       //Else it will not load anything else.
     });
@@ -425,7 +433,7 @@ export class EventsService {
     let b_dist = EventsService.getDistanceFromLatLonInMile(
       b.event_geoloc.lat, b.event_geoloc.lng,
       a.usrLoc.lat, a.usrLoc.lng);
-    if (a_dist - b_dist != 0) return (a_dist > b_dist) ? 1 : -1;
+    if (a_dist - b_dist != 0) return (a_dist < b_dist) ? 1 : -1;
     else return 0;
   }
 

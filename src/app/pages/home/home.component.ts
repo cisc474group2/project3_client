@@ -141,12 +141,11 @@ export class HomeComponent implements OnInit {
     }
 
     noEventsFound(): boolean {
-        if(this.eventSvc.zero_events.value && this.count<=0){
+        console.log(this.eventSvc.end_of_function.value, this.eventSvc.zero_events.value, this.count<=0)
+        if(this.eventSvc.end_of_function.value && this.eventSvc.zero_events.value && this.count<=0){
             this.count = 1;
             this.dialog.open(noLocation);
         }
-
-        
         return this.eventSvc.zero_events.value;
     }
 
