@@ -27,7 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 import { MatInputModule } from '@angular/material/input';
 import { FootComponent } from './pages/foot/foot.component';
-import { BusinessComponent } from './pages/business/business.component';
+import { bpnotLoggedIn, BusinessComponent } from './pages/business/business.component';
 
 
 
@@ -47,7 +47,8 @@ import { BusinessComponent } from './pages/business/business.component';
     noLocation,
     mapsNotLoggedIn,
     FootComponent,
-    BusinessComponent
+    BusinessComponent,
+    bpnotLoggedIn
   ],
   imports: [
     BrowserModule,
@@ -65,7 +66,7 @@ import { BusinessComponent } from './pages/business/business.component';
     NgbModule,
     MatInputModule,
   ],
-  entryComponents: [notLoggedIn, noLocation, mapsNotLoggedIn],
+  entryComponents: [notLoggedIn, noLocation, mapsNotLoggedIn, bpnotLoggedIn],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
   

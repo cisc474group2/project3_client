@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
 import { EventsService } from '../../services/events.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-business',
@@ -32,6 +33,7 @@ export class BusinessComponent implements OnInit {
     private profileSvc:ProfileService, 
     private eventSvc:EventsService, 
     private router:Router, 
+    public dialog : MatDialog,
     private activatedRoute:ActivatedRoute) { 
       this.checkingHostedEvents = false;
       activatedRoute.paramMap.subscribe((params) => { 
@@ -88,27 +90,35 @@ editEvent(event : EventModel) {
     this.router.navigate(['editevent']);
 }
 
+openDialog(){
+    this.dialog.open(bpnotLoggedIn, {});
+}
+
 registerUser(event) {
     this.authSvc.authorize();
-    if (!this.authSvc.userObject.reg_events.includes(event._id)) {
-        this.authSvc.userObject.reg_events.push(event._id);
+    console.log(this.authSvc.userObject);
+    if (this.authSvc.userObject === undefined || this.authSvc.userObject === null) {
+        this.openDialog();
+    } else {
+        if (!this.authSvc.userObject.reg_events.includes(event._id)) {
+            this.authSvc.userObject.reg_events.push(event._id);
 
-        this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response => {
-            console.log(response);
-            // this.eventSvc.getEventsFormat();
-            event.registered = !event.registered;
-            event.registered_ind.length ++;
-            this.updateLists()
-        }, err => {
-            console.error(err);
-        });
+            this.profileSvc.updateUser(this.authSvc.userObject._id, this.authSvc.userObject.email, this.authSvc.userObject.type_obj, this.authSvc.userObject.reg_events).subscribe(response => {
+                console.log(response);
+                // this.eventSvc.getEventsFormat();
+                event.registered = !event.registered;
+                event.registered_ind.length ++;
+            }, err => {
+                console.error(err);
+            });
 
 
-        this.eventSvc.updateUserList(event._id, this.authSvc.userObject._id).subscribe(response => {
-            console.log(response);
-        }, err => {
-            console.error(err);
-        });
+            this.eventSvc.updateUserList(event._id, this.authSvc.userObject._id).subscribe(response => {
+                console.log(response);
+            }, err => {
+                console.error(err);
+            });
+        }
     }
 }
 
@@ -126,7 +136,32 @@ updateLists(): void {
     if (this.authSvc.userObject.type === "B") 
         this.eventSvc.getProfileBusinessEventList();
     
+}
+
+
 
 }
 
-}
+@Component({
+    selector: 'bpnotLoggedIn',
+    templateUrl: 'bpnotLoggedIn.html',
+    styleUrls: ['../home/home.component.scss']
+  })
+  export class bpnotLoggedIn{
+  
+    constructor(
+      public dialogRef: MatDialogRef<bpnotLoggedIn>, private router: Router){
+  
+      };
+  
+      redirectToLogin() {
+        this.dialogRef.close();
+        this.router.navigate(['login']);
+    }
+  
+       redirectToRegister() {
+        this.dialogRef.close();
+        this.router.navigate(['register']);
+    }
+  
+  }
