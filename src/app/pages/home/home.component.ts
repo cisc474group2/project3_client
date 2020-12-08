@@ -124,11 +124,12 @@ export class HomeComponent implements OnInit {
     }
 
     noEventsFound(): boolean {
-        
         if(this.eventSvc.zero_events.value && this.count<=0){
             this.count = 1;
             this.dialog.open(noLocation);
         }
+
+        
         return this.eventSvc.zero_events.value;
     }
 
@@ -138,6 +139,7 @@ export class HomeComponent implements OnInit {
     onLocationSelected(location : Location) {
         this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
         this.eventSvc.getEventsFormat();
+        this.count = 0;
         console.log(this.geoloc.userGeoloc.value);
     }
 
