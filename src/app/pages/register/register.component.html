@@ -1,179 +1,181 @@
-<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<h2>Register</h2>
-<form [formGroup]="registerForm" (ngSubmit)="register()">
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Email</mat-label>
-            <input matInput placeholder="email@address.com" formControlName="email" required>
-            <mat-error>You must enter a valid email</mat-error>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Password</mat-label>
-            <input matInput formControlName="password" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div>Type of Account:<br><br></div>
-    <div>
-        <!--<mat-label>Type of Account:</mat-label>
-        <mat-checkbox id="indivCheck" formControlName="individual" (change)="unhide($event)">Individual</mat-checkbox>
-        <mat-checkbox id="busCheck" formControlName="individual" (change)="unhide($event)">Business</mat-checkbox>-->
-        <label for="individual">Individual</label>
-        <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
-        <label for="business">Business</label>
-        <input type="checkbox" id="busCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
-        <!--<mat-form-field appearance="fill">
-            <mat-label>Type of Account</mat-label>
-            <mat-select formControlName="individual" required>
-                <mat-option value="Individual" (change)="unhide($event)">Individual</mat-option>
-                <mat-option value="Business" (change)="unhide($event)">Business</mat-option>
-            </mat-select>
-        </mat-form-field>-->
-    </div>
-</form>
-<form [formGroup]="individualForm" (ngSubmit)="register()">
-    <div *ngIf="showIfIndividual">
-        <mat-form-field appearance="fill" id="fName">
-            <mat-label>Enter First Name</mat-label>
-            <input matInput formControlName="firstName" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" id="lName">
-            <mat-label>Enter Last Name</mat-label>
-            <input matInput formControlName="lastName" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfIndividual">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Zip Code</mat-label>
-            <input matInput placeholder="12345" formControlName="zip" required>
-            <mat-error>You must enter a valid zip code</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group" *ngIf="showIfIndividual">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Register
-        </button>
-    </div>
-</form>
-<form [formGroup]="businessForm" (ngSubmit)="register()">
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business Name</mat-label>
-            <input matInput formControlName="businessName" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business Street Address</mat-label>
-            <input matInput placeholder="123 Street Ave" formControlName="businessStreet" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business Unit or P.O. Box</mat-label>
-            <input matInput formControlName="businessApt">
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business City</mat-label>
-            <input matInput formControlName="businessCity" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Choose Business State</mat-label>
-            <mat-select formControlName="businessState" required>
-                <mat-option value="AL">Alabama</mat-option>
-                <mat-option value="AK">Alaska</mat-option>
-                <mat-option value="AZ">Arizona</mat-option>
-                <mat-option value="AR">Arkansas</mat-option>
-                <mat-option value="CA">California</mat-option>
-                <mat-option value="CO">Colorado</mat-option>
-                <mat-option value="CT">Connecticut</mat-option>
-                <mat-option value="DE">Delaware</mat-option>
-                <mat-option value="DC">District Of Columbia</mat-option>
-                <mat-option value="FL">Florida</mat-option>
-                <mat-option value="GA">Georgia</mat-option>
-                <mat-option value="HI">Hawaii</mat-option>
-                <mat-option value="ID">Idaho</mat-option>
-                <mat-option value="IL">Illinois</mat-option>
-                <mat-option value="IN">Indiana</mat-option>
-                <mat-option value="IA">Iowa</mat-option>
-                <mat-option value="KS">Kansas</mat-option>
-                <mat-option value="KY">Kentucky</mat-option>
-                <mat-option value="LA">Louisiana</mat-option>
-                <mat-option value="ME">Maine</mat-option>
-                <mat-option value="MD">Maryland</mat-option>
-                <mat-option value="MA">Massachusetts</mat-option>
-                <mat-option value="MI">Michigan</mat-option>
-                <mat-option value="MN">Minnesota</mat-option>
-                <mat-option value="MS">Mississippi</mat-option>
-                <mat-option value="MO">Missouri</mat-option>
-                <mat-option value="MT">Montana</mat-option>
-                <mat-option value="NE">Nebraska</mat-option>
-                <mat-option value="NV">Nevada</mat-option>
-                <mat-option value="NH">New Hampshire</mat-option>
-                <mat-option value="NJ">New Jersey</mat-option>
-                <mat-option value="NM">New Mexico</mat-option>
-                <mat-option value="NY">New York</mat-option>
-                <mat-option value="NC">North Carolina</mat-option>
-                <mat-option value="ND">North Dakota</mat-option>
-                <mat-option value="OH">Ohio</mat-option>
-                <mat-option value="OK">Oklahoma</mat-option>
-                <mat-option value="OR">Oregon</mat-option>
-                <mat-option value="PA">Pennsylvania</mat-option>
-                <mat-option value="RI">Rhode Island</mat-option>
-                <mat-option value="SC">South Carolina</mat-option>
-                <mat-option value="SD">South Dakota</mat-option>
-                <mat-option value="TN">Tennessee</mat-option>
-                <mat-option value="TX">Texas</mat-option>
-                <mat-option value="UT">Utah</mat-option>
-                <mat-option value="VT">Vermont</mat-option>
-                <mat-option value="VA">Virginia</mat-option>
-                <mat-option value="WA">Washington</mat-option>
-                <mat-option value="WV">West Virginia</mat-option>
-                <mat-option value="WI">Wisconsin</mat-option>
-                <mat-option value="WY">Wyoming</mat-option>
-            </mat-select>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business Zip</mat-label>
-            <input matInput formControlName="businessZip" required>
-            <mat-error>You must enter a valid zip code</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Contact Name</mat-label>
-            <input matInput formControlName="contactName" required>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="showIfBusiness" id="phoneBox">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter Business Phone Number</mat-label>
-            <input matInput placeholder="123-123-4567" formControlName="businessPhone" required>
-            <mat-hint>Please format as 123-123-4567</mat-hint>
-            <mat-error>You must enter a value</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group" *ngIf="showIfBusiness">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Register
-        </button>
-    </div>
-</form>
+<div style="min-height:88vh;">
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Email</mat-label>
+                <input matInput placeholder="email@address.com" formControlName="email" required>
+                <mat-error>You must enter a valid email</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Password</mat-label>
+                <input matInput formControlName="password" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div>Type of Account:<br><br></div>
+        <div>
+            <!--<mat-label>Type of Account:</mat-label>
+            <mat-checkbox id="indivCheck" formControlName="individual" (change)="unhide($event)">Individual</mat-checkbox>
+            <mat-checkbox id="busCheck" formControlName="individual" (change)="unhide($event)">Business</mat-checkbox>-->
+            <label for="individual">Individual</label>
+            <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
+            <label for="business">Business</label>
+            <input type="checkbox" id="busCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
+            <!--<mat-form-field appearance="fill">
+                <mat-label>Type of Account</mat-label>
+                <mat-select formControlName="individual" required>
+                    <mat-option value="Individual" (change)="unhide($event)">Individual</mat-option>
+                    <mat-option value="Business" (change)="unhide($event)">Business</mat-option>
+                </mat-select>
+            </mat-form-field>-->
+        </div>
+    </form>
+    <form [formGroup]="individualForm" (ngSubmit)="register()">
+        <div *ngIf="showIfIndividual">
+            <mat-form-field appearance="fill" id="fName">
+                <mat-label>Enter First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" id="lName">
+                <mat-label>Enter Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfIndividual">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Zip Code</mat-label>
+                <input matInput placeholder="12345" formControlName="zip" required>
+                <mat-error>You must enter a valid zip code</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group" *ngIf="showIfIndividual">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+            </button>
+        </div>
+    </form>
+    <form [formGroup]="businessForm" (ngSubmit)="register()">
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Name</mat-label>
+                <input matInput formControlName="businessName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Street Address</mat-label>
+                <input matInput placeholder="123 Street Ave" formControlName="businessStreet" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Unit or P.O. Box</mat-label>
+                <input matInput formControlName="businessApt">
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business City</mat-label>
+                <input matInput formControlName="businessCity" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Choose Business State</mat-label>
+                <mat-select formControlName="businessState" required>
+                    <mat-option value="AL">Alabama</mat-option>
+                    <mat-option value="AK">Alaska</mat-option>
+                    <mat-option value="AZ">Arizona</mat-option>
+                    <mat-option value="AR">Arkansas</mat-option>
+                    <mat-option value="CA">California</mat-option>
+                    <mat-option value="CO">Colorado</mat-option>
+                    <mat-option value="CT">Connecticut</mat-option>
+                    <mat-option value="DE">Delaware</mat-option>
+                    <mat-option value="DC">District Of Columbia</mat-option>
+                    <mat-option value="FL">Florida</mat-option>
+                    <mat-option value="GA">Georgia</mat-option>
+                    <mat-option value="HI">Hawaii</mat-option>
+                    <mat-option value="ID">Idaho</mat-option>
+                    <mat-option value="IL">Illinois</mat-option>
+                    <mat-option value="IN">Indiana</mat-option>
+                    <mat-option value="IA">Iowa</mat-option>
+                    <mat-option value="KS">Kansas</mat-option>
+                    <mat-option value="KY">Kentucky</mat-option>
+                    <mat-option value="LA">Louisiana</mat-option>
+                    <mat-option value="ME">Maine</mat-option>
+                    <mat-option value="MD">Maryland</mat-option>
+                    <mat-option value="MA">Massachusetts</mat-option>
+                    <mat-option value="MI">Michigan</mat-option>
+                    <mat-option value="MN">Minnesota</mat-option>
+                    <mat-option value="MS">Mississippi</mat-option>
+                    <mat-option value="MO">Missouri</mat-option>
+                    <mat-option value="MT">Montana</mat-option>
+                    <mat-option value="NE">Nebraska</mat-option>
+                    <mat-option value="NV">Nevada</mat-option>
+                    <mat-option value="NH">New Hampshire</mat-option>
+                    <mat-option value="NJ">New Jersey</mat-option>
+                    <mat-option value="NM">New Mexico</mat-option>
+                    <mat-option value="NY">New York</mat-option>
+                    <mat-option value="NC">North Carolina</mat-option>
+                    <mat-option value="ND">North Dakota</mat-option>
+                    <mat-option value="OH">Ohio</mat-option>
+                    <mat-option value="OK">Oklahoma</mat-option>
+                    <mat-option value="OR">Oregon</mat-option>
+                    <mat-option value="PA">Pennsylvania</mat-option>
+                    <mat-option value="RI">Rhode Island</mat-option>
+                    <mat-option value="SC">South Carolina</mat-option>
+                    <mat-option value="SD">South Dakota</mat-option>
+                    <mat-option value="TN">Tennessee</mat-option>
+                    <mat-option value="TX">Texas</mat-option>
+                    <mat-option value="UT">Utah</mat-option>
+                    <mat-option value="VT">Vermont</mat-option>
+                    <mat-option value="VA">Virginia</mat-option>
+                    <mat-option value="WA">Washington</mat-option>
+                    <mat-option value="WV">West Virginia</mat-option>
+                    <mat-option value="WI">Wisconsin</mat-option>
+                    <mat-option value="WY">Wyoming</mat-option>
+                </mat-select>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Zip</mat-label>
+                <input matInput formControlName="businessZip" required>
+                <mat-error>You must enter a valid zip code</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Contact Name</mat-label>
+                <input matInput formControlName="contactName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="showIfBusiness" id="phoneBox">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Phone Number</mat-label>
+                <input matInput placeholder="123-123-4567" formControlName="businessPhone" required>
+                <mat-hint>Please format as 123-123-4567</mat-hint>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group" *ngIf="showIfBusiness">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+            </button>
+        </div>
+    </form>
+</div>
 <app-foot></app-foot>
