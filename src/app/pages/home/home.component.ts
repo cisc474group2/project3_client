@@ -141,7 +141,6 @@ export class HomeComponent implements OnInit {
     }
 
     noEventsFound(): boolean {
-        console.log(this.eventSvc.end_of_function.value, this.eventSvc.zero_events.value, this.count<=0)
         if(this.eventSvc.end_of_function.value && this.eventSvc.zero_events.value && this.count<=0){
             this.count = 1;
             this.dialog.open(noLocation);
@@ -165,31 +164,28 @@ export class HomeComponent implements OnInit {
     // Right Now
     // My Events
     onTabSelectChange(tab : MatTabChangeEvent) { // console.log(tab);
+        let prev_index = this.currentIndex;
+        this.currentIndex = tab.index;
         switch (tab.index) {
             case 0:
-                this.currentIndex = 0;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.hotSort));
                 break;
             case 1:
-                this.currentIndex = 1;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.distanceSort));
                 break;
             case 2:
-                this.currentIndex = 2;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
                 break;
             case 3:
-                this.currentIndex = 3;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.nowFilter(this.eventSvc.events_all.value), this.eventSvc.nowSort));
                 break;
             case 4:
-                if (this.currentIndex == 3) {
+                if (prev_index == 3) {
                     this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
                 }
-                this.currentIndex = 4;
                 break;
             default:
-                this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+                this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
                 break;
         }
     }

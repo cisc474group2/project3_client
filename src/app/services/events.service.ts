@@ -379,8 +379,9 @@ export class EventsService {
   public sortList(unsorted: Array<EventModel>, sortFun): Array<EventModel> {
     unsorted.map(event => {
       event.usrLoc = this.geoloc.userGeoloc.value;
+      event.distToEvent = EventsService.getDistanceFromLatLonInMile(event.event_geoloc.lat, event.event_geoloc.lng, event.usrLoc.lat, event.usrLoc.lng);
     })
-    //console.log(unsorted);
+    console.log(unsorted);
     unsorted = unsorted.sort(sortFun);
 
     return unsorted;
@@ -427,13 +428,14 @@ export class EventsService {
   }
 
   distanceSort(a: EventModel, b: EventModel): number {
-    let a_dist = EventsService.getDistanceFromLatLonInMile(
-      a.event_geoloc.lat, a.event_geoloc.lng,
-      a.usrLoc.lat, a.usrLoc.lng);
-    let b_dist = EventsService.getDistanceFromLatLonInMile(
-      b.event_geoloc.lat, b.event_geoloc.lng,
-      a.usrLoc.lat, a.usrLoc.lng);
-    if (a_dist - b_dist != 0) return (a_dist > b_dist) ? 1 : -1;
+    // let a_dist = EventsService.getDistanceFromLatLonInMile(
+    //   a.event_geoloc.lat, a.event_geoloc.lng,
+    //   a.usrLoc.lat, a.usrLoc.lng);
+    // let b_dist = EventsService.getDistanceFromLatLonInMile(
+    //   b.event_geoloc.lat, b.event_geoloc.lng,
+    //   a.usrLoc.lat, a.usrLoc.lng);
+    // if (a_dist - b_dist != 0) return (a_dist > b_dist) ? 1 : -1;
+    if (a.distToEvent - b.distToEvent !=0) return (a.distToEvent > b.distToEvent) ? 1 : -1;
     else return 0;
   }
 
