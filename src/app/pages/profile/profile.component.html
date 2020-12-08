@@ -24,7 +24,7 @@
         <label for="mailAddress" class="label" *ngIf="showIfBusiness">Mail Address:</label>
             <div *ngIf="showIfBusiness" name="mailAddress">{{mailAddress}}<br><br></div>
         <div class="form-group">
-            <button [disabled]="loading" (click)="editProfile()" class="btn btn-primary" style="background-color: #60C864;">
+            <button [disabled]="loading" (click)="editProfile()" class="btn btn-dark bg-dark" style="background-color: #60C864;">
                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                 Edit Profile
             </button>

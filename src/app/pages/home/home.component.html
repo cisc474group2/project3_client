@@ -1,5 +1,5 @@
 <div style="min-height:88vh;">
-    <div>
+    <div class="locationStuff">
         <mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']"
         placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
         (onLocationSelected)="onLocationSelected($event)">
