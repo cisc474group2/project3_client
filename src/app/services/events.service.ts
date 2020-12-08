@@ -433,7 +433,7 @@ export class EventsService {
     let b_dist = EventsService.getDistanceFromLatLonInMile(
       b.event_geoloc.lat, b.event_geoloc.lng,
       a.usrLoc.lat, a.usrLoc.lng);
-    if (a_dist - b_dist != 0) return (a_dist < b_dist) ? 1 : -1;
+    if (a_dist - b_dist != 0) return (a_dist > b_dist) ? 1 : -1;
     else return 0;
   }
 

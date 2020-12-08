@@ -183,6 +183,9 @@ export class HomeComponent implements OnInit {
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.nowFilter(this.eventSvc.events_all.value), this.eventSvc.nowSort));
                 break;
             case 4:
+                if (this.currentIndex == 3) {
+                    this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
+                }
                 this.currentIndex = 4;
                 break;
             default:
