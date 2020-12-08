@@ -22,7 +22,7 @@ export class WeatherService {
   getWeather(lat:number, lng:number) {
     try {
       this.http.get(this.path + "other/weather/latlng/" + lat + '/' + lng).subscribe((res:Object) => {
-          // console.log(res);
+          console.log(res);
           //@ts-ignore
           this.curr_temp.next(this.selectedStandard(res.data.main.temp));
           //@ts-ignore
