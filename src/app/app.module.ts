@@ -26,6 +26,7 @@ import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 import {MatInputModule} from '@angular/material/input';
+import { FootComponent } from './pages/foot/foot.component';
 
 
 
@@ -43,7 +44,8 @@ import {MatInputModule} from '@angular/material/input';
     NoEventsLandingComponent,
     notLoggedIn,
     noLocation,
-    mapsNotLoggedIn
+    mapsNotLoggedIn,
+    FootComponent
   ],
   imports: [
     BrowserModule,
