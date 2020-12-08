@@ -11,7 +11,7 @@
                     <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light"
                             style="background-color: #F1FAEE;" (click)="editEvent(card)" style="margin-left:1%;">Edit
                             Event</button></span>
-                    <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-success"
+                    <span *ngIf='!card.registered'><button type="button" class="btn btn-success"
                             style="background-color: #60C864;" (click)="registerUser(card)">Register</button></span>
                     <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger"
                             style="background-color:#C81D35" (click)="unregisterUser(card)">Unregister</button></span>

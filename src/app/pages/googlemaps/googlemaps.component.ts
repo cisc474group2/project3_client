@@ -13,6 +13,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 import { Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
 import { Router } from '@angular/router';
 import PlaceResult = google.maps.places.PlaceResult;
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-googlemaps',
@@ -32,7 +33,7 @@ export class GooglemapsComponent {
   clicked;
   loggedIn = this.authSvc.loggedIn;
 
-  constructor(http:HttpClient, private geolocService:UserGeolocationService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private router:Router) {
+  constructor(http:HttpClient, private geolocService:UserGeolocationService, private eventServ:EventsService, private profileSvc:ProfileService, private authSvc:AuthService, private router:Router, public dialog : MatDialog) {
     geolocService.lat.subscribe(res => {
       //console.log("changed location");
       this.lat = geolocService.lat.value;
@@ -81,8 +82,16 @@ export class GooglemapsComponent {
       }
     }
 
+    openDialog() {
+      this.dialog.open(mapsNotLoggedIn, {});
+    }
+
     registerUser(event){
       this.authSvc.authorize();
+      if (this.authSvc.userObject === undefined || this.authSvc.userObject === null) {
+        this.openDialog();
+    }
+    else{
       if(!this.authSvc.userObject.reg_events.includes(event._id)){
         this.authSvc.userObject.reg_events.push(event._id);
   
@@ -100,6 +109,7 @@ export class GooglemapsComponent {
             },err=>{console.error(err);});
       }
     }
+  }
   
     unregisterUser(event){
       this.authSvc.authorize();
@@ -205,6 +215,32 @@ export class GoogleMapMarker{
 
   static fuzzyCompareBetweenTypes(a:GoogleMapMarker, b:EventModel) {
     return a.locString == this.eventLatLngtoString(b);
+  }
+
+  
+
+}
+
+@Component({
+  selector: 'mapsNotLoggedIn',
+  templateUrl: 'mapsNotLoggedIn.html',
+  styleUrls: ['./googlemaps.component.scss']
+})
+export class mapsNotLoggedIn{
+
+  constructor(
+    public dialogRef: MatDialogRef<mapsNotLoggedIn>, private router: Router){
+
+    };
+
+    redirectToLogin() {
+      this.dialogRef.close();
+      this.router.navigate(['login']);
+  }
+
+     redirectToRegister() {
+      this.dialogRef.close();
+      this.router.navigate(['register']);
   }
 
 }

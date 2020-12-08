@@ -16,7 +16,7 @@ import { PosteventComponent } from './pages/postevent/postevent.component';
 import { ProfileComponent } from './pages/profile/profile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
-import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
+import { GooglemapsComponent, mapsNotLoggedIn } from './pages/googlemaps/googlemaps.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { Config } from 'src/app/secrets/Config';
@@ -26,6 +26,7 @@ import {EditeventComponent} from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 import {MatInputModule} from '@angular/material/input';
+
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatInputModule} from '@angular/material/input';
     EditeventComponent,
     NoEventsLandingComponent,
     notLoggedIn,
-    noLocation
+    noLocation,
+    mapsNotLoggedIn
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,7 @@ import {MatInputModule} from '@angular/material/input';
     NgbModule,
     MatInputModule,
   ],
-  entryComponents: [notLoggedIn, noLocation],
+  entryComponents: [notLoggedIn, noLocation, mapsNotLoggedIn],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
   
