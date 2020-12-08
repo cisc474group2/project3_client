@@ -1,8 +1,4 @@
-<!-- <mat-google-maps-autocomplete [types]="['(regions)']" placeholderText="Input new location..."
-    (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
-</mat-google-maps-autocomplete> -->
 <div>
-   
     <mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']"
     placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
     (onLocationSelected)="onLocationSelected($event)">
@@ -17,6 +13,7 @@
 
 <div class="entirePage">
     <div *ngIf="eventsLoaded()">
+        <h4 class="pageDateWeather">{{date_insert}} - <img id="weather_icon" [src]="getWeatherPath()" class="img-fluid" alt="Responsive image"> {{temp_insert}}</h4>
         <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
         <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
             <mat-tab label="Popular Events"></mat-tab>

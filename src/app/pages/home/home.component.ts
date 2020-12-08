@@ -10,6 +10,8 @@ import {Location, Appearance} from '@angular-material-extensions/google-maps-aut
 import PlaceResult = google.maps.places.PlaceResult;
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
+import { WeatherService } from '../../services/weather.service';
+import { MasterDateTimeService } from 'src/app/services/master-date-time.service';
 
 @Component({selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnInit {
@@ -19,10 +21,20 @@ export class HomeComponent implements OnInit {
     public locality_name : string;
     public locality_state : string;
     public radius_options : number[];
+    public date_insert:string;
+    public temp_insert:string;
     default_radius = 50;
     labelText = "Change current location";
 
-    constructor(private eventSvc : EventsService, private profileSvc : ProfileService, private authSvc : AuthService, private route : ActivatedRoute, private router : Router, private geoloc : UserGeolocationService, public dialog : MatDialog) {
+    constructor(private eventSvc : EventsService, 
+      private profileSvc : ProfileService, 
+      private authSvc : AuthService, 
+      private route : ActivatedRoute, 
+      private router : Router, 
+      private geoloc : UserGeolocationService, 
+      public dialog : MatDialog, 
+      private weatherSvc:WeatherService, 
+      private mstDateTimeSvc:MasterDateTimeService) {
         this.geoloc.currentLocal.subscribe(city => {
             this.locality_name = this.geoloc.currentLocal.value;
         });
@@ -37,6 +49,12 @@ export class HomeComponent implements OnInit {
             100,
             250
         ];
+        weatherSvc.temp_insert.subscribe((t_i:string) => {
+          this.temp_insert = t_i;
+        });
+        mstDateTimeSvc.date_insert.subscribe((d_i:string) => {
+          this.date_insert = d_i;
+        });
     }
 
     ngOnInit(): void {
@@ -51,7 +69,6 @@ export class HomeComponent implements OnInit {
       this.dialog.open(Popup, {});
     }
 
-    
 
     registerUser(event) {
         this.authSvc.authorize();
@@ -170,6 +187,10 @@ export class HomeComponent implements OnInit {
     onRadiusDropDownChange(dropdown : MatSelectChange) {
         this.eventSvc.user_radius.next(dropdown.value);
         this.eventSvc.getEventsFormat();
+    }
+
+    getWeatherPath():string {
+        return this.weatherSvc.weatherImg();
     }
 
 

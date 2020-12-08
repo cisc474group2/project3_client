@@ -175,15 +175,6 @@ export class GooglemapsComponent {
       this.router.navigate(['editevent']);
     }
 
-    onAutocompleteSelected(result: PlaceResult) {
-      console.log('onAutocompleteSelected: ', result);
-    }
-   
-    onLocationSelected(location: Location) {
-      this.geolocService.overrideGeolocLocation(location.longitude, location.latitude);
-      this.eventServ.getEventsFormat();
-    }
-
 
 }
 

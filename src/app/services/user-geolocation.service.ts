@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { EventModel, Geoloc } from 'src/assets/model';
 import { Config } from '../secrets/Config';
 import { Router } from '@angular/router';
+import { WeatherService } from './weather.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class UserGeolocationService {
   public currentLocal: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public currentAdministrativeAreaLevel1: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private default_location:number[] = [-75.1653705, 39.9529923];
-  constructor(private http: HttpClient, private router:Router) {
+  constructor(private http: HttpClient, private router:Router, private weatherSvc:WeatherService) {
   }
 
   getLocation(): void{
@@ -51,6 +52,7 @@ export class UserGeolocationService {
     this.userGeoloc.next(new Geoloc(lat, lng));
     //console.log("geoloc override triggered!\n", this.userGeoloc.value);
     this.reverseGeocodeGetCityName();
+    this.weatherSvc.getWeather(lat, lng);
   }
 
   
