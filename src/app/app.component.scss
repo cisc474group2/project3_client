@@ -1,12 +1,16 @@
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+footer,#wrapper:after {
     text-align: center;
-    height: 3vh;
-    line-height: 3vh;
-    background-color: #1D3557;
+    height: 2vw;
 }
-.nav-link {
-    background-color: #1D3557;
+
+#wrapper {
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -2vw;
+  }
+
+#app{
+    flex: 1;
+    overflow: auto;
 }
