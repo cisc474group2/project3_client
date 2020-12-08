@@ -49,7 +49,7 @@ export class UserGeolocationService {
   overrideGeolocLocation(lng:number, lat:number):void {
     this.lng.next(lng);
     this.lat.next(lat);
-    this.userGeoloc.next(new Geoloc(lat, lng));
+    this.userGeoloc.next(new Geoloc(lng, lat));
     //console.log("geoloc override triggered!\n", this.userGeoloc.value);
     this.reverseGeocodeGetCityName();
     this.weatherSvc.getWeather(lat, lng);

@@ -22,7 +22,7 @@ export class WeatherService {
   getWeather(lat:number, lng:number) {
     try {
       this.http.get(this.path + "other/weather/latlng/" + lat + '/' + lng).subscribe((res:Object) => {
-          console.log(res);
+          // console.log(res);
           //@ts-ignore
           this.curr_temp.next(this.selectedStandard(res.data.main.temp));
           //@ts-ignore
@@ -41,7 +41,7 @@ export class WeatherService {
   }
 
   buildWeatherInsert() {
-    this.temp_insert.next(Math.trunc(this.curr_temp.value).toString().concat(String.fromCharCode(176) 
+    this.temp_insert.next(Math.trunc(this.curr_temp.value).toString().concat(String.fromCharCode(176) , 'F' 
       //, ' ', Math.trunc(this.high_temp.value).toString() 
       //, ' ',Math.trunc(this.low_temp.value).toString()
     ));
