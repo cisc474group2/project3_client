@@ -61,17 +61,8 @@
         </div>
     </div>
 </div>
-<div *ngIf="noEventsFound() && loggedIn">
-    <div>We Cant find any events near you!</div>
-    <div>
-        <a>use the address bar above to change your location</a>
-    </div>
-</div>
-<div *ngIf="noEventsFound() && !loggedIn">
-    <h1 class="pageTitle">Nothin' in {{locality_name}}, {{locality_state}}</h1>
-    <div>We can't find any events near you!</div>
-    <div>
-        <a routerLink="/register" class="btn btn-link">Register</a>
-        <a routerLink="/login" class="btn btn-link">Log in</a>
-    </div>
+<div *ngIf="noEventsFound()">
+    <h1>
+        Your event is in another castle...
+    </h1>
 </div>

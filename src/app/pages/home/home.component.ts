@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     public radius_options : number[];
     public date_insert:string;
     public temp_insert:string;
+    public count = 0;
     default_radius = 50;
     labelText = "Change current location";
 
@@ -66,7 +67,7 @@ export class HomeComponent implements OnInit {
 
 
     openDialog() {
-      this.dialog.open(Popup, {});
+      this.dialog.open(notLoggedIn, {});
     }
 
 
@@ -140,6 +141,12 @@ export class HomeComponent implements OnInit {
     }
 
     noEventsFound(): boolean {
+        if(this.eventSvc.zero_events.value && this.count<=0){
+            this.count = 1;
+            this.dialog.open(noLocation);
+        }
+
+        
         return this.eventSvc.zero_events.value;
     }
 
@@ -149,6 +156,7 @@ export class HomeComponent implements OnInit {
     onLocationSelected(location : Location) {
         this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
         this.eventSvc.getEventsFormat();
+        this.count = 0;
         console.log(this.geoloc.userGeoloc.value);
     }
 
@@ -197,27 +205,45 @@ export class HomeComponent implements OnInit {
 }
 
 @Component({
-  selector: 'popup',
-  templateUrl: 'popup.html',
+  selector: 'notLoggedIn',
+  templateUrl: 'notLoggedIn.html',
   styleUrls: ['./home.component.scss']
 })
-export class Popup{
+export class notLoggedIn{
 
   constructor(
-    public dialogRef: MatDialogRef<Popup>, private router: Router){
+    public dialogRef: MatDialogRef<notLoggedIn>, private router: Router){
 
     };
-    
 
     redirectToLogin() {
       this.dialogRef.close();
       this.router.navigate(['login']);
   }
 
-  redirectToRegister() {
+     redirectToRegister() {
       this.dialogRef.close();
       this.router.navigate(['register']);
   }
 
 }
+
+@Component({
+    selector: 'noLocation',
+    templateUrl: 'noLocation.html',
+    styleUrls: ['./home.component.scss']
+  })
+  export class noLocation{
+  
+    constructor(
+      public dialogRef: MatDialogRef<noLocation>){
+  
+      };
+      
+      searchAgain(){
+          this.dialogRef.close();
+      }
+      
+  
+  }
 

@@ -1,18 +1,17 @@
 .mapPage{
-  width: 80vw;
+  width: 95vw;
   height: 45vh;
   margin: 0 auto;
   display: flex;
 }
 
 .map {
-    width: 30vw;
+    width: 75vw;
     min-height: 30vh;
-    height: 90vh;
-    float: left;
+    height: 70vh;
+    float: right;
     margin: 0 auto;
-    margin-bottom: 2.5%;
-    margin-right: 2.5%;
+    margin-right: 0.5%;
 
     agm-map {
         height: 100%;
@@ -30,8 +29,8 @@
   }
   .card{
     margin-bottom: 2.5%;
-    width: 45vw;
-    height: 25vh;
+    width: 35vw;
+    height: 30vh;
   }
   i{
     width: 2em;
