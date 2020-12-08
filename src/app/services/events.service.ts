@@ -93,14 +93,16 @@ export class EventsService {
     else return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: _id });
   }
 
-  getBulkBusinessEvents() {
-    return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: this.authSvc.userObject.type_obj.hostedEvents });
+  getBulkBusinessEvents(_id:string[] = null) {
+    if (_id == null) return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: this.authSvc.userObject.type_obj.hostedEvents });
+    else return this.http.post<any>(this.path + 'events' + "/" + "bulk", { reg_events: _id });
   }
 
   getBulkEventsFormat(_id:string[]) {
     let event_model_list = Array<EventModel>();
     let count = 1;
-    this.getBulkBusinessEvents().subscribe(result => {
+    this.getBulkBusinessEvents(_id).subscribe(result => {
+      //console.log(result);
       result.data.forEach(unformatted_event => {
         this.getBusiness(unformatted_event.bus_id).subscribe(business => {
           event_model_list.push(new EventModel(unformatted_event.title,

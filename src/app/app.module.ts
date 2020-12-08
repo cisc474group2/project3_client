@@ -27,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
 import { MatInputModule } from '@angular/material/input';
 import { FootComponent } from './pages/foot/foot.component';
+import { BusinessComponent } from './pages/business/business.component';
 
 
 
@@ -45,7 +46,8 @@ import { FootComponent } from './pages/foot/foot.component';
     notLoggedIn,
     noLocation,
     mapsNotLoggedIn,
-    FootComponent
+    FootComponent,
+    BusinessComponent
   ],
   imports: [
     BrowserModule,
