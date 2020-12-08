@@ -136,6 +136,10 @@ export class EventsService {
     let event_model_list = Array<EventModel>();
     let count = 1;
     this.getBulkEvents().subscribe(result => {
+      if(result.data.length == 0){
+        this.profile_events_loaded.next(true);
+      }
+      else{
       result.data.forEach(unformatted_event => {
         this.getBusiness(unformatted_event.bus_id).subscribe(business => {
           event_model_list.push(new EventModel(unformatted_event.title,
@@ -163,13 +167,18 @@ export class EventsService {
           }
         });
       });
+    }
     });
+  
   }
 
   getProfileBusinessEventList() {
     let event_model_list = Array<EventModel>();
     let count = 1;
     this.getBulkBusinessEvents().subscribe(result => {
+      if(result.data.length == 0){
+        this.profile_business_events_loaded.next(true);
+      }
       result.data.forEach(unformatted_event => {
         this.getBusiness(unformatted_event.bus_id).subscribe(business => {
           event_model_list.push(new EventModel(unformatted_event.title,
