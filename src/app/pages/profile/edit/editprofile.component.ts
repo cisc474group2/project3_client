@@ -35,19 +35,27 @@ export class EditprofileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,private authSvc:AuthService, private profileSvc: ProfileService) {
     this.authSvc.authorize();
-    this.email = this.authSvc.userObject.email;
-    this.reg_events = this.authSvc.userObject.reg_events;
-    if(this.authSvc.userObject.type == 'I'){
-      this.fName = this.authSvc.userObject.type_obj.fName;
-      this.lName = this.authSvc.userObject.type_obj.lName;
-    }
-    else{
-      this.busName = this.authSvc.userObject.type_obj.bus_name;
-      this.cName = this.authSvc.userObject.type_obj.cName;
-      this.cPhone = this.authSvc.userObject.type_obj.cPhone;
-      this.mailAddress = this.authSvc.userObject.type_obj.mailAddress.split('+');
-      this.hostedEvents = this.authSvc.userObject.type_obj.hostedEvents;
-    }
+
+        this.authSvc.CurrentUser.subscribe(user => {
+            if (user === null || user === undefined) {
+                this.router.navigate(['login'])
+            } else {
+              this.email = this.authSvc.userObject.email;
+              this.reg_events = this.authSvc.userObject.reg_events;
+              if(this.authSvc.userObject.type == 'I'){
+                this.fName = this.authSvc.userObject.type_obj.fName;
+                this.lName = this.authSvc.userObject.type_obj.lName;
+              }
+              else{
+                this.busName = this.authSvc.userObject.type_obj.bus_name;
+                this.cName = this.authSvc.userObject.type_obj.cName;
+                this.cPhone = this.authSvc.userObject.type_obj.cPhone;
+                this.mailAddress = this.authSvc.userObject.type_obj.mailAddress.split('+');
+                this.hostedEvents = this.authSvc.userObject.type_obj.hostedEvents;
+              }
+            }
+        });
+    
   
     
    }
