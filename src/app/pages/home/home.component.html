@@ -16,7 +16,7 @@
             </div>
             <h4 class="pageDateWeather">{{date_insert}} - <img id="weather_icon" [src]="getWeatherPath()"
                     class="img-fluid" alt="Responsive image"> {{temp_insert}}</h4>
-            <h1 class="pageTitle">Happening in {{locality_name}}, {{locality_state}}</h1>
+            <h1 class="pageTitle">Happening near {{locality_name}}, {{locality_state}}</h1>
             <mat-tab-group (selectedTabChange)="onTabSelectChange($event)" mat-align-tabs="center">
                 <mat-tab label="Popular Events"></mat-tab>
                 <mat-tab label="Near Me"></mat-tab>
