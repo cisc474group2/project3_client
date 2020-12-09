@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
       businessState: ['', Validators.required],
       businessZip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]],
       contactName: ['', Validators.required],
-      businessPhone: ['', Validators.required]
+      businessPhone: ['', [Validators.required,Validators.pattern('([0-9]{3}){1}(-[0-9]{3}){1}(-[0-9]{4}){1}')]]
     });
     this.returnUrl=this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.submitted == true;
-    console.log(this.businessForm);
+    //console.log(this.businessForm);
     if (this.registerForm.invalid || (this.individualRegister && this.individualForm.invalid) 
     || (!this.individualRegister && this.businessForm.invalid)) {
       return;
