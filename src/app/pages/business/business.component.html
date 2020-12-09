@@ -23,6 +23,9 @@
         <div class="card" *ngFor='let card of hostedEvents' style="width: 45vw;">
             <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">
                 <span id="title">{{card.title}}</span>
+                <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-danger"
+                    style="background-color: #C81D35;" (click)="deleteEvent(card)" style="margin-left:1%;">Delete
+                    Event</button></span>
                 <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light"
                         style="background-color: #F1FAEE;" (click)="editEvent(card)" style="margin-left:1%;">Edit
                         Event</button></span>
