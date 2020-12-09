@@ -85,7 +85,8 @@ export class ProfileComponent implements OnInit {
     }
 
     eventsLoaded(): boolean{
-        return this.eventSvc.profile_events_loaded.value && this.eventSvc.profile_business_events_loaded.value;
+        if (this.authSvc.userObject.type == "B") return this.eventSvc.profile_events_loaded.value && this.eventSvc.profile_business_events_loaded.value;
+        else return this.eventSvc.profile_events_loaded.value;
     }
 
     ngOnInit(): void {
