@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MasterDateTimeService {
+  public now:Date;
   public day:number;
   public day_of_week:string;
   public month:number;
@@ -13,12 +14,12 @@ export class MasterDateTimeService {
   public date_insert:BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   constructor() {
-    let now = new Date();
-    this.day = now.getDate();
-    this.setDayOfWeek(now.getDay());
-    this.month = now.getMonth();
+    this.now = new Date();
+    this.day = this.now.getDate();
+    this.setDayOfWeek(this.now.getDay());
+    this.month = this.now.getMonth();
     this.setMonth(this.month);
-    this.year = now.getFullYear();
+    this.year = this.now.getFullYear();
     this.buildDateInsert();
   }
 

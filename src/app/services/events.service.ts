@@ -6,6 +6,8 @@ import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 import { UserGeolocationService } from './user-geolocation.service';
 import { AuthService } from './auth.service';
+import { ThrowStmt } from '@angular/compiler';
+import { MasterDateTimeService } from './master-date-time.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class EventsService {
   current_event: EventModel;
   public user_radius:BehaviorSubject<number> = new BehaviorSubject<number>(50);
 
-  constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService) {
+  constructor(private http: HttpClient, private geoloc: UserGeolocationService, private authSvc: AuthService, private dateTimeSvc:MasterDateTimeService) {
     this.events_loaded.next(false);
   }
 
@@ -387,13 +389,17 @@ export class EventsService {
     return event_address.replace(/[+]/g, " ");
   }
 
-  public sortList(unsorted: Array<EventModel>, sortFun): Array<EventModel> {
+  public sortList(unsorted: Array<EventModel>, sortFun, filterOld:boolean = true): Array<EventModel> {
     unsorted.map(event => {
       event.usrLoc = this.geoloc.userGeoloc.value;
       event.distToEvent = EventsService.getDistanceFromLatLonInMile(event.event_geoloc.lat, event.event_geoloc.lng, event.usrLoc.lat, event.usrLoc.lng);
     })
-    console.log(unsorted);
-    unsorted = unsorted.sort(sortFun);
+    if (filterOld) {
+      unsorted = unsorted.filter((x:EventModel) => {
+        console.log(x.end_time.getTime() > this.dateTimeSvc.now.getTime());
+        return x.end_time.getTime() > this.dateTimeSvc.now.getTime();
+      }).sort(sortFun);
+    }
 
     return unsorted;
   }
