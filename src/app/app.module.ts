@@ -28,6 +28,7 @@ import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-la
 import { MatInputModule } from '@angular/material/input';
 import { FootComponent } from './pages/foot/foot.component';
 import { bpnotLoggedIn, BusinessComponent } from './pages/business/business.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 
 
@@ -48,7 +49,8 @@ import { bpnotLoggedIn, BusinessComponent } from './pages/business/business.comp
     mapsNotLoggedIn,
     FootComponent,
     BusinessComponent,
-    bpnotLoggedIn
+    bpnotLoggedIn,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
