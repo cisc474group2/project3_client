@@ -1,12 +1,16 @@
+mat-form-field{
+    width: 100%;
+}
+
 .form-box{
-    padding-top: 2.5%;
-    width: 50%;
-    margin: 0 auto;
-    
-    button, a{
-        float: right;
-    }
+    width: 25%;
+    padding-top: 10%;
+    margin: auto;
+    margin-left: 37.5%;
     h2{
         padding-bottom: 1%;
+    }
+    button{
+        float: right;
     }
 }
