@@ -2,28 +2,33 @@
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     <h2>Edit Profile</h2>
     <form [formGroup]="profileForm" (ngSubmit)="updateInfo()">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && profileForm.controls.email.errors }"/>
-            <div *ngIf="submitted && profileForm.controls.email.errors" class="invalid-feedback">
-                <div *ngIf="profileForm.controls.email.errors.required">Username is required</div>
-            </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Email</mat-label>
+                <input matInput formControlName="email" required>
+                <mat-error>You must enter a valid email</mat-error>
+            </mat-form-field>
         </div>
     </form>
     <form [formGroup]="individualForm" (ngSubmit)="updateInfo()">
-        <div class="form-group" *ngIf="showIfIndividual">
-            <label for="firstName">First Name</label>
-            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.firstName.errors }"/>
-            <div *ngIf="submitted && individualForm.controls.firstName.errors" class="invalid-feedback">
-                <div *ngIf="individualForm.controls.firstName.errors.required">firstName is required</div>
-            </div>
+        <div *ngIf="showIfIndividual">
+            <mat-form-field appearance="fill" id="fName">
+                <mat-label>Enter First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" id="lName">
+                <mat-label>Enter Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfIndividual">
-            <label for="lastName">Last Name</label>
-            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && individualForm.controls.lastName.errors }"/>
-            <div *ngIf="submitted && individualForm.controls.lastName.errors" class="invalid-feedback">
-                <div *ngIf="individualForm.controls.lastName.errors.required">firstName is required</div>
-            </div>
+        <div *ngIf="showIfIndividual">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Zip Code</mat-label>
+                <input matInput placeholder="12345" formControlName="zip" required>
+                <mat-error>You must enter a valid zip code</mat-error>
+            </mat-form-field>
         </div>
         <div class="form-group" *ngIf="showIfIndividual">
             <button [disabled]="loading" class="btn btn-success">
@@ -33,64 +38,112 @@
         </div>
     </form>
     <form [formGroup]="businessForm" (ngSubmit)="updateInfo()">
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessName">Business Name</label>
-            <input type="text" formControlName="businessName" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessName.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessName.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessName.errors.required">Username is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Name</mat-label>
+                <input matInput formControlName="businessName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            Business Address
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Street Address</mat-label>
+                <input matInput placeholder="123 Street Ave" formControlName="businessStreet" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessStreet">Street</label>
-            <input type="text" formControlName="businessStreet" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessStreet.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessStreet.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessStreet.errors.required">businessStreet is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Unit or P.O. Box</mat-label>
+                <input matInput formControlName="businessApt">
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessApt">Unit/P.O. Box</label>
-            <input type="text" formControlName="businessApt" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessApt.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessApt.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessApt.errors.required">businessApt is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business City</mat-label>
+                <input matInput formControlName="businessCity" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessCity">City</label>
-            <input type="text" formControlName="businessCity" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessCity.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessCity.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessCity.errors.required">businessCity is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Choose Business State</mat-label>
+                <mat-select formControlName="businessState" required>
+                    <mat-option value="AL">Alabama</mat-option>
+                    <mat-option value="AK">Alaska</mat-option>
+                    <mat-option value="AZ">Arizona</mat-option>
+                    <mat-option value="AR">Arkansas</mat-option>
+                    <mat-option value="CA">California</mat-option>
+                    <mat-option value="CO">Colorado</mat-option>
+                    <mat-option value="CT">Connecticut</mat-option>
+                    <mat-option value="DE">Delaware</mat-option>
+                    <mat-option value="DC">District Of Columbia</mat-option>
+                    <mat-option value="FL">Florida</mat-option>
+                    <mat-option value="GA">Georgia</mat-option>
+                    <mat-option value="HI">Hawaii</mat-option>
+                    <mat-option value="ID">Idaho</mat-option>
+                    <mat-option value="IL">Illinois</mat-option>
+                    <mat-option value="IN">Indiana</mat-option>
+                    <mat-option value="IA">Iowa</mat-option>
+                    <mat-option value="KS">Kansas</mat-option>
+                    <mat-option value="KY">Kentucky</mat-option>
+                    <mat-option value="LA">Louisiana</mat-option>
+                    <mat-option value="ME">Maine</mat-option>
+                    <mat-option value="MD">Maryland</mat-option>
+                    <mat-option value="MA">Massachusetts</mat-option>
+                    <mat-option value="MI">Michigan</mat-option>
+                    <mat-option value="MN">Minnesota</mat-option>
+                    <mat-option value="MS">Mississippi</mat-option>
+                    <mat-option value="MO">Missouri</mat-option>
+                    <mat-option value="MT">Montana</mat-option>
+                    <mat-option value="NE">Nebraska</mat-option>
+                    <mat-option value="NV">Nevada</mat-option>
+                    <mat-option value="NH">New Hampshire</mat-option>
+                    <mat-option value="NJ">New Jersey</mat-option>
+                    <mat-option value="NM">New Mexico</mat-option>
+                    <mat-option value="NY">New York</mat-option>
+                    <mat-option value="NC">North Carolina</mat-option>
+                    <mat-option value="ND">North Dakota</mat-option>
+                    <mat-option value="OH">Ohio</mat-option>
+                    <mat-option value="OK">Oklahoma</mat-option>
+                    <mat-option value="OR">Oregon</mat-option>
+                    <mat-option value="PA">Pennsylvania</mat-option>
+                    <mat-option value="RI">Rhode Island</mat-option>
+                    <mat-option value="SC">South Carolina</mat-option>
+                    <mat-option value="SD">South Dakota</mat-option>
+                    <mat-option value="TN">Tennessee</mat-option>
+                    <mat-option value="TX">Texas</mat-option>
+                    <mat-option value="UT">Utah</mat-option>
+                    <mat-option value="VT">Vermont</mat-option>
+                    <mat-option value="VA">Virginia</mat-option>
+                    <mat-option value="WA">Washington</mat-option>
+                    <mat-option value="WV">West Virginia</mat-option>
+                    <mat-option value="WI">Wisconsin</mat-option>
+                    <mat-option value="WY">Wyoming</mat-option>
+                </mat-select>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessState">State</label>
-            <input type="text" formControlName="businessState" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessState.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessState.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessState.errors.required">businessState is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Zip</mat-label>
+                <input matInput formControlName="businessZip" required>
+                <mat-error>You must enter a valid zip code</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessZip">Zip</label>
-            <input type="text" formControlName="businessZip" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessZip.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessZip.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessZip.errors.required">businessZip is required</div>
-            </div>
+        <div *ngIf="showIfBusiness">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Contact Name</mat-label>
+                <input matInput formControlName="contactName" required>
+                <mat-error>You must enter a value</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="contactName">Contact Name</label>
-            <input type="text" formControlName="contactName" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.contactName.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.contactName.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.contactName.errors.required">contactName is required</div>
-            </div>
-        </div>
-        <div class="form-group" *ngIf="showIfBusiness">
-            <label for="businessPhone">Phone Number</label>
-            <input type="text" formControlName="businessPhone" class="form-control" [ngClass]="{ 'is-invalid': submitted && businessForm.controls.businessPhone.errors }"/>
-            <div *ngIf="submitted && businessForm.controls.businessPhone.errors" class="invalid-feedback">
-                <div *ngIf="businessForm.controls.businessPhone.errors.required">businessPhone is required</div>
-            </div>
+        <div *ngIf="showIfBusiness" id="phoneBox">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Business Phone Number</mat-label>
+                <input matInput formControlName="businessPhone" required>
+                <mat-error>You must enter a valid phone number</mat-error>
+            </mat-form-field>
         </div>
         <div class="form-group" *ngIf="showIfBusiness">
             <button [disabled]="loading" class="btn btn-success">
