@@ -150,6 +150,7 @@ ln {
 .img_scale {
 	width:10vw;
 	height:10vw;
+	border-radius: 15%;
 }
 
 .img_container {
@@ -160,4 +161,10 @@ ln {
 	span {
 		max-width: 100%;
 	}
+}
+
+.img_flex {
+	margin-left:auto;
+	margin-right:auto;
+	justify-content: center;
 }
