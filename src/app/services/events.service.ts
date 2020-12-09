@@ -394,12 +394,14 @@ export class EventsService {
       event.usrLoc = this.geoloc.userGeoloc.value;
       event.distToEvent = EventsService.getDistanceFromLatLonInMile(event.event_geoloc.lat, event.event_geoloc.lng, event.usrLoc.lat, event.usrLoc.lng);
     })
+    //console.log(unsorted.length)
     if (filterOld) {
       unsorted = unsorted.filter((x:EventModel) => {
         console.log(x.end_time.getTime() > this.dateTimeSvc.now.getTime());
         return x.end_time.getTime() > this.dateTimeSvc.now.getTime();
       }).sort(sortFun);
     }
+    //console.log(unsorted.length)
 
     return unsorted;
   }
@@ -475,9 +477,8 @@ export class EventsService {
   }
 
   nowFilter(events: EventModel[]): EventModel[] {
-    let now = Date.now
     return events.filter((x) => {
-      return x.start_time.getDate > now && x.end_time.getDate < now;
+      return x.start_time.getTime() < this.dateTimeSvc.now.getTime() && x.end_time.getTime() > this.dateTimeSvc.now.getTime();
     })
   }
 
