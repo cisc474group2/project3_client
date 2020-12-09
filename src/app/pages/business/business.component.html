@@ -18,9 +18,9 @@
         <div name="mailAddress">{{mailAddress}}<br><br></div>
     </div>
 
-    <div id="right" *ngIf="checkingHostedEvents" style="padding-left: 10%;">
+    <div id="right" *ngIf="checkingHostedEvents" style="padding-left: 2%;">
         <label for="hostedEvents" class="label"></label>
-        <div class="card" *ngFor='let card of hostedEvents'>
+        <div class="card" *ngFor='let card of hostedEvents' style="width: 45vw;">
             <div class="card-header" style="background-color:#77859A; color:#FFFFFF;">
                 <span id="title">{{card.title}}</span>
                 <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light"
