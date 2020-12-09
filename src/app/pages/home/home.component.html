@@ -1,7 +1,7 @@
 <div style="min-height:86vh;">
 
     <div class="entirePage">
-        <div *ngIf="eventsLoaded()">
+        <div *ngIf="eventsLoaded()" style="min-height:95vh;">
             <div class="locationStuff">
                 <mat-google-maps-autocomplete [country]="['us']" [addressLabelText]="labelText" [types]="['(regions)']"
                     placeholderText="Input new location..." (onAutocompleteSelected)="onAutocompleteSelected($event)"
@@ -53,11 +53,11 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="currentIndex == 4">
+            <div *ngIf="currentIndex == 4" style="height:73vh;">
                 <app-googlemaps></app-googlemaps>
             </div>
         </div>
-        <div *ngIf="!eventsLoaded() && !noEventsFound()" style="height:90vh;">
+        <div *ngIf="!eventsLoaded() && !noEventsFound()" style="height:87vh;">
             <div class="d-flex justify-content-center"
                 style="font-size: 2em; padding-top: 40vh; vertical-align: middle;">
                 Welcome to your Community Board...</div>

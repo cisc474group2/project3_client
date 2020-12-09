@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top:7.5vh;
+  margin-top:30vh;
 }
   .beforeClick{
     padding: 2.5%;
@@ -68,4 +68,10 @@
   .afterClick{
     padding: 2.5%;
     margin: 0 auto;
+  }
+
+  .clickableCardItem:hover {
+    color: #2e2e2e;
+    border-radius: 25%;
+    background: #b0e0e6;
   }

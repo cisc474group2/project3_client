@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
     reg_events : EventModel[];
     fName : string;
     lName : string;
+    iZip : string;
     busName : string;
     cName : string;
     cPhone : string;
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
                 if (this.authSvc.userObject.type == 'I') {
                     this.fName = this.authSvc.userObject.type_obj.fName;
                     this.lName = this.authSvc.userObject.type_obj.lName;
+                    this.iZip = this.authSvc.userObject.type_obj.iZip;
                 } else {
                     this.busName = this.authSvc.userObject.type_obj.bus_name;
                     this.cName = this.authSvc.userObject.type_obj.cName;
