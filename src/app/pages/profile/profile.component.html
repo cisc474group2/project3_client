@@ -56,7 +56,9 @@
                             style="background-color:#C81D35" (click)="unregisterUser(card)">Unregister</button></span>
                 </div>
                 <div class="card-body">
-                    <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
+                    <div><i class="fas fa-building"></i><span class="clickableCardItem"
+                        [routerLink]="['../business', card.actual_bus_id]"
+                        routerLinkActive='active'>{{card.bus_id}}</span></div>
                     <div><i class="fas fa-comment-alt"></i><span>{{card.description}}</span></div>
                     <div><i class="fas fa-male"></i><span>Going: {{card.registered_ind.length}}</span></div>
                     <div><i class="fas fa-map-marker-alt"></i><span>{{card.event_address}}</span></div>
@@ -90,7 +92,9 @@
                             style="background-color:#C81D35" (click)="unregisterUser(card)">Unregister</button></span>
                 </div>
                 <div class="card-body">
-                    <div><i class="fas fa-building"></i><span>{{card.bus_id}}</span></div>
+                    <div><i class="fas fa-building"></i><span class="clickableCardItem"
+                        [routerLink]="['../business', card.actual_bus_id]"
+                        routerLinkActive='active'>{{card.bus_id}}</span></div>
                     <div><i class="fas fa-comment-alt"></i><span>{{card.description}}</span></div>
                     <div><i class="fas fa-male"></i><span>Going: {{card.registered_ind.length}}</span></div>
                     <div><i class="fas fa-map-marker-alt"></i><span>{{card.event_address}}</span></div>
