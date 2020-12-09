@@ -1,0 +1,163 @@
+.text-dark {
+	color: var(--color-text-primary, #24292e) !important;
+}
+
+.text-gray {
+	color: var(--color-text-secondary, #586069) !important;
+}
+
+.text-bold {
+	font-weight: bold !important;
+}
+
+.text-light-gray {
+	color: var(--color-text-terciary, #6a737d) !important;
+}
+
+.helvetica {
+	font-family: 'Helvetica' !important;
+}
+
+.box-color {
+	color: var(--color-border-primary, #e2e4e8) !important;
+}
+
+.line-color {
+	color: var(--color-border-secondary, #eaecef) !important;
+}
+
+.header {
+	padding-top:1vh;
+}
+
+.body1 {
+	padding-top: 3vh;
+	padding-right: 5vw;
+	padding-left: 5vw;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.mt_15 {
+	margin-top: 15vh;
+}
+
+.mt_10 {
+	margin-top: 10vh;
+}
+
+.mt_5 {
+	margin-top: 5vh;
+}
+
+.mb_5 {
+	margin-bottom: 5vh;
+}
+
+.mt_2 {
+	margin-top: 2vh
+}
+
+.rounded1 {
+	border-radius: 6px !important;
+}
+
+.flex_wrap {
+	flex-wrap: wrap !important;
+}
+
+.flex_row {
+	flex-direction: row !important;
+}
+
+.d_flex {
+	display:flex;
+}
+
+.d_block {
+	display:block
+}
+
+.border {
+	border: 1px solid !important;
+}
+
+.border_right {
+	border-right: 1px solid !important;
+}
+
+.mb_0 {
+	border-bottom: 0 !important;
+}
+
+.box_width {
+	width: 33.33333%;
+}
+
+.box_cotainer {
+	box-sizing: border-box;
+}
+
+.inner_box_padding {
+	padding-top: 40px !important;
+	padding-bottom: 40px !important;
+}
+
+.h1_40 {
+	font-size: 40px !important;
+}
+
+.h1_48 {
+	font-size: 48px !important;
+}
+
+.h2_24 {
+	font-size: 24px !important;
+}
+
+.h3_14 {
+	font-size: 14px !important;
+}
+
+.h4_18 {
+	font-size: 18px !important;
+}
+
+.ta_center {
+	text-align: center !important;
+}
+
+ln {
+	box-sizing: initial;
+	height: 0;
+	overflow: visible;
+}
+
+.line, ln {
+	height: 0;
+	margin: 15px 0;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+		border-bottom-color: currentcolor;
+		border-bottom-style: none;
+		border-bottom-width: 0px;
+	border-bottom: 1px solid;
+}
+
+.img_scale {
+	width:10vw;
+	height:10vw;
+}
+
+.img_container {
+	margin: 2vw;
+	img {
+		margin-bottom: 2vw;
+	}
+	span {
+		max-width: 100%;
+	}
+}
