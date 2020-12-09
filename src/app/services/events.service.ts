@@ -86,6 +86,11 @@ export class EventsService {
     return this.http.put(x, { registered_ind: registered_ind });
   }
 
+  deleteEvent(eventID: string, registered_ind: string) {
+    var x = this.path + 'events' + "/" + eventID;
+    return this.http.delete(x);
+  }
+
   getBusiness(busID: string): Observable<any> {
     return this.http.get(this.path + 'users/bus' + "/" + busID);
   }
