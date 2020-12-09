@@ -38,30 +38,32 @@
 		<div class="d_block ta_center">
 			<span class="h2_24 text-dark mb_5">Meet the Team</span>
 		</div>
-		<div class="d_flex flex_wrap flex_row ta_center">
+		<div class="img_flex d_flex flex_wrap flex_row ta_center">
 			<div class="img_container">
-				<img class="img-responsive img_scale d_block" src='./assets/group_members/tim_m.jpeg'>
-				<span class="h3_14 text-gray d_block">Timmy Mozzarella</span>
+				<img class="img-responsive img_scale d_block" src='./assets/group_members/tim_m.jpg'>
+				<span class="h4_18 text-gray d_block">Timmy Mozzarella</span>
 			</div>
 			<div class="img_container">
 				<img class="img-responsive img_scale d_block" src='./assets/group_members/sam_d.JPG'>
-				<span class="h3_14 text-gray d_block">Sam D^AmoreAmore</span>
+				<span class="h4_18 text-gray d_block">Sam D^AmoreAmore</span>
 			</div>
 			<div class="img_container">
 				<img class="img-responsive img_scale d_block" src='./assets/group_members/sarah_j.jpg'>
-				<span class="h3_14 text-gray d_block">Shara Joice</span>
+				<span class="h4_18 text-gray d_block">Shara Joice</span>
 			</div>
 			<div class="img_container">
 				<img class="img-responsive img_scale d_block" src='./assets/group_members/mark_w.jpg'>
-				<span class="h3_14 text-gray d_block">Marc Wolgout</span>
+				<span class="h4_18 text-gray d_block">Marc Wolgout</span>
 			</div>
 			<div class="img_container">
 				<img class="img-responsive img_scale d_block" src='./assets/group_members/bonnie_s.jpg'>
-				<span class="h3_14 text-gray d_block">Bonnie Skism</span>
+				<span class="h4_18 text-gray d_block">Bonnie Skism</span>
 			</div>
 			<div class="img_container">
-				<img class="img-responsive img_scale d_block" src='./assets/group_members/kevin_p.png'>
-				<span class="h3_14 text-gray d_block">He's a Peach, Man</span>
+				<img class="img-responsive img_scale d_block" [src]="imgSrc"
+					(mouseover)="imgSrc = './assets/group_members/kevin_p.png'"
+					(mouseout)="imgSrc = './assets/group_members/kevin_p.jpg'">
+				<span class="h4_18 text-gray d_block">He's a Peach, Man</span>
 			</div>
 		</div>
 	</div>
