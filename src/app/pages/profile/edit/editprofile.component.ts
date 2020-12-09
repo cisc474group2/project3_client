@@ -25,6 +25,7 @@ export class EditprofileComponent implements OnInit {
   reg_events: [];
   fName: string;
   lName: string;
+  iZip: string;
   busName: string;
   cName: string;
   cPhone: string;
@@ -45,6 +46,7 @@ export class EditprofileComponent implements OnInit {
               if(this.authSvc.userObject.type == 'I'){
                 this.fName = this.authSvc.userObject.type_obj.fName;
                 this.lName = this.authSvc.userObject.type_obj.lName;
+                this.iZip = this.authSvc.userObject.type_obj.iZip;
               }
               else{
                 this.busName = this.authSvc.userObject.type_obj.bus_name;
@@ -82,7 +84,8 @@ export class EditprofileComponent implements OnInit {
     });
     this.individualForm=this.formBuilder.group({
         firstName: ['', Validators.required],
-        lastName: ['', Validators.required]
+        lastName: ['', Validators.required],
+        zip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]]
     });
 
     this.businessForm=this.formBuilder.group({
@@ -91,9 +94,9 @@ export class EditprofileComponent implements OnInit {
       businessApt: [''],
       businessCity: ['', Validators.required],
       businessState: ['', Validators.required],
-      businessZip: ['', Validators.required],
+      businessZip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]],
       contactName: ['', Validators.required],
-      businessPhone: ['', Validators.required]
+      businessPhone: ['', [Validators.required,Validators.pattern('([0-9]{3}){1}(-[0-9]{3}){1}(-[0-9]{4}){1}')]]
     });
     
     this.profileForm.setValue({
@@ -103,7 +106,8 @@ export class EditprofileComponent implements OnInit {
   if(this.authSvc.userObject.type == 'I'){
     this.individualForm.setValue({
       firstName: this.fName,
-      lastName: this.lName
+      lastName: this.lName,
+      zip: this.iZip
     });
   }
 
@@ -138,6 +142,7 @@ export class EditprofileComponent implements OnInit {
     if(this.authSvc.userObject.type == 'I'){
       this.authSvc.userObject.type_obj.fName = this.individualForm.controls.firstName.value;
       this.authSvc.userObject.type_obj.lName = this.individualForm.controls.lastName.value;
+      this.authSvc.userObject.type_obj.iZip = this.individualForm.controls.zip.value;
     }
 
     else{

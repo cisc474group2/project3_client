@@ -47,15 +47,15 @@ export class EditeventComponent implements OnInit {
 
     
     this.eventsForm=this.formBuilder.group({
-      title: '',
-      description: '',
-      eventApt: '',
-      eventStreet: '',
-      eventCity: '',
-      eventState: '',
-      eventZip: '',
-      start_time: '',
-      end_time: ''
+      title: ['',Validators.required],
+      description: ['',Validators.required],
+      eventApt: [''],
+      eventStreet: ['',Validators.required],
+      eventCity: ['',Validators.required],
+      eventState: ['',Validators.required],
+      eventZip: ['', [Validators.pattern('([0-9]{5}){1}(-[0-9]{4})?'),Validators.required]],
+      start_time: ['',Validators.required],
+      end_time: ['',Validators.required]
     });
 
     this.eventsForm.setValue({
