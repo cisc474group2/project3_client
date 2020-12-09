@@ -46,7 +46,7 @@ export class EditprofileComponent implements OnInit {
               if(this.authSvc.userObject.type == 'I'){
                 this.fName = this.authSvc.userObject.type_obj.fName;
                 this.lName = this.authSvc.userObject.type_obj.lName;
-                this.iZip = this.authSvc.userObject.type_obj.iZip;
+                this.iZip = this.authSvc.userObject.type_obj.zip;
               }
               else{
                 this.busName = this.authSvc.userObject.type_obj.bus_name;
@@ -142,7 +142,7 @@ export class EditprofileComponent implements OnInit {
     if(this.authSvc.userObject.type == 'I'){
       this.authSvc.userObject.type_obj.fName = this.individualForm.controls.firstName.value;
       this.authSvc.userObject.type_obj.lName = this.individualForm.controls.lastName.value;
-      this.authSvc.userObject.type_obj.iZip = this.individualForm.controls.zip.value;
+      this.authSvc.userObject.type_obj.zip = this.individualForm.controls.zip.value;
     }
 
     else{

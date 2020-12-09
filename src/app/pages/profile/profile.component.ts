@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
     cPhone : string;
     mailAddress : string[];
     hostedEvents : EventModel[];
+    zipcode: string;
     showIfIndividual = false;
     showIfBusiness = false;
     checkingRegisteredEvents = true;
@@ -44,7 +45,7 @@ export class ProfileComponent implements OnInit {
                 if (this.authSvc.userObject.type == 'I') {
                     this.fName = this.authSvc.userObject.type_obj.fName;
                     this.lName = this.authSvc.userObject.type_obj.lName;
-                    this.iZip = this.authSvc.userObject.type_obj.iZip;
+                    this.iZip = this.authSvc.userObject.type_obj.zip;
                 } else {
                     this.busName = this.authSvc.userObject.type_obj.bus_name;
                     this.cName = this.authSvc.userObject.type_obj.cName;
@@ -111,9 +112,11 @@ export class ProfileComponent implements OnInit {
                 if (this.authSvc.userObject.type == 'I') {
                     this.showIfIndividual = true;
                     this.showIfBusiness = false;
+        
                 } else {
                     this.showIfBusiness = true;
                     this.showIfIndividual = false;
+                    
                 }
             }
         });
