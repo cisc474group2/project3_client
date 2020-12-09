@@ -21,9 +21,9 @@
             <!--<mat-label>Type of Account:</mat-label>
             <mat-checkbox id="indivCheck" formControlName="individual" (change)="unhide($event)">Individual</mat-checkbox>
             <mat-checkbox id="busCheck" formControlName="individual" (change)="unhide($event)">Business</mat-checkbox>-->
-            <label for="individual">Individual</label>
+            <label for="indivCheck">Individual</label>
             <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
-            <label for="business">Business</label>
+            <label for="busCheck">Business</label>
             <input type="checkbox" id="busCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
             <!--<mat-form-field appearance="fill">
                 <mat-label>Type of Account</mat-label>
