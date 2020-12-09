@@ -16,15 +16,15 @@
                 <mat-error>You must enter a value</mat-error>
             </mat-form-field>
         </div>
-        <div>Type of Account:<br><br></div>
+        <div class="center">Type of Account:<br><br></div>
         <div>
             <!--<mat-label>Type of Account:</mat-label>
             <mat-checkbox id="indivCheck" formControlName="individual" (change)="unhide($event)">Individual</mat-checkbox>
             <mat-checkbox id="busCheck" formControlName="individual" (change)="unhide($event)">Business</mat-checkbox>-->
-            <label for="indivCheck">Individual</label>
-            <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
-            <label for="busCheck">Business</label>
-            <input type="checkbox" id="busCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/>
+            <div id="indiv"><label for="indivCheck" class="word">Individual</label>
+            <input type="checkbox" id="indivCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/></div>
+            <div id="bus"><label for="busCheck" class="word">Business</label>
+            <input type="checkbox" id="busCheck" (change)="unhide($event)" formControlName="individual" class="checkbox-inline" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.individual.errors }"/></div>
             <!--<mat-form-field appearance="fill">
                 <mat-label>Type of Account</mat-label>
                 <mat-select formControlName="individual" required>

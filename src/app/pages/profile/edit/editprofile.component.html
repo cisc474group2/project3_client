@@ -1,6 +1,6 @@
 <div style="min-height:88vh;">
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-    <h2>Edit Profile</h2>
+    <div class="form-box"><h2>Edit Profile</h2>
     <form [formGroup]="profileForm" (ngSubmit)="updateInfo()">
         <div>
             <mat-form-field appearance="fill">
@@ -151,6 +151,6 @@
                 Update Profile Information
             </button>
         </div>
-    </form>
+    </form></div>
 </div>
 <app-foot></app-foot>

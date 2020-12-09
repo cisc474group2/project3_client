@@ -1,13 +1,6 @@
 #stateBox{
     margin-left: 1%;
 }
-#indivCheck{
-    margin-left: 1%;
-    margin-right: 2%;
-}
-#busCheck{
-    margin-left: 1%;
-}
 mat-form-field{
     width: 100%;
 }
@@ -17,11 +10,34 @@ mat-form-field{
 mat-form-field{
     width: 100%;
 }
+#indivCheck{
+    margin-left: 2%;
+}
+#busCheck{
+    margin-left: 2%;
+}
+.word{
+    padding-right: 1%;
+}
+.center{
+    margin:auto;
+    width:50%;
+    text-align: center;
+}
+#indiv{
+    float: left;
+    width:25%
+}
+#bus{
+    float: right;
+    width:25%;
+    text-align:right;
+}
 
 .form-box{
     width: 25%;
     padding-top: 5%;
-    padding-bottom: 1%;
+    padding-bottom: 2%;
     margin: auto;
     margin-left: 37.5%;
     h2{
