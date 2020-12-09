@@ -10,6 +10,8 @@ import {Location, Appearance} from '@angular-material-extensions/google-maps-aut
 import PlaceResult = google.maps.places.PlaceResult;
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
+import { WeatherService } from '../../services/weather.service';
+import { MasterDateTimeService } from 'src/app/services/master-date-time.service';
 
 @Component({selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnInit {
@@ -19,10 +21,21 @@ export class HomeComponent implements OnInit {
     public locality_name : string;
     public locality_state : string;
     public radius_options : number[];
+    public date_insert:string;
+    public temp_insert:string;
+    public count = 0;
     default_radius = 50;
     labelText = "Change current location";
 
-    constructor(private eventSvc : EventsService, private profileSvc : ProfileService, private authSvc : AuthService, private route : ActivatedRoute, private router : Router, private geoloc : UserGeolocationService, public dialog : MatDialog) {
+    constructor(private eventSvc : EventsService, 
+      private profileSvc : ProfileService, 
+      private authSvc : AuthService, 
+      private route : ActivatedRoute, 
+      private router : Router, 
+      private geoloc : UserGeolocationService, 
+      public dialog : MatDialog, 
+      private weatherSvc:WeatherService, 
+      private mstDateTimeSvc:MasterDateTimeService) {
         this.geoloc.currentLocal.subscribe(city => {
             this.locality_name = this.geoloc.currentLocal.value;
         });
@@ -37,6 +50,12 @@ export class HomeComponent implements OnInit {
             100,
             250
         ];
+        weatherSvc.temp_insert.subscribe((t_i:string) => {
+          this.temp_insert = t_i;
+        });
+        mstDateTimeSvc.date_insert.subscribe((d_i:string) => {
+          this.date_insert = d_i;
+        });
     }
 
     ngOnInit(): void {
@@ -48,10 +67,9 @@ export class HomeComponent implements OnInit {
 
 
     openDialog() {
-      this.dialog.open(Popup, {});
+      this.dialog.open(notLoggedIn, {});
     }
 
-    
 
     registerUser(event) {
         this.authSvc.authorize();
@@ -123,6 +141,10 @@ export class HomeComponent implements OnInit {
     }
 
     noEventsFound(): boolean {
+        if(this.eventSvc.end_of_function.value && this.eventSvc.zero_events.value && this.count<=0){
+            this.count = 1;
+            this.dialog.open(noLocation);
+        }
         return this.eventSvc.zero_events.value;
     }
 
@@ -132,6 +154,7 @@ export class HomeComponent implements OnInit {
     onLocationSelected(location : Location) {
         this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
         this.eventSvc.getEventsFormat();
+        this.count = 0;
         console.log(this.geoloc.userGeoloc.value);
     }
 
@@ -141,28 +164,28 @@ export class HomeComponent implements OnInit {
     // Right Now
     // My Events
     onTabSelectChange(tab : MatTabChangeEvent) { // console.log(tab);
+        let prev_index = this.currentIndex;
+        this.currentIndex = tab.index;
         switch (tab.index) {
             case 0:
-                this.currentIndex = 0;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.hotSort));
                 break;
             case 1:
-                this.currentIndex = 1;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.distanceSort));
                 break;
             case 2:
-                this.currentIndex = 2;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
                 break;
             case 3:
-                this.currentIndex = 3;
                 this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.nowFilter(this.eventSvc.events_all.value), this.eventSvc.nowSort));
                 break;
             case 4:
-                this.currentIndex = 4;
+                if (prev_index == 3) {
+                    this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.events_all.value, this.eventSvc.upcommingSort));
+                }
                 break;
             default:
-                this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.alphaSort));
+                this.eventSvc.event_list.next(this.eventSvc.sortList(this.eventSvc.event_list.value, this.eventSvc.hotSort));
                 break;
         }
     }
@@ -172,31 +195,53 @@ export class HomeComponent implements OnInit {
         this.eventSvc.getEventsFormat();
     }
 
+    getWeatherPath():string {
+        return this.weatherSvc.weatherImg();
+    }
+
 
 }
 
 @Component({
-  selector: 'popup',
-  templateUrl: 'popup.html',
+  selector: 'notLoggedIn',
+  templateUrl: 'notLoggedIn.html',
   styleUrls: ['./home.component.scss']
 })
-export class Popup{
+export class notLoggedIn{
 
   constructor(
-    public dialogRef: MatDialogRef<Popup>, private router: Router){
+    public dialogRef: MatDialogRef<notLoggedIn>, private router: Router){
 
     };
-    
 
     redirectToLogin() {
       this.dialogRef.close();
       this.router.navigate(['login']);
   }
 
-  redirectToRegister() {
+     redirectToRegister() {
       this.dialogRef.close();
       this.router.navigate(['register']);
   }
 
 }
+
+@Component({
+    selector: 'noLocation',
+    templateUrl: 'noLocation.html',
+    styleUrls: ['./home.component.scss']
+  })
+  export class noLocation{
+  
+    constructor(
+      public dialogRef: MatDialogRef<noLocation>){
+  
+      };
+      
+      searchAgain(){
+          this.dialogRef.close();
+      }
+      
+  
+  }
 

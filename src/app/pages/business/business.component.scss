@@ -1,0 +1,38 @@
+#left{
+    margin-top: 1%; 
+    margin-left: 2%;
+    width: 40%;
+    float:left;
+    text-align: center;
+}
+
+#right{
+    margin-top: 1%; 
+    margin-right: 10%;
+    width: 40%;
+    float: right;
+}
+
+.label{
+    font-size: 1.5em;
+}
+
+.list{
+    list-style-type: none;
+}
+#title{
+    font-size: 2em;
+}
+  .card{
+    margin-bottom: 2.5%;
+
+    .btn{
+        float: right;
+        vertical-align: middle;
+        margin: 0 auto;
+      }
+  }
+  i{
+    width: 2em;
+    text-align: center;
+  }

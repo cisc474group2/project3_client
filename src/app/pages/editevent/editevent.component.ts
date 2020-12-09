@@ -31,6 +31,12 @@ export class EditeventComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.authSvc.CurrentUser.subscribe(user => {
+      if (user === null || this.authSvc.userObject.type != 'B') {
+        this.router.navigate(['login'])
+      }
+  });
+
     this.title = this.eventSvc.current_event.title;
     this.description = this.eventSvc.current_event.description;
     this.eventAddress = this.eventSvc.current_event.actual_address.split("+");
@@ -39,11 +45,7 @@ export class EditeventComponent implements OnInit {
     
     //Authorize w/ Business accounts only
 
-    this.authSvc.CurrentUser.subscribe(user => {
-        if (user === null || this.authSvc.userObject.type != 'B') {
-          this.router.navigate(['login'])
-        }
-    });
+    
     this.eventsForm=this.formBuilder.group({
       title: '',
       description: '',

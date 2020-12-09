@@ -5,7 +5,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './pages/material/material-module'
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent, notLoggedIn, noLocation } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,17 +16,20 @@ import { PosteventComponent } from './pages/postevent/postevent.component';
 import { ProfileComponent } from './pages/profile/profile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fromEventPattern } from 'rxjs';
-import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
+import { GooglemapsComponent, mapsNotLoggedIn } from './pages/googlemaps/googlemaps.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { Config } from 'src/app/secrets/Config';
 import { EditprofileComponent } from './pages/profile/edit/editprofile.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {EditeventComponent} from './pages/editevent/editevent.component';
+import { EditeventComponent } from './pages/editevent/editevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoEventsLandingComponent } from './pages/no-events-landing/no-events-landing.component';
-import {MatInputModule} from '@angular/material/input';
-import {Popup} from './pages/home/home.component';
+import { MatInputModule } from '@angular/material/input';
+import { FootComponent } from './pages/foot/foot.component';
+import { bpnotLoggedIn, BusinessComponent } from './pages/business/business.component';
+
+
 
 @NgModule({
   declarations: [
@@ -40,7 +43,12 @@ import {Popup} from './pages/home/home.component';
     EditprofileComponent,
     EditeventComponent,
     NoEventsLandingComponent,
-    Popup
+    notLoggedIn,
+    noLocation,
+    mapsNotLoggedIn,
+    FootComponent,
+    BusinessComponent,
+    bpnotLoggedIn
   ],
   imports: [
     BrowserModule,
@@ -58,7 +66,7 @@ import {Popup} from './pages/home/home.component';
     NgbModule,
     MatInputModule,
   ],
-  entryComponents: [Popup],
+  entryComponents: [notLoggedIn, noLocation, mapsNotLoggedIn, bpnotLoggedIn],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
   

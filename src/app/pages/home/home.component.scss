@@ -25,6 +25,10 @@
   padding-right: 20%;
   padding-bottom: 1%;
 }
+
+.okButton{
+  padding-bottom: 2%;
+}
 // .mat-tab-label {
 //   min-width: 25px !important;
 //   padding: 5px;
@@ -46,21 +50,45 @@
 .mat-ink-bar {
   background-color: #1D3557;
 }
+
 mat-google-maps-autocomplete {
-  width: 13%;
+  width: 15vw;
   float: right;
   z-index: 2;
+  grid-row: 1;
 }
 .radius {
-  width: 12%;
-  position: relative;
+  width: 5vw;
+  height: 2vh;
+  float: right;
+  grid-row: 2;
+}
 
+.locationStuff{
+  display: grid;
+  float: right;
+  padding-top: 6%;
+}
+#weather_icon {
+  max-width: 4%;
+  background-color: #77859a;
+  border-radius: 100%;
+}
+.pageDateWeather {
+  text-align: center; 
+  padding: 1%; 
+  padding-top: 7%;
+  padding-bottom:1%;
+  padding-left: 15%;
+  margin-top: -5%;
+  z-index:1;
 }
 .pageTitle {
   text-align: center; 
-  padding: 2.5%; 
+  padding: 1%; 
   padding-bottom:1%;
-  padding-left: 23%;
+  padding-left: 15%;
+  margin-top: -2%;
   z-index:1;
 }
 .event{
@@ -106,9 +134,18 @@ mat-google-maps-autocomplete {
     margin: 0 auto;
   }
   .card{
-    margin-bottom: 2.5%;
+    margin-bottom: 1%;
+  }
+  .clickableCardItem:hover {
+    color: #2e2e2e;
+    border-radius: 25%;
+    background: #b0e0e6;
   }
   i{
     width: 2em;
     text-align: center;
+  }
+
+  .noEventsSearch{
+    margin-top:-5%;
   }

@@ -1,17 +1,4 @@
 <div *ngIf="loaded" class="mapPage">
-    <div class="map">
-        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            <div class="event" *ngFor='let event of googleMapMarkerContainer'>
-                <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.label" [label]="event.title"
-                    (markerClick)="showEvent(event._id)"></agm-marker>
-            </div>
-            <agm-info-window [disableAutoPan]="true">
-                Hi, this is the content of the <strong>info window</strong>
-            </agm-info-window>
-        </agm-map>
-    </div>
-
     <div class="details">
         <div *ngIf="!clicked" class="beforeClick">
             Click a marker to see the event details.
@@ -24,7 +11,7 @@
                     <span *ngIf='currentBusiness(card.actual_bus_id)'><button type="button" class="btn btn-light"
                             style="background-color: #F1FAEE;" (click)="editEvent(card)" style="margin-left:1%;">Edit
                             Event</button></span>
-                    <span *ngIf='!card.registered && loggedIn'><button type="button" class="btn btn-success"
+                    <span *ngIf='!card.registered'><button type="button" class="btn btn-success"
                             style="background-color: #60C864;" (click)="registerUser(card)">Register</button></span>
                     <span *ngIf='card.registered && loggedIn'><button type="button" class="btn btn-danger"
                             style="background-color:#C81D35" (click)="unregisterUser(card)">Unregister</button></span>
@@ -42,6 +29,20 @@
             </div>
         </div>
     </div>
+    <div class="map">
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [scrollwheel]="null">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <div class="event" *ngFor='let event of googleMapMarkerContainer'>
+                <agm-marker [latitude]="event.lat" [longitude]="event.lng" [title]="event.label" [label]="event.title"
+                    (markerClick)="showEvent(event._id)"></agm-marker>
+            </div>
+            <agm-info-window [disableAutoPan]="true">
+                Hi, this is the content of the <strong>info window</strong>
+            </agm-info-window>
+        </agm-map>
+    </div>
+
+  
 </div>
 
 <div *ngIf="!loaded">

@@ -8,6 +8,7 @@ import { ProfileComponent } from './pages/profile/profile.component'
 import { GooglemapsComponent } from './pages/googlemaps/googlemaps.component';
 import { EditprofileComponent} from './pages/profile/edit/editprofile.component';
 import { EditeventComponent} from './pages/editevent/editevent.component';
+import { BusinessComponent } from './pages/business/business.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path:'postevent',component: PosteventComponent},
   {path:'profile', component: ProfileComponent},
   {path:'profile/edit', component: EditprofileComponent},
-  {path:'editevent', component: EditeventComponent}
+  {path:'editevent', component: EditeventComponent},
+  {path:'business/:_id', component:BusinessComponent}
 ];
 
 @NgModule({
