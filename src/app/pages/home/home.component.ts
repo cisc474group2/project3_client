@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit {
         this.geoloc.overrideGeolocLocation(location.longitude, location.latitude);
         this.eventSvc.getEventsFormat();
         this.count = 0;
-        console.log(this.geoloc.userGeoloc.value);
+        //console.log(this.geoloc.userGeoloc.value);
     }
 
     // Popular Events
