@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "bootstrap": "^4.4.0",
     "rxjs": "~6.5.4",
+    "ts-md5": "^1.2.7",
     "tslib": "^1.10.0",
     "yargs": "^12.0.5",
     "zone.js": "~0.10.2"
