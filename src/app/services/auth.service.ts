@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserModel, BusModel, IndModel} from "../../assets/model";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private path='http://localhost:3000/api/security/'
+  private path = environment.apiLocation + 'security/';
   private _token:string=null;
   CurrentUser: BehaviorSubject<UserModel>=new BehaviorSubject<UserModel>(null);
   userObject;

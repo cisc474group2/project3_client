@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserGeolocationService } from './user-geolocation.service';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  private path = "http://localhost:3000/api/";
+  private path = environment.apiLocation;
   private icon_path = 'http://openweathermap.org/img/wn/<<icon>>@2x.png';
   public curr_temp:BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public high_temp:BehaviorSubject<number> = new BehaviorSubject<number>(null);

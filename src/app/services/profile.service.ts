@@ -5,13 +5,14 @@ import { map, catchError } from 'rxjs/operators';
 import { EventModel, Geoloc } from '../../assets/model';
 import { ɵBrowserAnimationBuilder } from '@angular/platform-browser/animations';
 import { UserModel, BusModel, IndModel} from "../../assets/model";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private path="http://localhost:3000/api/"
+  private path= environment.apiLocation;
 
   constructor(private http:HttpClient) {
   }

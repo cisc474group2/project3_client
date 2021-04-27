@@ -29,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FootComponent } from './pages/foot/foot.component';
 import { bpnotLoggedIn, BusinessComponent } from './pages/business/business.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -61,7 +62,7 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
     BrowserAnimationsModule,
     MaterialModule,
     AgmCoreModule.forRoot({
-      apiKey: Config.GOOGLE_API,
+      apiKey: environment.googleAPI,
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
