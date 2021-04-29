@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiLocation: 'communityboard.dev/api',
+  apiLocation: '/api/',
   googleAPI: 'AIzaSyDM0fQ7kbuAt7TG4JVJRfMhH58QBBt3gco'
 };
