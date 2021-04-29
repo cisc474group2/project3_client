@@ -8,13 +8,14 @@ import { UserGeolocationService } from './user-geolocation.service';
 import { AuthService } from './auth.service';
 import { ThrowStmt } from '@angular/compiler';
 import { MasterDateTimeService } from './master-date-time.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  private path = "http://localhost:3000/api/"
+  private path = environment.apiLocation;
   public event_list: BehaviorSubject<Array<EventModel>> = new BehaviorSubject<Array<EventModel>>(null);
   public events_loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public end_of_function: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);

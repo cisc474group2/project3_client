@@ -5,12 +5,13 @@ import { EventModel, Geoloc } from 'src/assets/model';
 import { Config } from '../secrets/Config';
 import { Router } from '@angular/router';
 import { WeatherService } from './weather.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserGeolocationService {
-  private path = "http://localhost:3000/api/";
+  private path = environment.apiLocation;
   public lat: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public lng: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public accuracy: BehaviorSubject<number> = new BehaviorSubject<number>(null);
